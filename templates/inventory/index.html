@@ -4,6 +4,11 @@
 
 {% block content %}
     <h1>Inventory</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Add Item">
+    </form>
     
 {% endblock %}
 
