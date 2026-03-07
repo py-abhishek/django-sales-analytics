@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Sales{% endblock %}
+{% block css_files%}
+    <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div class="container-fluid p-1">
+
+        <!-- PAGE HEADER -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="section-title mb-0">Sale Details</h3>
+                <small class="text-muted">Transaction information</small>
+            </div>
+
+            <a href="{% url 'sales_list' %}" class="btn btn-primary">
+                Back to List
+            </a>
+        </div>
+
+
+        <!-- SALE INFORMATION -->
+        <div class="custom-card mb-4 p-4">
+
+            <h5 class="mb-3">Sale Information</h5>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <p class="text-muted mb-1">Customer</p>
+                    <p class="text-semibold">
+                        {% if sale.customer %}
+                            {{ sale.customer.name }}
+                        {% else %}
+                            Walk-in Customer
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="text-muted mb-1">Sale Date</p>
+                    <p class="text-semibold">{{ sale.sale_date }}</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="text-muted mb-1">Payment Method</p>
+                    <p class="text-semibold">{{ sale.payment_method|upper }}</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS SOLD -->
+        <div class="mb-4">
+
+            <div class="p-3 border-bottom">
+                <h5 class="mb-0">Products Sold</h5>
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle data-table mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Unit</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Profit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in sale.items.all %}
+
+                        <tr>
+
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.unit }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>₹ {{ item.price_at_sale }}</td>
+                            <td class="text-semibold">₹ {{ item.item_total }}</td>
+                            <td class="text-success text-semibold">
+                                ₹ {{ item.item_profit }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="custom-card p-4 border-left">
+
+            <h5 class="mb-3">Summary</h5>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-semibold">Total Amount</span>
+                <span class="text-semibold">₹ {{ sale.total_amount }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="text-semibold">Total Profit</span>
+                <span class="text-success text-semibold">
+                    ₹ {{ sale.total_profit }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

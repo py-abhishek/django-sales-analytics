@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Sales{% endblock %}
+{% block css_files%}
+    <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="section-title mb-0">Product Detail</h3>
+            <small class="text-muted">Product details and performance</small>
+        </div>
+
+        <div>
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                Back to List
+            </a>
+
+            {% comment %} <a href="{% url 'product_edit' product.id %}" class="btn btn-primary">
+                Edit Product
+            </a> {% endcomment %}
+        </div>
+    </div>
+
+
+    <!-- PRODUCT INFORMATION -->
+    <div class="custom-card p-4 mb-4">
+
+        <h5 class="mb-3">Product Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Product Name</p>
+                <p class="fw-semibold">{{ product.name }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">SKU</p>
+                <p class="fw-semibold">{{ product.sku }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Category</p>
+                <p class="fw-semibold">
+                    {{ product.category.name }}
+                </p>
+            </div>
+
+            <div class="col-md-12">
+                <p class="text-muted mb-1">Description</p>
+                <p class="fw-semibold">
+                    {{ product.description|default:"No description provided." }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRICING & INVENTORY -->
+    <div class="custom-card p-4 mb-4">
+
+        <h5 class="mb-3">Pricing & Inventory</h5>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Cost Price</p>
+                <p class="fw-semibold">₹ {{ product.cost_price }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Selling Price</p>
+                <p class="fw-semibold">₹ {{ product.selling_price }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Current Stock</p>
+                <p class="fw-semibold">{{ product.stock_quantity }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Reorder Level</p>
+                <p class="fw-semibold">{{ product.reorder_level }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SALES INSIGHTS -->
+    <div class="custom-card border-left p-4 mb-4">
+
+        <h5 class="mb-3">Sales Insights</h5>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Total Units Sold</p>
+                <p class="fw-semibold">{{ total_sold }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Total Revenue</p>
+                <p class="fw-semibold">₹ {{ total_revenue }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Total Profit</p>
+                <p class="text-success fw-semibold">
+                    ₹ {{ total_profit }}
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Last Sold</p>
+                <p class="fw-semibold">
+                    {{ last_sold_date|default:"N/A" }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RECENT SALES -->
+    <div class="card-soft mb-4">
+
+        <div class="p-3 border-bottom">
+            <h5 class="mb-0">Recent Sales</h5>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table align-middle table-hover mb-0">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for item in recent_sales %}
+
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>{{ item.sale.sale_date }}</td>
+
+                    <td>
+                        {% if item.sale.customer %}
+                            {{ item.sale.customer.name }}
+                        {% else %}
+                            <span class="text-muted">Walk-in</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ item.quantity }}</td>
+
+                    <td>₹ {{ item.item_total }}</td>
+
+                    <td class="text-success">
+                        ₹ {{ item.item_profit }}
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">
+                        No sales for this product yet.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- RECORD INFORMATION -->
+    <div class="custom-card p-4">
+
+        <h5 class="mb-3">Record Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Created At</p>
+                <p class="fw-semibold">{{ product.created_at }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Last Updated</p>
+                <p class="fw-semibold">{{ product.updated_at }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

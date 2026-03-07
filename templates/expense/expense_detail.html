@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Sales{% endblock %}
+{% block css_files%}
+    <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="section-title mb-0">Expense Detail</h3>
+            <small class="text-muted">Expense record information</small>
+        </div>
+
+        <a href="{% url 'expense_list' %}" class="btn btn-primary">
+            Back to List
+        </a>
+    </div>
+
+
+    <!-- EXPENSE DETAILS -->
+    <div class="custom-card border-left p-4 mb-4">
+
+        <h5 class="mb-3">Expense Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <p class="text-muted mb-1">Expense Name</p>
+                <p class="text-semibold">{{ expense.name }}</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="text-muted mb-1">Category</p>
+                <p class="text-semibold">{{ expense.category.name }}</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="text-muted mb-1">Amount</p>
+                <p class="text-semibold text-danger">
+                    ₹ {{ expense.amount }}
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="text-muted mb-1">Expense Date</p>
+                <p class="text-semibold">{{ expense.expense_date }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+    <div class="card-soft rounded p-4 mb-4">
+
+        <h5 class="mb-3">Description</h5>
+
+        {% if expense.description %}
+            <p class="text-semibold">{{ expense.description }}</p>
+        {% else %}
+            <p class="text-muted">No description provided.</p>
+        {% endif %}
+
+    </div>
+
+
+    <!-- RECORD INFORMATION -->
+    <div class="custom-card p-4">
+
+        <h5 class="mb-3">Record Info</h5>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Created At</p>
+                <p class="text-semibold">{{ expense.created_at }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Last Updated</p>
+                <p class="text-semibold">{{ expense.updated_at }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

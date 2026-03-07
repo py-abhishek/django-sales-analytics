@@ -1,11 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block page_title %}{% endblock %}</title>
-    {% block css_files %}{% endblock %}
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    {% block css_files %}
+    {% endblock %}
 </head>
 <body>
-    {% block content %}{% endblock %}
+    
+    <!-- NAVBAR -->
+    {% include "partials/navbar.html" %}
+
+    <!-- ===============================
+        MAIN LAYOUT
+    =================================-->
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        {% include "partials/sidebar.html" %}
+        
+
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            <div class="content-placeholder">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

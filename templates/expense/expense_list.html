@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Expense List{% endblock %}
+{% block css_files%}
+    <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="section-title mb-0">Expense</h3>
+            <small class="text-muted">All recorded expense transactions</small>
+        </div>
+
+        <a href="{% url 'add_expense' %}" class="btn btn-secondary">
+            + Add Expense
+        </a>
+    </div>
+
+
+    <!-- FILTER BAR -->
+    <div class="card-soft mb-4 p-3">
+        <div class="row g-3">
+
+            <div class="col-md-4">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search expense...">
+            </div>
+
+            <div class="col-md-3">
+                <input type="date" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-soft w-100">
+                    Filter
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SALES TABLE -->
+    <div class="card-soft">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle data-table mb-0">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for expense in expenses %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td>
+                            {{ expense.name }}
+                        </td>
+
+                        <td>{{ expense.expense_date }}</td>
+
+                        <td>
+                            <span class="badge-soft badge-success">
+                                {{ expense.category }}
+                            </span>
+                        </td>
+
+                        <td class="fw-semibold">
+                            ₹ {{ expense.amount }}
+                        </td>
+
+                        <td class="text-end">
+                            <a href="{% url 'expense_detail' expense.id %}">View</a>
+                        </td>
+                        
+                    </tr>
+                
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            No Expense recorded
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

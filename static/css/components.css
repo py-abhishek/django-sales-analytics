@@ -1,0 +1,64 @@
+.custom-card {
+    background: #ffffff;
+    border-radius: var(--radius);
+    border: 1px solid var(--clr-border);
+    /* box-shadow: var(--shadow-soft); */
+}
+
+/* Form control */
+.form-control,
+.form-select {
+    border-radius: var(--radius);
+    border: 2px solid var(--clr-border);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--clr-primary);
+    /* box-shadow: 0 0 0 3px rgba(91,108,255,0.1); */
+    outline: none;
+}
+
+.form-select:hover {
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--clr-primary);
+    border-color: var(--clr-primary);
+}
+
+.btn-primary:hover {
+    background: #4a59e3;
+}
+
+.btn-secondary {
+    background: none !important;
+    border-color: var(--clr-primary) !important;
+    color: var(--clr-primary) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--clr-primary-soft) !important;
+    border-color: var(--clr-primary) !important;
+    color: var(--clr-primary) !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--clr-bg-btn-secondary) !important;
+    color: var(--clr-text-medium) !important;
+    border-color: var(--clr-text-medium) !important;
+}
+
+.btn-soft {
+    border-radius: var(--radius);
+    /* border: 1px solid var(--clr-border); */
+    background-color: var(--clr-primary-soft);
+    color: var(--clr-text-main);
+    font-weight: 500;
+}
+
+.btn-soft:hover {
+    background-color: var(--clr-primary-medium);
+}

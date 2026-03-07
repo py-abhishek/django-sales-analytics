@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator
 
 # Create your models here.
 
-class Category(models.Model):
+class ProductCategory(models.Model):
     """
     To Organize products into groups
     """
@@ -23,17 +23,18 @@ class Product(models.Model):
 
     class UnitChoices(models.TextChoices):
         PIECE = "pcs", "Pieces"
-        KILOGRAM = "kg", "Kilogram"
-        LITER = "l", "Liter"
-        GRAM = "g", "Gram"
-        METER = "m", "Meter"
-        BOX = "box", "Box"
-        PACK = "pack", "Pack"
+        KILOGRAM = "kg", "Kilograms"
+        LITER = "l", "Liters"
+        GRAM = "g", "Grams"
+        METER = "m", "Meters"
+        BOX = "box", "Boxes"
+        PACK = "pack", "Packs"
 
     name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
     sku = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(
-        Category, on_delete=models.PROTECT,
+        ProductCategory, on_delete=models.PROTECT,
         db_index=True,
         related_name="products"
         )
@@ -51,8 +52,7 @@ class Product(models.Model):
         )
     unit = models.CharField(
         max_length=20,
-        choices=UnitChoices.choices,
-        default=UnitChoices.PIECE
+        choices=UnitChoices.choices
         )
     reorder_level = models.IntegerField(
         default=0,

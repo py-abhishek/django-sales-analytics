@@ -1,0 +1,28 @@
+.data-table thead {
+    background: var(--clr-bg-content);
+}
+
+.data-table th {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--clr-text-muted);
+}
+
+.data-table td {
+    padding: 14px;
+}
+
+.data-table tr:hover {
+    background: var(--clr-primary-soft);
+}
+
+.text-end a {
+    color: var(--clr-text-medium);
+    border: none;
+    background: none;
+    text-decoration: none;
+}
+
+.text-end a:hover {
+    color: var(--clr-text-muted)
+}

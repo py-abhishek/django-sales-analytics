@@ -1,0 +1,98 @@
+from django.db import transaction
+from .models import Sale, SaleItem
+from inventory.models import Product
+from django.core.exceptions import ValidationError
+
+import logging
+logger = logging.getLogger(__name__)
+
+def create_sale(customer_name, sale_date, payment_method, formset_data):
+    """
+    This function will validate if item available in the stock,
+    then deduct it from the stock,
+    calcalate totals, profits, 
+    and then create sale
+    """
+
+    logger.info(formset_data)
+    # remove empty item from formset
+    clean_formset_data = [
+        item for item in formset_data
+        if item
+        and not item.get('delete')
+        and item.get('product')
+        # and item.get('unit')
+        and item.get('quantity') is not None 
+    ]
+
+    with transaction.atomic():
+        for item in clean_formset_data:
+            if not available_in_stock(item['product'], item):
+                raise ValidationError(
+                    f"Insufficient stock for {item['product'].name}. "
+                    f"Available: {item['product'].stock_quantity}, "
+                    f"Requested: {item['quantity']}."
+                )
+                
+            
+        sale = Sale.objects.create(
+            customer=customer_name,
+            sale_date=sale_date,
+            total_amount=get_total_sale_amount(clean_formset_data),
+            total_profit=get_total_profit(clean_formset_data),
+            payment_method=payment_method
+            )
+
+        for item in clean_formset_data:
+            product = item['product']
+            SaleItem.objects.create(
+                sale=sale,
+                product=product,
+                quantity=item['quantity'],
+                unit=product.unit,
+                price_at_sale=product.selling_price,
+                cost_at_sale=product.cost_price,
+                item_total=get_item_total_price(product, item),
+                item_profit=get_item_profit(product, item)
+            )
+            
+            deduct_stock(product, item)
+
+        return sale
+
+
+def available_in_stock(product, item):
+    stock_quantity = product.stock_quantity
+    return stock_quantity >= item['quantity']
+
+
+def deduct_stock(product, item):
+    c_stock_quantity = product.stock_quantity
+    sale_quantity = item['quantity']
+    product.stock_quantity = c_stock_quantity - sale_quantity
+    product.save()
+
+
+def get_item_total_price(product, item):
+    return product.selling_price * item['quantity']
+
+
+def get_item_profit(product, item):
+    return (product.selling_price - product.cost_price) * item['quantity']
+
+
+def get_total_sale_amount(clean_formset_data):
+    total = 0
+    for item in clean_formset_data:
+        total += get_item_total_price(item['product'], item)
+    return total
+
+
+def get_total_profit(clean_formset_data):
+    profit = 0
+    for item in clean_formset_data:
+        profit += get_item_profit(item['product'], item)
+    return profit
+
+
+
