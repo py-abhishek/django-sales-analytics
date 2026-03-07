@@ -5,6 +5,11 @@
     /* box-shadow: var(--shadow-soft); */
 }
 
+.card-soft {
+    background-color: var(--clr-primary-soft);
+    border-radius: var(--radius);
+}
+
 /* Form control */
 .form-control,
 .form-select {
@@ -22,6 +27,7 @@
 .form-select:hover {
     cursor: pointer;
 }
+
 
 /* Buttons */
 .btn-primary {

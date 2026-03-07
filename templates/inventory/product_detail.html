@@ -13,7 +13,7 @@
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="section-title mb-0">Product Detail</h3>
+            <h3 class="section-title mb-0">Product Details</h3>
             <small class="text-muted">Product details and performance</small>
         </div>
 
@@ -38,24 +38,24 @@
 
             <div class="col-md-4 mb-3">
                 <p class="text-muted mb-1">Product Name</p>
-                <p class="fw-semibold">{{ product.name }}</p>
+                <p class="text-semibold">{{ product.name }}</p>
             </div>
 
             <div class="col-md-4 mb-3">
                 <p class="text-muted mb-1">SKU</p>
-                <p class="fw-semibold">{{ product.sku }}</p>
+                <p class="text-semibold">{{ product.sku }}</p>
             </div>
 
             <div class="col-md-4 mb-3">
                 <p class="text-muted mb-1">Category</p>
-                <p class="fw-semibold">
+                <p class="text-semibold">
                     {{ product.category.name }}
                 </p>
             </div>
 
             <div class="col-md-12">
                 <p class="text-muted mb-1">Description</p>
-                <p class="fw-semibold">
+                <p class="text-semibold">
                     {{ product.description|default:"No description provided." }}
                 </p>
             </div>
@@ -74,22 +74,22 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Cost Price</p>
-                <p class="fw-semibold">₹ {{ product.cost_price }}</p>
+                <p class="text-semibold">₹ {{ product.cost_price }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Selling Price</p>
-                <p class="fw-semibold">₹ {{ product.selling_price }}</p>
+                <p class="text-semibold">₹ {{ product.selling_price }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Current Stock</p>
-                <p class="fw-semibold">{{ product.stock_quantity }}</p>
+                <p class="text-semibold">{{ product.stock_quantity }} {{ product.unit }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Reorder Level</p>
-                <p class="fw-semibold">{{ product.reorder_level }}</p>
+                <p class="text-semibold">{{ product.reorder_level }} {{ product.unit }}</p>
             </div>
 
         </div>
@@ -100,30 +100,30 @@
     <!-- SALES INSIGHTS -->
     <div class="custom-card border-left p-4 mb-4">
 
-        <h5 class="mb-3">Sales Insights</h5>
+        <h5 class="mb-3">Sales Insights ({{ current_year }})</h5>
 
         <div class="row">
 
             <div class="col-md-3">
-                <p class="text-muted mb-1">Total Units Sold</p>
-                <p class="fw-semibold">{{ total_sold }}</p>
+                <p class="text-muted mb-1">Total Quantity Sold</p>
+                <p class="text-semibold">{{ total_quantity_sold }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Revenue</p>
-                <p class="fw-semibold">₹ {{ total_revenue }}</p>
+                <p class="text-semibold">₹ {{ total_revenue }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Profit</p>
-                <p class="text-success fw-semibold">
+                <p class="text-success text-semibold">
                     ₹ {{ total_profit }}
                 </p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Last Sold</p>
-                <p class="fw-semibold">
+                <p class="text-semibold">
                     {{ last_sold_date|default:"N/A" }}
                 </p>
             </div>
@@ -134,15 +134,15 @@
 
 
     <!-- RECENT SALES -->
-    <div class="card-soft mb-4">
+    <div class=" mb-4">
 
         <div class="p-3 border-bottom">
-            <h5 class="mb-0">Recent Sales</h5>
+            <h5 class="mb-0">Recent Sales ({{ current_year }})</h5>
         </div>
 
         <div class="table-responsive">
 
-            <table class="table align-middle table-hover mb-0">
+            <table class="table align-middle data-table mb-0">
 
                 <thead>
                     <tr>
@@ -173,7 +173,7 @@
                         {% endif %}
                     </td>
 
-                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.quantity }} {{ item.product.unit }}</td>
 
                     <td>₹ {{ item.item_total }}</td>
 
@@ -211,12 +211,12 @@
 
             <div class="col-md-6">
                 <p class="text-muted mb-1">Created At</p>
-                <p class="fw-semibold">{{ product.created_at }}</p>
+                <p class="text-semibold">{{ product.created_at|date }}</p>
             </div>
 
             <div class="col-md-6">
                 <p class="text-muted mb-1">Last Updated</p>
-                <p class="fw-semibold">{{ product.updated_at }}</p>
+                <p class="text-semibold">{{ product.updated_at|date }}</p>
             </div>
 
         </div>

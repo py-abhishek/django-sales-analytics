@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, View
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from .forms import ProductForm
 from .models import Product, ProductCategory
 from sales.models import SaleItem
+from . import services
 
 # Create your views here.
 
@@ -32,13 +34,20 @@ class ProductDetailView(View):
     def get(self, request, pk):
         product_id = pk
         product = Product.objects.get(id=product_id)
-        print(product)
-        recent_sales = SaleItem.objects.filter(product=product).order_by('-sale.date')
-        print(recent_sales[0].sale.customer)
+        current_year = now().year
+        all_sales = SaleItem.objects.filter(product=product, sale__sale_date__year=current_year).order_by('-sale__sale_date')
+        recent_sales = all_sales[:5]
+
+        sales_insights = services.get_sales_insights(all_sales)
 
         context = {
             "product": product,
-            "recent_sales": recent_sales
+            "recent_sales": recent_sales,
+            "last_sold_date": recent_sales.first().sale.sale_date if recent_sales else None,
+            "current_year": current_year
         }
+
+        context |= sales_insights
+
         return render(request, "inventory/product_detail.html", context)
-        pass
+        

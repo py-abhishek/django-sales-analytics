@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Sales{% endblock %}
+{% block css_files%}
+    <link rel="stylesheet" href="{% static 'css/apps/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid dashboard-page">
+
+    <!-- DASHBOARD HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="section-title mb-0">Dashboard</h3>
+            <small class="text-muted">Business overview and analytics</small>
+        </div>
+
+        <div class="d-flex gap-2">
+            <select class="form-select form-select-sm">
+                <option>2026</option>
+                <option>2025</option>
+                <option>2024</option>
+            </select>
+
+            <select class="form-select form-select-sm">
+                <option>All Months</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- KPI CARDS -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card-soft p-3 border-left">
+                <p class="card-label">Revenue</p>
+                <h4 class="card-value">₹ 10000{{ revenue }}</h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-soft p-3 border-left">
+                <p class="card-label">Expenses</p>
+                <h4 class="card-value text-danger">₹ 2000{{ expenses }}</h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-soft p-3 border-left">
+                <p class="card-label">Net Profit</p>
+                <h4 class="card-value text-success">₹ 3000{{ profit }}</h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-soft p-3 border-left">
+                <p class="card-label">Total Sales</p>
+                <h4 class="card-value">50 {{ total_sales }}</h4>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- REVENUE VS EXPENSE CHART -->
+    <div class="card-soft p-4 mb-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Revenue vs Expense ({{ current_year }})</h5>
+        </div>
+
+        <canvas id="revenueExpenseChart" height="100"></canvas>
+
+    </div>
+
+
+    <!-- RECENT SALES + LOW STOCK -->
+    <div class="row g-4 mb-4">
+
+        <!-- RECENT SALES -->
+        <div class="col-md-6">
+
+            <div class="card-soft">
+
+                <div class="p-3 border-bottom d-flex justify-content-between">
+                    <h5 class="mb-0">Recent Sales</h5>
+                    <a href="{% url 'sales_list' %}" class="small text-semibold text-decoration-none">View All</a>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for sale in recent_sales %}
+
+                        <tr>
+
+                            <td>
+                                {% if sale.customer %}
+                                    {{ sale.customer.name }}
+                                {% else %}
+                                    <span class="text-muted">Walk-in</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ sale.sale_date }}</td>
+
+                            <td class="fw-semibold">
+                                ₹ {{ sale.total_amount }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOW STOCK -->
+        <div class="col-md-6">
+
+            <div class="card-soft">
+
+                <div class="p-3 border-bottom">
+                    <h5 class="mb-0">Low Stock Products</h5>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Stock</th>
+                                <th>Reorder</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for product in low_stock_products %}
+
+                        <tr>
+
+                            <td>{{ product.name }}</td>
+
+                            <td class="text-danger fw-semibold">
+                                {{ product.stock_quantity }}
+                            </td>
+
+                            <td>{{ product.reorder_level }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOP PRODUCTS + EXPENSE BREAKDOWN -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-6">
+
+            <div class="card-soft p-4">
+
+                <h5 class="mb-3">Top Selling Products</h5>
+
+                <canvas id="topProductsChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="card-soft p-4">
+
+                <h5 class="mb-3">Expense Breakdown</h5>
+
+                <canvas id="expenseChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MONTHLY PROFIT -->
+    <div class="card-soft p-4 mb-4">
+
+        <h5 class="mb-3">Monthly Profit ({{ current_year }})</h5>
+
+        <canvas id="profitChart"></canvas>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
