@@ -10,8 +10,8 @@ class Customer(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, unique=True)
-    phone = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,20 +28,17 @@ class Sale(models.Model):
     """
 
     class PaymentMethod(models.TextChoices):
-        """
-        Contains different payment options
-        """
 
-        CASH = "cash", "Cash"
-        CARD = "card", "Card"
-        UPI = "upi", "UPI"
+        CASH = 'cash', 'Cash'
+        CARD = 'card', 'Card'
+        UPI = 'upi', 'UPI'
 
     customer = models.ForeignKey(
         Customer,
         on_delete=models.SET_NULL,
         null=True,
         db_index=True,
-        related_name="sales"
+        related_name='sales'
         )
     sale_date = models.DateField(db_index=True, default=localdate)
     total_amount = models.DecimalField(
@@ -68,12 +65,12 @@ class SaleItem(models.Model):
     sale = models.ForeignKey(
         Sale,
         on_delete=models.CASCADE,
-        related_name="items"
+        related_name='items'
         )
     product = models.ForeignKey(
-        "inventory.Product",
+        'inventory.Product',
         on_delete=models.PROTECT,
-        related_name="sale_items"
+        related_name='sale_items'
         )
     quantity = models.IntegerField(
         default=1,

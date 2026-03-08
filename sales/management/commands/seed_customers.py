@@ -1,0 +1,162 @@
+from django.core.management.base import BaseCommand
+from sales.models import Customer
+
+
+class Command(BaseCommand):
+    help = 'Create sample customers'
+
+    customer_list = [
+
+        {
+        'name': 'Rahul Sharma',
+        'email': 'rahul.sharma92@gmail.com',
+        'phone': '9876542101',
+        'address': 'Lajpat Nagar, New Delhi'
+        },
+
+        {
+        'name': 'Priya Verma',
+        'email': 'priya.verma88@gmail.com',
+        'phone': '9876542102',
+        'address': 'Indirapuram, Ghaziabad'
+        },
+
+        {
+        'name': 'Amit Kumar',
+        'email': 'amit.kumar91@gmail.com',
+        'phone': '9876542103',
+        'address': 'Sector 22, Chandigarh'
+        },
+
+        {
+        'name': 'Neha Gupta',
+        'email': 'neha.gupta87@gmail.com',
+        'phone': '9876542104',
+        'address': 'Rajouri Garden, New Delhi'
+        },
+
+        {
+        'name': 'Vikas Singh',
+        'email': 'vikas.singh90@gmail.com',
+        'phone': '9876542105',
+        'address': 'Aliganj, Lucknow'
+        },
+
+        {
+        'name': 'Anjali Mehta',
+        'email': 'anjali.mehta89@gmail.com',
+        'phone': '9876542106',
+        'address': 'Satellite Road, Ahmedabad'
+        },
+
+        {
+        'name': 'Rohit Agarwal',
+        'email': 'rohit.agarwal93@gmail.com',
+        'phone': '9876542107',
+        'address': 'Bani Park, Jaipur'
+        },
+
+        {
+        'name': 'Sneha Patel',
+        'email': 'sneha.patel95@gmail.com',
+        'phone': '9876542108',
+        'address': 'Navrangpura, Ahmedabad'
+        },
+
+        {
+        'name': 'Karan Malhotra',
+        'email': 'karan.malhotra90@gmail.com',
+        'phone': '9876542109',
+        'address': 'Janakpuri, New Delhi'
+        },
+
+        {
+        'name': 'Pooja Yadav',
+        'email': 'pooja.yadav94@gmail.com',
+        'phone': '9876542110',
+        'address': 'Civil Lines, Kanpur'
+        },
+
+        {
+        'name': 'Manish Tiwari',
+        'email': 'manish.tiwari89@gmail.com',
+        'phone': '9876542111',
+        'address': 'Gomti Nagar, Lucknow'
+        },
+
+        {
+        'name': 'Simran Kaur',
+        'email': 'simran.kaur92@gmail.com',
+        'phone': '9876542112',
+        'address': 'Model Town, Ludhiana'
+        },
+
+        {
+        'name': 'Arjun Reddy',
+        'email': 'arjun.reddy91@gmail.com',
+        'phone': '9876542113',
+        'address': 'Banjara Hills, Hyderabad'
+        },
+
+        {
+        'name': 'Deepak Choudhary',
+        'email': 'deepak.choudhary90@gmail.com',
+        'phone': '9876542114',
+        'address': 'Malviya Nagar, Jaipur'
+        },
+
+        {
+        'name': 'Kavita Joshi',
+        'email': 'kavita.joshi88@gmail.com',
+        'phone': '9876542115',
+        'address': 'Kothrud, Pune'
+        },
+
+        {
+        'name': 'Sandeep Mishra',
+        'email': 'sandeep.mishra93@gmail.com',
+        'phone': '9876542116',
+        'address': 'Hazratganj, Lucknow'
+        },
+
+        {
+        'name': 'Nisha Kapoor',
+        'email': 'nisha.kapoor94@gmail.com',
+        'phone': '9876542117',
+        'address': 'Pitampura, New Delhi'
+        },
+
+        {
+        'name': 'Ravi Bansal',
+        'email': 'ravi.bansal92@gmail.com',
+        'phone': '9876542118',
+        'address': 'Sector 15, Gurgaon'
+        },
+
+        {
+        'name': 'Meena Iyer',
+        'email': 'meena.iyer89@gmail.com',
+        'phone': '9876542119',
+        'address': 'Adyar, Chennai'
+        },
+
+        {
+        'name': 'Varun Saxena',
+        'email': 'varun.saxena90@gmail.com',
+        'phone': '9876542120',
+        'address': 'Indira Nagar, Bangalore'
+        }
+
+    ]
+
+    customers = []
+
+    def handle(self, *args, **options):
+        for c in self.customer_list:
+            self.customers.append(Customer(**c))
+
+        Customer.objects.bulk_create(self.customers)
+
+        print('Customers added successfully')
+
+        

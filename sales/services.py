@@ -7,14 +7,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 def create_sale(customer_name, sale_date, payment_method, formset_data):
-    """
+    '''
     This function will validate if item available in the stock,
     then deduct it from the stock,
     calcalate totals, profits, 
     and then create sale
-    """
+    '''
 
-    logger.info(formset_data)
+    # logger.info(formset_data)
     # remove empty item from formset
     clean_formset_data = [
         item for item in formset_data
@@ -29,9 +29,9 @@ def create_sale(customer_name, sale_date, payment_method, formset_data):
         for item in clean_formset_data:
             if not available_in_stock(item['product'], item):
                 raise ValidationError(
-                    f"Insufficient stock for {item['product'].name}. "
-                    f"Available: {item['product'].stock_quantity}, "
-                    f"Requested: {item['quantity']}."
+                    f'Insufficient stock for {item['product'].name}. '
+                    f'Available: {item['product'].stock_quantity}, '
+                    f'Requested: {item['quantity']}.'
                 )
                 
             

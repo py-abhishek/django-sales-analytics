@@ -4,9 +4,9 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 
 class ProductCategory(models.Model):
-    """
+    '''
     To Organize products into groups
-    """
+    '''
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -17,18 +17,18 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    """
+    '''
     Represents an item being sold
-    """
+    '''
 
     class UnitChoices(models.TextChoices):
-        PIECE = "pcs", "Pieces"
-        KILOGRAM = "kg", "Kilograms"
-        LITER = "l", "Liters"
-        GRAM = "g", "Grams"
-        METER = "m", "Meters"
-        BOX = "box", "Boxes"
-        PACK = "pack", "Packs"
+        PIECE = 'pcs', 'Piece'
+        KILOGRAM = 'kg', 'KG'
+        LITER = 'l', 'Liter'
+        GRAM = 'g', 'Gram'
+        METER = 'm', 'Meter'
+        BOX = 'box', 'Box'
+        PACK = 'pack', 'Pack'
 
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -36,7 +36,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         ProductCategory, on_delete=models.PROTECT,
         db_index=True,
-        related_name="products"
+        related_name='products'
         )
     cost_price = models.DecimalField(
         max_digits=12,
