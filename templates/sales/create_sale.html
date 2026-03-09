@@ -15,7 +15,7 @@
                 <h3 class="fw-bold mb-1">Create New Sale</h3>
                 <small class="text-muted">Record a new sale</small>
             </div>
-                <a href="{% url 'add_product' %}" class="btn btn-secondary">
+                <a href="{% url 'sales_list' %}" class="btn btn-secondary">
                 View Sales List 
             </a>
         </div> 
@@ -23,16 +23,22 @@
         <!-- ================= TRANSACTION HEADER ================= -->
         <form method="post" id="saleForm">
             {% csrf_token %}
-            <div class="card custom-card p-4 mb-4 transaction-header border-left">
+            <div class="card custom-card p-4 mb-4 transaction-header">
 
                 <div class="row align-items-end justify-content-center">
 
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <label class="form-label">Customer</label>
-                        {{ form.customer }}
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="flex-grow-1">
+                                {{ form.customer }}
+                            </div>
+                            <button id="add-customer" type="button" class="btn btn-secondary">
+                                + New Customer
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-3 mb-3">
                         <label class="form-label">Sale Date</label>
                         {{ form.sale_date }}
                     </div>
@@ -57,7 +63,7 @@
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="section-title mb-0">Sale Items</h5>
-                            <button type="button" class="btn btn-sm btn-outline-primary">
+                            <button id="add-product" type="button" class="btn btn-sm btn-secondary">
                                 + Add Product
                             </button>
                         </div>
@@ -70,39 +76,65 @@
                                     <tr>
                                         <th>Product</th>
                                         <th width="100">Qty</th>
-                                        <th width="120">Unit</th>
-                                        <th width="140">Unit Price</th>
-                                        <th width="140">Total</th>
-                                        <th width="60"></th>
+                                        <th width="80">Unit</th>
+                                        <th width="110">Unit Price (₹)</th>
+                                        <th width="120">Total (₹)</th>
+                                        <th width="10"></th>
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody id="sale-items">
 
                                     {% for form in formset %}
-                                    <tr class="data-row">
+                                    <tr class="sale-row">
                                         <td>{{ form.product }}</td>
                                         <td>{{ form.quantity }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="row-total text-muted">₹ 0.00</td>
+                                        <td><input value="" type="text" class="readonly unit" readonly></td>
+                                        <td><input value="0.00" type="text" class="readonly price" readonly></td>
+                                        <td class="row-total text-muted">
+                                            <input value="0.00" type="text" class="readonly product-total" readonly>
+                                        </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm text-danger">
-                                                ✕
-                                            </button>
+                                            
                                         </td>
                                     </tr>
                                     {% endfor %}
 
+                                    <!-- Empty Template -->
+                                    <tr id="empty-form" class="sale-row" style="display: none;">
+                                        <td>{{ formset.empty_form.product }}</td>
+                                        <td>{{ formset.empty_form.quantity }}</td>
+                                        <td><input value="" type="text" class="readonly unit" readonly></td>
+                                        <td><input value="0.00" type="text" class="readonly price" readonly></td>
+                                        <td class="row-total text-muted">
+                                            <input value="0.00" type="text" class="readonly product-total" readonly>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm text-danger remove-product p-0">
+                                                ✕
+                                            </button>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
+                        <!-- Dislpay Errors -->
                         <div class="error-msg text-danger">
                             {% for errors in form.errors.values %}
                                 {% for error in errors %}
                                     {{ error }}
                                 {% endfor %}
                             {% endfor %}
+
+                            {% for item in formset %}
+                                {% for errors in item.errors.values %}
+                                    {% for error in errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                           
                         </div>
 
                     </div>
@@ -114,17 +146,17 @@
             <!-- ================= SUMMARY PANEL ================= -->
             <div class="col-lg-4">
 
-                <div class="card custom-card p-4 summary-card">
+                <div class="card custom-card p-4 summary-card border-left">
 
                     <h5 class="section-title mb-4">Summary</h5>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Subtotal</span>
-                        <span class="fw-semibold">₹ 0.00</span>
+                        <span class="fw-semibold" id="sub_total">₹ 0.00.00</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
-                        <span class="text-muted">Profit</span>
+                        <span class="text-muted">Discount</span>
                         <span class="fw-semibold text-success">₹ 0.00</span>
                     </div>
 
@@ -132,7 +164,7 @@
 
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <span class="fw-bold">Total</span>
-                        <span class="grand-total">₹ 0.00</span>
+                        <span class="grand-total"  id="grand_total">₹ 0.00</span>
                     </div>
 
                     <button type="submit"
@@ -148,5 +180,9 @@
         </div>
 
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/sales/create_sale.js' %}"></script>
 {% endblock %}
 

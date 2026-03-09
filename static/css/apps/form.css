@@ -59,7 +59,7 @@
     border-top: 1px solid var(--clr-border);
 }
 
-.data-row:hover {
+.sale-row:hover {
     background: var(--clr-primary-soft);
 }
 

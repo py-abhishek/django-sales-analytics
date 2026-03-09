@@ -26,7 +26,16 @@ def create_sale(customer_name, sale_date, payment_method, formset_data):
     ]
 
     with transaction.atomic():
+        # validation
+        seen_products = set()
         for item in clean_formset_data:
+            # check for duplicates
+            product_sku = item['product'].sku
+            if product_sku in seen_products:
+                print("error")
+                raise ValidationError('This product is already in the list. Update the quantity instead.')
+            seen_products.add(product_sku)
+
             if not available_in_stock(item['product'], item):
                 raise ValidationError(
                     f'Insufficient stock for {item['product'].name}. '
