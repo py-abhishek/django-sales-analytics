@@ -30,6 +30,40 @@
     border-left: 4px solid var(--clr-primary);
 } */
 
+.customer-results{
+    position:absolute;
+    width:100%;
+    background: var(--clr-bg-main);
+    border:1px solid var(--clr-border);
+    border-radius:var(--radius);
+    max-height:200px;
+    overflow-y:auto;
+    z-index:1000;
+    display:none;
+}
+
+.form-control::placeholder {
+    color: var(--clr-text-placeholder);
+}
+
+.customer-results div {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.customer-results div:hover {
+    background-color: var(--clr-primary-soft);
+}
+
+.customer-item{
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.customer-item:hover{
+    background: var(--clr-primary-soft);
+}
+
 .total-display {
     background: var(--clr-primary-soft);
     padding: 14px 18px;

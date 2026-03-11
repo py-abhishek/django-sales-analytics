@@ -2,33 +2,31 @@ from django import forms
 from django.forms import inlineformset_factory
 from .models import Sale, SaleItem, Customer
 
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['name', 'phone', 'email', 'address']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-name', 'placeholder': 'Search or enter new customer'}),
+            'phone': forms.NumberInput(attrs={'class': 'form-control', 'id': 'customer-phone', 'placeholder': '9845678325'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'customer-email', 'placeholder': 'email_address@domain.com'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-address', 'placeholder': 'City, State (Country)'})
+        }
+
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields = ['customer', 'sale_date', 'payment_method']
+        fields = ['sale_date', 'payment_method']
         labels = {
             'sale_date': 'Sale Date',
             'payment_method': 'Payment Method'
         }
 
         widgets = {
-            'customer': forms.Select(attrs={'class': 'form-select'}),
             'sale_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'payment_method': forms.Select(attrs={'class': 'form-select'}),
         }
-        
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['customer'].empty_label = 'Select Customer'
-
-        """
-        try:
-            walkin = Customer.objects.get(is_walkin=True)
-            self.fields['customer'].initial = walkin
-        except Exception as e:
-            pass
-        """
     
 
 class SaleItemForm(forms.ModelForm):

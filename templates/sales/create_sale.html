@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}Sales{% endblock %}
+{% block page_title %}Create New Sale{% endblock %}
 {% block css_files%}
     <link rel="stylesheet" href="{% static 'css/apps/form.css' %}">
 {% endblock %}
@@ -22,34 +22,81 @@
 
         <!-- ================= TRANSACTION HEADER ================= -->
         <form method="post" id="saleForm">
-            {% csrf_token %}
-            <div class="card custom-card p-4 mb-4 transaction-header">
+            {% csrf_token %} 
 
-                <div class="row align-items-end justify-content-center">
+            <div class="row transaction-header g-3 align-items-end mb-4">
 
-                    <div class="col-lg-6 mb-3">
-                        <label class="form-label">Customer</label>
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="flex-grow-1">
-                                {{ form.customer }}
+                <!-- Customer Name Search -->
+                <div class="col-lg-8">
+                    <div class="card custom-card p-4">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <label class="form-label">Customer Name*</label>
+
+                                <div class="position-relative">
+                                    {{ customer_form.name}}
+                                    {{ customer_form.name.errors}}
+
+                                    <!-- Hidden customer id -->
+                                    <input type="hidden"
+                                        id="customer-id"
+                                        name="customer_id" value="">
+
+                                    <!-- Search Results -->
+                                    <div id="customer-suggestions"
+                                        class="customer-results"></div>
+
+                                </div>
                             </div>
-                            <button id="add-customer" type="button" class="btn btn-secondary">
-                                + New Customer
-                            </button>
+
+                            <!-- Phone -->
+                            <div class="col-lg-5">
+                                <label class="form-label">Phone*</label>
+
+                                {{ customer_form.phone }}
+                                {{ customer_form.phone.errors }}
+                            </div>
+                        </div>
+                    
+                        <div class="row mt-3">
+
+                            <!-- Email -->
+                            <div class="col-lg-5">
+                                <label class="form-label">Email</label>
+                                {{ customer_form.email }}
+                                {{ customer_form.email.errors }}
+                            </div>
+
+                            <!-- Address -->
+                            <div class="col-lg-7">
+                                <label class="form-label">Address</label>
+                                {{ customer_form.address }}
+                                {{ customer_form.address.errors }}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 mb-3">
-                        <label class="form-label">Sale Date</label>
-                        {{ form.sale_date }}
-                    </div>
+                </div>
+            
+                <div class="col-lg-4">
+                    <div class="card custom-card p-4">
 
-                    <div class="col-lg-3 mb-3">
-                        <label class="form-label">Payment Method</label>
-                        {{ form.payment_method }}
+                        <!-- Sale Date -->
+                        <div class="row">
+                            <label class="form-label">Sale Date</label>
+                            {{ sale_form.sale_date }}
+                            {{ sale_form.sale_date.errors }}
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="row mt-3">
+                            <label class="form-label">Payment Method</label>
+                            {{ sale_form.payment_method }}
+                            {{ sale_form.payment_method.errors }}
+                        </div>
                     </div>
 
                 </div>
-                
+
             </div>
 
 
@@ -98,6 +145,8 @@
                                             
                                         </td>
                                     </tr>
+                                    {{ form.product.errors }}
+                                    {{ form.quantity.errors }}
                                     {% endfor %}
 
                                     <!-- Empty Template -->
@@ -115,74 +164,78 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    {{ formset.empty_form.product.errors }}
+                                    {{ formset.empty_form.quantity.errors }}
 
                                 </tbody>
                             </table>
                         </div>
                         <!-- Dislpay Errors -->
                         <div class="error-msg text-danger">
-                            {% for errors in form.errors.values %}
+                            {% for errors in sale_form.errors.values %}
                                 {% for error in errors %}
                                     {{ error }}
                                 {% endfor %}
                             {% endfor %}
 
-                            {% for item in formset %}
+                            {% comment %} {% for item in formset %}
                                 {% for errors in item.errors.values %}
                                     {% for error in errors %}
                                         {{ error }}
                                     {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
+                            {% endfor %} {% endcomment %}
                            
                         </div>
 
                     </div>
 
                 </div>
-        </form>
 
 
-            <!-- ================= SUMMARY PANEL ================= -->
-            <div class="col-lg-4">
 
-                <div class="card custom-card p-4 summary-card border-left">
+                <!-- ================= SUMMARY PANEL ================= -->
+                <div class="col-lg-4">
 
-                    <h5 class="section-title mb-4">Summary</h5>
+                    <div class="card custom-card p-4 summary-card border-left">
 
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted">Subtotal</span>
-                        <span class="fw-semibold" id="sub_total">₹ 0.00.00</span>
+                        <h5 class="section-title mb-4">Summary</h5>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-semibold" id="sub_total">₹ 0.00.00</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Discount</span>
+                            <span class="fw-semibold text-success">₹ 0.00</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fw-bold">Total</span>
+                            <span class="grand-total"  id="grand_total">₹ 0.00</span>
+                        </div>
+
+                        <button type="submit"
+                                form="saleForm"
+                                class="btn btn-primary w-100 mt-4 py-2">
+                            Create Sale
+                        </button>
+
                     </div>
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="text-muted">Discount</span>
-                        <span class="fw-semibold text-success">₹ 0.00</span>
-                    </div>
-
-                    <hr>
-
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fw-bold">Total</span>
-                        <span class="grand-total"  id="grand_total">₹ 0.00</span>
-                    </div>
-
-                    <button type="submit"
-                            form="saleForm"
-                            class="btn btn-primary w-100 mt-4 py-2">
-                        Create Sale
-                    </button>
 
                 </div>
 
             </div>
 
-        </div>
-
+        </form>
     </div>
 {% endblock %}
 
 {% block scripts %}
     <script src="{% static 'js/sales/create_sale.js' %}"></script>
+    <script src="{% static 'js/sales/customer_suggestions.js' %}"></script>
 {% endblock %}
 

@@ -7,3 +7,11 @@ if (form !== null){
     })
 
 }
+const today = new Date();
+
+const date = today.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+});
+document.getElementById("nav-date").innerHTML = date

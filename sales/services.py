@@ -1,12 +1,12 @@
 from django.db import transaction
-from .models import Sale, SaleItem
+from .models import Sale, SaleItem, Customer
 from inventory.models import Product
 from django.core.exceptions import ValidationError
 
 import logging
 logger = logging.getLogger(__name__)
 
-def create_sale(customer_name, sale_date, payment_method, formset_data):
+def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data):
     '''
     This function will validate if item available in the stock,
     then deduct it from the stock,
@@ -14,7 +14,7 @@ def create_sale(customer_name, sale_date, payment_method, formset_data):
     and then create sale
     '''
 
-    # logger.info(formset_data)
+    logger.info("services")
     # remove empty item from formset
     clean_formset_data = [
         item for item in formset_data
@@ -42,14 +42,23 @@ def create_sale(customer_name, sale_date, payment_method, formset_data):
                     f'Available: {item['product'].stock_quantity}, '
                     f'Requested: {item['quantity']}.'
                 )
-                
-            
+        
+        if is_new_customer:
+            customer = Customer.objects.create(
+                name=customer_form_data['name'],
+                phone=customer_form_data['phone'],
+                email=customer_form_data['email'],
+                address=customer_form_data['address']
+            )
+        else:
+            customer = Customer.objects.get(id=customer_id)
+
         sale = Sale.objects.create(
-            customer=customer_name,
-            sale_date=sale_date,
+            customer=customer,
+            sale_date=sale_form_data['sale_date'],
             total_amount=get_total_sale_amount(clean_formset_data),
             total_profit=get_total_profit(clean_formset_data),
-            payment_method=payment_method
+            payment_method=sale_form_data['payment_method']
             )
 
         for item in clean_formset_data:
