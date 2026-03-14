@@ -63,7 +63,6 @@
                         <th>Selling Price</th>
                         <th>Quanitity Available</th>
                         <th>Date Added</th>
-                        <th></th>
                     </tr>
                 </thead>
 
@@ -71,7 +70,7 @@
 
                     {% for product in products %}
 
-                    <tr>
+                    <tr class="clickable-row" data-url="{% url 'product_detail' product.id %}">
 
                         <td>{{ forloop.counter }}</td>
 
@@ -95,10 +94,6 @@
 
                         <td>
                             {{ product.created_at|date }}
-                        </td>
-
-                        <td class="text-end">
-                            <a href="{% url 'product_detail' product.id %}">View</a>
                         </td>
                         
                     </tr>

@@ -12,7 +12,7 @@
         <!-- PAGE HEADER -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h3 class="section-title mb-0">Sale Details</h3>
+                <h3 class="section-title mb-0">Sale Details (#{{ sale.id }})</h3>
                 <small class="text-muted">Transaction information</small>
             </div>
 
@@ -23,7 +23,7 @@
 
 
         <!-- SALE INFORMATION -->
-        <div class="custom-card mb-4 p-4">
+        <div class="card-soft border-left mb-4 p-4">
 
             <h5 class="mb-3">Sale Information</h5>
 
@@ -32,11 +32,7 @@
                 <div class="col-md-4">
                     <p class="text-muted mb-1">Customer</p>
                     <p class="text-semibold">
-                        {% if sale.customer %}
-                            {{ sale.customer.name }}
-                        {% else %}
-                            Walk-in Customer
-                        {% endif %}
+                        {{ sale.customer.name }}
                     </p>
                 </div>
 
@@ -108,7 +104,7 @@
 
 
         <!-- SUMMARY -->
-        <div class="custom-card p-4 border-left">
+        <div class="custom-card p-4">
 
             <h5 class="mb-3">Summary</h5>
 

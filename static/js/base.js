@@ -15,3 +15,16 @@ const date = today.toLocaleDateString('en-US', {
     year: 'numeric'
 });
 document.getElementById("nav-date").innerHTML = date
+
+// Clickable list rows
+
+document.querySelectorAll(".clickable-row").forEach(row => {
+    row.addEventListener("click", function(e) {
+
+        if (e.target.tagName === "A" || e.target.tagName === "BUTTON") {
+            return 
+        }
+
+        window.location = this.dataset.url
+    })
+})

@@ -61,7 +61,6 @@
                         <th>Date</th>
                         <th>Category</th>
                         <th>Amount</th>
-                        <th></th>
                     </tr>
                 </thead>
 
@@ -69,7 +68,7 @@
 
                     {% for expense in expenses %}
 
-                    <tr>
+                    <tr class="clickable-row" data-url="{% url 'expense_detail' expense.id %}">
 
                         <td>{{ forloop.counter }}</td>
 
@@ -87,10 +86,6 @@
 
                         <td class="fw-semibold">
                             ₹ {{ expense.amount }}
-                        </td>
-
-                        <td class="text-end">
-                            <a href="{% url 'expense_detail' expense.id %}">View</a>
                         </td>
                         
                     </tr>

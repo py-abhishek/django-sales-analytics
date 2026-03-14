@@ -71,7 +71,6 @@
                         <th>Payment Method</th>
                         <th>Total Amount</th>
                         <th>Profit</th>
-                        <th></th>
                     </tr>
                 </thead>
 
@@ -79,7 +78,7 @@
 
                     {% for sale in sales %}
 
-                    <tr>
+                    <tr class="clickable-row" data-url="{% url 'sale_detail' sale.id %}">
 
                         <td>{{ forloop.counter }}</td>
 
@@ -105,10 +104,6 @@
 
                         <td class="text-success fw-semibold">
                             ₹ {{ sale.total_profit }}
-                        </td>
-
-                        <td class="text-end">
-                            <a href="{% url 'sale_detail' sale.id %}">View</a>
                         </td>
                         
                     </tr>

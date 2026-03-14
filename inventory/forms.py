@@ -1,5 +1,15 @@
 from django import forms
-from .models import Product
+from .models import Product, ProductCategory
+
+class ProductCategoryForm(forms.ModelForm):
+    class Meta:
+        model = ProductCategory
+        fields = ['name', 'description']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Optional Description', 'rows': 3})
+        }
 
 class ProductForm(forms.ModelForm):
     '''

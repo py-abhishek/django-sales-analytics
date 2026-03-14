@@ -1,7 +1,19 @@
 from django import forms
-from .models import Expense
+from .models import Expense, ExpenseCategory
 
-class AddExpenseForm(forms.ModelForm):
+
+class ExpenseCategoryForm(forms.ModelForm):
+    class Meta:
+        model = ExpenseCategory
+        fields = ['name', 'description']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-select'}),
+
+        }
+
+class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = '__all__'

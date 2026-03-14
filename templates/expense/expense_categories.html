@@ -16,10 +16,57 @@
             <h3 class="section-title mb-0">Expense Categories</h3>
             <small class="text-muted">All recorded expense Categories</small>
         </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                + Add Category
+            </button>
 
         {% comment %} <a href="{% url 'add_expense' %}" class="btn btn-primary">
             + Add Expense
         </a> {% endcomment %}
+    </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Expense Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Category Name</label>
+                            {{ form.name }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            {{ form.description }}
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <button type="submit" class="btn btn-primary">
+                                Save Category
+                            </button>
+                        </div>
+
+                    </form>
+                </div> 
+
+            </div>
+        </div>
     </div>
 
 

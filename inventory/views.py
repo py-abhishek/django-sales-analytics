@@ -4,7 +4,7 @@ from django.views.generic import ListView, View
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
-from .forms import ProductForm
+from .forms import ProductForm, ProductCategoryForm
 from .models import Product, ProductCategory
 from sales.models import SaleItem
 from . import services
@@ -18,11 +18,17 @@ class AddProductView(CreateView):
     template_name = 'inventory/add_product.html'
     success_url = reverse_lazy('add_product_success')
 
-class ProductCategoryView(ListView):
+class ProductCategoryView(CreateView):
     model = ProductCategory
+    form_class = ProductCategoryForm
     template_name = 'inventory/product_categories.html'
-    context_object_name = 'categories'
-    ordering = 'name'
+    success_url = reverse_lazy('product_categories')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = ProductCategory.objects.all().order_by('-created_at')
+        return context
+    
 
 
 class ProductListView(ListView):

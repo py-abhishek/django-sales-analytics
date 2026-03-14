@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 from .models import Expense, ExpenseCategory
-from .forms import AddExpenseForm
+from .forms import ExpenseForm, ExpenseCategoryForm
 
 # Create your views here.
 
 class AddExpenseView(CreateView):
     model = Expense
-    form_class = AddExpenseForm
+    form_class = ExpenseForm
     template_name = 'expense/add_expense.html'
     success_url = reverse_lazy('expense_success')
 
@@ -24,8 +24,16 @@ class ExpenseDetailView(DetailView):
     context_object_name = 'expense'
     template_name = 'expense/expense_detail.html'
 
-class ExpenseCategoryView(ListView):
+class ExpenseCategoryView(CreateView):
     model = ExpenseCategory
+    form_class = ExpenseCategoryForm
     template_name = 'expense/expense_categories.html'
-    context_object_name = 'categories'
-    ordering = 'name'
+    success_url = reverse_lazy('expense_categories')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ExpenseCategory.objects.all().order_by('-created_at')
+        return context
+    
+
+
