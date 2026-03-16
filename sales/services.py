@@ -70,7 +70,7 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
                 unit=product.unit,
                 price_at_sale=product.selling_price,
                 cost_at_sale=product.cost_price,
-                item_total=get_item_total_price(product, item),
+                item_total_price=get_item_total_price(product, item),
                 item_profit=get_item_profit(product, item)
             )
             

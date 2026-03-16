@@ -15,6 +15,7 @@
     --clr-bg-main: #ffffff;
     --clr-bg-content: #f4f7ff;
     --clr-bg-btn-secondary: #eaeaea;
+    --clr-bg-components: #f5f7fa;
 
     /* Text */
     --clr-text-main: #1f2937;
@@ -24,6 +25,7 @@
 
     /* Borders */
     --clr-border: #dce1ea;
+    --clr-border-light: #e4e7ec;
 
     /* Effects */
     --shadow-soft: 0 6px 20px rgba(17, 24, 39, 0.04);

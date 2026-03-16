@@ -35,50 +35,66 @@
     <!-- FILTERS -->
     <div class="card-soft p-3 mb-4">
 
-        <form method="get">
-
-            <div class="row g-3 align-items-end">
-
-                 <div class="col-md-3">
-                    <label class="form-label">From Date</label>
-                    <input type="date" name="from_date" class="form-control">
-                </div>
+        <div class="row g-3 align-items-end">
 
                 <div class="col-md-3">
-                    <label class="form-label">To Date</label>
-                    <input type="date" name="to_date" class="form-control">
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Category</label>
-                    <select name="category" class="form-select">
-                        <option value="">All Categories</option>
-                        {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">Stock Status</label>
-                    <select name="stock_status" class="form-select">
-                        <option value="">All</option>
-                        <option value="in_stock">In Stock</option>
-                        <option value="low_stock">Low Stock</option>
-                        <option value="out_of_stock">Out of Stock</option>
-                    </select>
-                </div>
-
-                <div class="col-md-1">
-                    <button class="btn btn-primary w-100">Filter</button>
-                </div>
-
+                <label class="form-label">From Date</label>
+                <input id="fromDate" type="date" name="from_date" class="form-control">
             </div>
 
-        </form>
+            <div class="col-md-3">
+                <label class="form-label">To Date</label>
+                <input id="toDate" type="date" name="to_date" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Category</label>
+                <select id="selectCategory" name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    {% for category in product_categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% comment %} <div class="col-md-2">
+                <label class="form-label">Stock Status</label>
+                <select name="stock_status" class="form-select">
+                    <option value="">All</option>
+                    <option value="in_stock">In Stock</option>
+                    <option value="low_stock">Low Stock</option>
+                    <option value="out_of_stock">Out of Stock</option>
+                </select>
+            </div> {% endcomment %}
+
+            {% csrf_token %}
+
+            <div class="col-md-2">
+                <button id="btnProductFilter" class="btn btn-primary w-100">Apply Filter</button>
+            </div>
+
+        </div>
 
     </div>
 
+    <!-- CURRENT FILTER INFORMATION -->
+    <div class="card-soft p-3 mb-3">
+
+        <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
+
+            <span class="filter-label">Showing results for:</span>
+
+            <div id="resultFor_date" class="filter-chip">
+                Date: All Time
+            </div>
+
+            <div id="resultFor_category" class="filter-chip">
+                Category: All Categories
+            </div>
+
+        </div>
+
+    </div>
 
     <!-- SUMMARY METRICS -->
     <div class="row g-3 mb-4">
@@ -86,28 +102,28 @@
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Products</p>
-                <h4 class="metric-value">{{ product_insights.total_products }}</h4>
+                <h4 id="cardTotalProducts" class="metric-value">{{ summary.total_products }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Units Sold</p>
-                <h4 class="metric-value">{{ product_insights.units_sold|intcomma }}</h4>
+                <h4 id="cardUnitsSold" class="metric-value">{{ summary.units_sold|intcomma }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Product Revenue</p>
-                <h4 class="metric-value">₹ {{ product_insights.revenue|floatformat:0|intcomma }}</h4>
+                <h4 id="cardProductRevenue" class="metric-value">₹ {{ summary.product_revenue|floatformat:0|intcomma }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Low Stock Products</p>
-                <h4 class="metric-value text-warning">{{ product_insights.low_stock }}</h4>
+                <h4 id="cardLowStock" class="metric-value text-warning">{{ summary.low_stock_products }}</h4>
             </div>
         </div>
 
@@ -117,11 +133,11 @@
     <!-- PRODUCT SALES TREND -->
     <div class="card-soft p-4 mb-4">
 
-        <h5 class="mb-3">Product Sales Trend</h5>
+        <h5 class="mb-3">Product Demand Trend</h5>
 
         <div id="productSalesTrendChart"></div>
 
-        {{ product_sales_trend.labels|json_script:"product_trend_labels" }}
+        {{ product_sales_trend.labels|json_script:"product_trend_lables" }}
         {{ product_sales_trend.data|json_script:"product_trend_data" }}
 
     </div>
@@ -139,8 +155,8 @@
 
                 <div id="topProductsChart"></div>
 
-                {{ top_products.labels|json_script:"top_products_labels" }}
-                {{ top_products.data|json_script:"top_products_data" }}
+                {{ top_selling_products.labels|json_script:"top_products_labels" }}
+                {{ top_selling_products.data|json_script:"top_products_data" }}
 
             </div>
 
@@ -156,8 +172,8 @@
 
                 <div id="categorySalesChart"></div>
 
-                {{ category_sales.labels|json_script:"category_labels" }}
-                {{ category_sales.data|json_script:"category_data" }}
+                {{ top_categories.labels|json_script:"category_labels" }}
+                {{ top_categories.data|json_script:"category_data" }}
 
             </div>
 
@@ -185,7 +201,7 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
-                                <th>Stock</th>
+                                <th>Available Stock</th>
                                 <th>Reorder Level</th>
                             </tr>
                         </thead>
@@ -199,7 +215,7 @@
                             <td>{{ product.name }}</td>
 
                             <td class="text-warning fw-semibold">
-                                {{ product.stock }}
+                                {{ product.stock_quantity }}
                             </td>
 
                             <td>{{ product.reorder_level }}</td>
@@ -242,21 +258,21 @@
 
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Stock</th>
-                                <th>Last Sold</th>
+                                <th width=240>Product</th>
+                                <th>Units Sold</th>
+                                <th>Last Sale</th>
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody id="tableSlowProducts">
 
                         {% for product in slow_products %}
 
                         <tr>
 
-                            <td>{{ product.name }}</td>
+                            <td>{{ product.product_name }}</td>
 
-                            <td>{{ product.stock }}</td>
+                            <td>{{ product.total_units_sold }}</td>
 
                             <td class="text-muted">
                                 {{ product.last_sale_date|default:"No sales" }}
@@ -294,6 +310,6 @@
 {% block scripts %}
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="{% static 'js/product_report.js' %}"></script>
+<script type="module" src="{% static 'js/reports//product_report.js' %}"></script>
 
 {% endblock %}

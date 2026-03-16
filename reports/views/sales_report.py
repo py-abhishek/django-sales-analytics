@@ -3,8 +3,8 @@ from django.views.generic import View
 from sales.models import Sale, Customer
 from ..services import sales_analysis
 
-# Create your views here.
 
+# Create your views here.
 
 class SaleReportView(View):
     def get(self, request):
@@ -20,16 +20,3 @@ class SaleReportView(View):
 
         context.update(sales_insights)
         return render(request, 'reports/sales_report.html', context)
-    
-
-class ProductReportView(View):
-    def get(self, request):
-        return render(request, 'reports/product_report.html')
-    
-class RevenueExpReportView(View):
-    def get(self, request):
-        return render(request, 'reports/revenue_exp_report.html')
-    
-class InventoryReportView(View):
-    def get(self, request):
-        return render(request, 'reports/inventory_report.html')

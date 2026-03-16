@@ -95,7 +95,8 @@ class SaleItem(models.Model):
         validators=[MinValueValidator(0)],
         default=0
         )
-    item_total = models.DecimalField(
+    item_total_price = models.DecimalField(
+        # quantity * product selling price
         max_digits=12,
         decimal_places=2,
         validators=[MinValueValidator(0)]

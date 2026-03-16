@@ -35,12 +35,12 @@
 
                 <div class="row g-3 align-items-end">
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label class="form-label">From Date</label>
                         <input type="date" name="from_date" class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label class="form-label">To Date</label>
                         <input type="date" name="to_date" class="form-control">
                     </div>
@@ -65,13 +65,36 @@
                         </select>
                     </div>
 
-                    <div class="col-md-1">
-                        <button class="btn btn-primary w-100">Filter</button>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Apply Filter</button>
                     </div>
 
                 </div>
 
             </form>
+
+        </div>
+
+        <!-- CURRENT FILTER INFORMATION -->
+        <div class="card-soft p-3 mb-3">
+
+            <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
+
+                <span class="filter-label">Showing results for:</span>
+
+                <div class="filter-chip">
+                    Date: All Time
+                </div>
+
+                <div class="filter-chip">
+                    Customer: All Customers
+                </div>
+
+                <div class="filter-chip">
+                    Payment Method: All
+                </div>
+
+            </div>
 
         </div>
 
@@ -82,28 +105,28 @@
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Sales</p>
-                    <h4 class="metric-value">{{ sales_insights.total_sales_count }}</h4>
+                    <h4 class="metric-value">{{ summary.total_sales_count }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Revenue</p>
-                    <h4 class="metric-value">₹ {{ sales_insights.total_revenue|floatformat:0|intcomma }}</h4>
+                    <h4 class="metric-value">₹ {{ summary.total_revenue|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Profit</p>
-                    <h4 class="metric-value text-success">₹ {{ sales_insights.total_profit|floatformat:0|intcomma }}</h4>
+                    <h4 class="metric-value text-success">₹ {{ summary.total_profit|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Avg Order Value</p>
-                    <h4 class="metric-value">₹ {{ sales_insights.avg_order_value|floatformat:0|intcomma }}</h4>
+                    <h4 class="metric-value">₹ {{ summary.avg_order_value|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
@@ -275,5 +298,5 @@
 
 {% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="{% static 'js/sales_report.js' %}"></script>
+    <script type="module" src="{% static 'js/reports/sales_report.js' %}"></script>
 {% endblock %}
