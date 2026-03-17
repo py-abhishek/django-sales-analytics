@@ -75,7 +75,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Revenue</p>
                 <h4 class="metric-value text-success">
-                    ₹ {{ finance_insights.total_revenue|floatformat:0|intcomma }}
+                    ₹ {{ summary.total_revenue|floatformat:0|intcomma }}
                 </h4>
             </div>
         </div>
@@ -84,7 +84,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Expense</p>
                 <h4 class="metric-value text-danger">
-                    ₹ {{ finance_insights.total_expense|floatformat:0|intcomma }}
+                    ₹ {{ summary.total_expense|floatformat:0|intcomma }}
                 </h4>
             </div>
         </div>
@@ -93,7 +93,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Net Profit</p>
                 <h4 class="metric-value">
-                    ₹ {{ finance_insights.net_profit|floatformat:0|intcomma }}
+                    ₹ {{ summary.net_profit|floatformat:0|intcomma }}
                 </h4>
             </div>
         </div>
@@ -102,7 +102,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Profit Margin</p>
                 <h4 class="metric-value">
-                    {{ finance_insights.profit_margin }} %
+                    {{ summary.profit_margin }} %
                 </h4>
             </div>
         </div>
@@ -156,8 +156,8 @@
 
                 <div id="expenseBreakdownChart"></div>
 
-                {{ expense_breakdown.labels|json_script:"expense_labels" }}
-                {{ expense_breakdown.data|json_script:"expense_data" }}
+                {{ exp_by_category.labels|json_script:"exp_by_cat_labels" }}
+                {{ exp_by_category.data|json_script:"exp_by_cat_data" }}
 
             </div>
 
@@ -166,7 +166,7 @@
     </div>
 
 
-
+{% comment %}
     <!-- FINANCIAL HIGHLIGHTS -->
     <div class="row g-4">
 
@@ -248,6 +248,8 @@
 
     </div>
 
+{% endcomment %}
+
 </div>
 
 {% endblock %}
@@ -256,7 +258,8 @@
 
 {% block scripts %}
 
+
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="{% static 'js/revenue_expense_report.js' %}"></script>
+<script type="module" src="{% static 'js/reports//rev_exp_report.js' %}"></script>
 
 {% endblock %}

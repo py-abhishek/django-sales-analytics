@@ -1,4 +1,4 @@
-const chartColors = {
+export const chartColors = {
   primary: "#4F46E5",   // Indigo - main sales trend
   success: "#22C55E",   // Green - profit / growth
   warning: "#F59E0B",   // Amber - alerts / moderate values
@@ -30,15 +30,15 @@ const chartUI = {
 };
 
 export class LineChart {
-    constructor(chartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit="", tpUnitPos="") {
+    constructor(chartContainer, labels, series, titleX, titleY, toolTipUnit="", tpUnitPos="", colors=chartPalette) {
         this.container = chartContainer
         this.labels = labels
-        this.data = data
-        this.seriesName = seriesName
+        this.series = series
         this.titleX = titleX
         this.titleY = titleY
         this.toolTipUnit = toolTipUnit
         this.tpUnitPos = tpUnitPos
+        this.colors = colors
 
         this.options = {
             chart: {
@@ -58,10 +58,7 @@ export class LineChart {
                 },
             },
             
-            series: [{
-                name: this.seriesName,
-                data: this.data
-            }],
+            series: this.series,
 
             xaxis: {
                 categories: this.labels,
@@ -86,20 +83,18 @@ export class LineChart {
                 width: 3
             },
 
-            colors: [chartColors.primary],
+            colors: this.colors,
 
             tooltip: {
                 y: {
-                    formatter: function(value){
-                        const tpUnitPos = this.tpUnitPos
-                        const toolTipUnit = this.toolTipUnit
+                    formatter: (value) => {
 
-                        if (tpUnitPos === "prefix") {
-                            return toolTipUnit + " " + value.toLocaleString("en-IN")
+                        if (this.tpUnitPos === "prefix") {
+                            return this.toolTipUnit + " " + value.toLocaleString("en-IN")
                         }
                         
-                        if (tpUnitPos === "suffix") {
-                            return value.toLocaleString("en-IN") + " " + toolTipUnit
+                        if (this.tpUnitPos === "suffix") {
+                            return value.toLocaleString("en-IN") + " " + this.toolTipUnit
                         }
 
                         return value.toLocaleString("en-IN")
@@ -130,27 +125,26 @@ export class LineChart {
         this.chart.render();
     }
 
-    update(labels, data) {
+    update(labels, series) {
         this.labels = labels
-        this.data = data
+        this.series = series
         this.chart.updateOptions({
             xaxis: {
                 categories: labels
             },
-            series: [{
-                name: this.seriesName,
-                data: data
-            }]
+            series: series
         })
     }
 }
 
 
 export class PieChart {
-        constructor(chartContainer, labels, data) {
+        constructor(chartContainer, labels, data, toolTipUnit, tpUnitPos) {
         this.container = chartContainer
         this.labels = labels
         this.data = data
+        this.toolTipUnit = toolTipUnit
+        this.tpUnitPos = tpUnitPos
 
         this.options = {
             chart: {
@@ -162,7 +156,24 @@ export class PieChart {
             labels: labels,
             legend: {
                 position: 'bottom'
-            }
+            },
+            
+            tooltip: {
+                y: {
+                    formatter: (value) => {
+
+                        if (this.tpUnitPos === "prefix") {
+                                return this.toolTipUnit + " " + value.toLocaleString("en-IN")
+                            }
+                            
+                        if (this.tpUnitPos === "suffix") {
+                            return value.toLocaleString("en-IN") + " " + this.toolTipUnit
+                        }
+
+                        return value.toLocaleString("en-IN")
+                    }
+                }
+            },
         };
     }
 
@@ -182,13 +193,12 @@ export class PieChart {
 }
 
 export class HorizontalBarchart {
-    constructor(chartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit="", tpUnitPos="") {
+    constructor(chartContainer, labels, data, seriesName, titleX, toolTipUnit="", tpUnitPos="") {
         this.container = chartContainer
         this.labels = labels
         this.data = data
         this.seriesName = seriesName
         this.titleX = titleX
-        this.titleY = titleY
         this.toolTipUnit = toolTipUnit
         this.tpUnitPos = tpUnitPos
 
@@ -226,16 +236,14 @@ export class HorizontalBarchart {
 
             tooltip: {
                 y: {
-                    formatter: function(value) {
-                        const toolTipUnit = this.toolTipUnit
-                        const tpUnitPos = this. tpUnitPos
+                    formatter: (value) => {
 
-                        if (tpUnitPos === "prefix") {
-                                return toolTipUnit + " " + value.toLocaleString("en-IN")
+                        if (this.tpUnitPos === "prefix") {
+                                return this.toolTipUnit + " " + value.toLocaleString("en-IN")
                             }
                             
-                        if (tpUnitPos === "suffix") {
-                            return value.toLocaleString("en-IN") + " " + toolTipUnit
+                        if (this.tpUnitPos === "suffix") {
+                            return value.toLocaleString("en-IN") + " " + this.toolTipUnit
                         }
 
                         return value.toLocaleString("en-IN")
@@ -321,7 +329,7 @@ export class DonutChart {
                         show: true,
                         label: "Total",
                         formatter: function(w) {
-                        return w.globals.seriesTotals.reduce((a, b) => a + b, 0)
+                        return (w.globals.seriesTotals.reduce((a, b) => a + b, 0)).toLocaleString('en-IN')
                         }
                     }
                     }
@@ -331,16 +339,14 @@ export class DonutChart {
 
             tooltip: {
                 y: {
-                formatter: function(value) {
-                    const toolTipUnit = this.toolTipUnit
-                    const tpUnitPos = this.tpUnitPos
+                formatter: (value) => {
 
-                    if (tpUnitPos === "prefix") {
-                            return toolTipUnit + " " + value.toLocaleString("en-IN")
+                    if (this.tpUnitPos === "prefix") {
+                            return this.toolTipUnit + " " + value.toLocaleString("en-IN")
                         }
                             
-                    if (tpUnitPos === "suffix") {
-                        return value.toLocaleString("en-IN") + " " + toolTipUnit
+                    if (this.tpUnitPos === "suffix") {
+                        return value.toLocaleString("en-IN") + " " + this.toolTipUnit
                     }
 
                     return value.toLocaleString("en-IN")
@@ -369,67 +375,122 @@ export class DonutChart {
     }
 }
 
-export function donutChart(chartContainer, labels, data, seriesName, titleX, toolTipUnit="", tpUnitPos="") {
-    var options = {
-    chart: {
-        type: "donut",
-        height: 320
-    },
 
-    series: data,
 
-    labels: labels,
+export class AreaChart {
+    constructor(chartContainer, labels, series, titleX, titleY, toolTipUnit="", tpUnitPos="", colors=chartPalette) {
+        this.container = chartContainer
+        this.labels = labels
+        this.series = series
+        this.titleX = titleX
+        this.titleY = titleY
+        this.toolTipUnit = toolTipUnit
+        this.tpUnitPos = tpUnitPos
+        this.colors = colors
 
-    colors: chartPalette,
+        this.options = {
+            chart: {
+                type: 'area',
+                height: 350,
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800,
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 800
+                    }
+                },
+            },
+            
+            series: this.series,
 
-    legend: {
-        position: "bottom"
-    },
-
-    dataLabels: {
-        enabled: false
-    },
-
-    plotOptions: {
-        pie: {
-        donut: {
-            size: "65%",
-            labels: {
-            show: true,
-
-            total: {
-                show: true,
-                label: "Total",
-                formatter: function(w) {
-                return w.globals.seriesTotals.reduce((a, b) => a + b, 0)
+            xaxis: {
+                categories: this.labels,
+                title: {
+                    text: this.titleX
                 }
-            }
-            }
-        }
-        }
-    },
+            },
 
-    tooltip: {
-        y: {
-        formatter: function(value) {
-            if (tpUnitPos === "prefix") {
-                    return toolTipUnit + " " + value.toLocaleString("en-IN")
+            yaxis: {
+                title: {
+                    text: this.titleY
+                },
+                labels: {
+                    formatter: function(value) {
+                        return value.toLocaleString("en-IN")
+                    }
                 }
-                    
-            if (tpUnitPos === "suffix") {
-                return value.toLocaleString("en-IN") + " " + toolTipUnit
-            }
+            },
 
-            return value.toLocaleString("en-IN")
-        }
-        }
-    },
+            stroke: {
+                curve: "smooth",
+                width: 3
+            },
 
-    stroke: {
-        width: 2
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.8,
+                    opacityTo: 0.2,
+                    stops: [0, 90, 100]
+                }
+            },
+
+            colors: this.colors,
+
+            tooltip: {
+                y: {
+                    formatter: (value) => {
+
+                        if (this.tpUnitPos === "prefix") {
+                            return this.toolTipUnit + " " + value.toLocaleString("en-IN")
+                        }
+                        
+                        if (this.tpUnitPos === "suffix") {
+                            return value.toLocaleString("en-IN") + " " + this.toolTipUnit
+                        }
+
+                        return value.toLocaleString("en-IN")
+                    }
+                }
+            },
+            
+            grid: {
+                borderColor: chartUI["grid"],
+                strokeDashArray: 3
+            },
+
+            dataLabels: {
+                enabled: false
+            },
+
+            markers: {
+                size: 0,
+                hover: {
+                    size: 6
+                }
+            },
+        }
     }
-    };
 
-    var chart = new ApexCharts(chartContainer, options);
-    chart.render();
+    create() {
+        this.chart = new ApexCharts(this.container, this.options);
+        this.chart.render();
+    }
+
+    update(labels, series) {
+        this.labels = labels
+        this.series = series
+        this.chart.updateOptions({
+            xaxis: {
+                categories: labels
+            },
+            series: series
+        })
+    }
 }

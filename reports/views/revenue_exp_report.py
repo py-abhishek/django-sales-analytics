@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import View
 
+from ..services import revenue_exp_analysis
+
 
 class RevenueExpReportView(View):
     def get(self, request):
-        return render(request, 'reports/revenue_exp_report.html')
+
+        insights = revenue_exp_analysis.get_insights()
+
+        print(insights['exp_by_category'])
+        return render(request, 'reports/revenue_exp_report.html', insights)

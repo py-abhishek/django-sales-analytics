@@ -51,7 +51,12 @@ def get_summary(sales):
 
 
 def get_sales_trend(sales):
-    monthly_sales = sales.annotate(month=TruncMonth('sale_date')).values('month').annotate(total_amount=Sum('total_amount')).order_by('month')
+    monthly_sales = sales.annotate(
+        month=TruncMonth('sale_date')
+        ).values('month').annotate(
+            total_amount=Sum('total_amount')
+            ).order_by('month')
+    
     sales_trend = {
         'labels': [],
         'data': []

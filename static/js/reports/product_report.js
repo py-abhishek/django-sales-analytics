@@ -12,11 +12,10 @@ function createProSalesTrendChart() {
     const data = utils.parseJson(document.querySelector("#product_trend_data"));
     let titleX = "Month"
     let titleY = "Total Units"
-    let seriesName = "Sales"
     let toolTipUnit = "Units"
     let tpUnitPos = "suffix"
     
-    productSalesTrendChart = new charts.LineChart(trendChartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit, tpUnitPos)
+    productSalesTrendChart = new charts.LineChart(trendChartContainer, labels, [{ name: "Sales", data: data }], titleX, titleY, toolTipUnit, tpUnitPos)
     productSalesTrendChart.create()
 }
 
@@ -40,12 +39,11 @@ function createTopCategoriesChart() {
     const chartContainer = document.querySelector("#categorySalesChart");
     const labels = utils.parseJson(document.querySelector("#category_labels"));
     const data = utils.parseJson(document.querySelector("#category_data"));
-    let titleX = "Units"
     let seriesName = "Product"
     let toolTipUnit = "Units"
     let tpUnitPos = "suffix"
 
-    topCategoriesChart = new charts.DonutChart(chartContainer, labels, data, toolTipUnit, tpUnitPos)
+    topCategoriesChart = new charts.DonutChart(chartContainer, labels, data, seriesName, toolTipUnit, tpUnitPos)
     topCategoriesChart.create()
 
 }
@@ -143,10 +141,10 @@ function updateCardsTables(data) {
 
     const summary = data.summary || {}
     // Updating Cards
-    cardUnitsSold.innerHTML = (summary.units_sold || 0).toLocaleString()
-    cardProductRevenue.innerHTML = "₹" + " " + (summary.product_revenue || 0).toLocaleString()
-    cardTotalProducts.innerHTML = (summary.total_products || 0).toLocaleString() || 0
-    cardLowStock.innerHTML = (summary.low_stock_products || 0).toLocaleString() || 0
+    cardUnitsSold.innerHTML = (summary.units_sold || 0).toLocaleString('en-IN')
+    cardProductRevenue.innerHTML = "₹" + " " + (summary.product_revenue || 0).toLocaleString('en-IN')
+    cardTotalProducts.innerHTML = (summary.total_products || 0).toLocaleString('en-IN') || 0
+    cardLowStock.innerHTML = (summary.low_stock_products || 0).toLocaleString('en-IN') || 0
 
     // Updating Slow Product Table
     tableSlowProducts.innerHTML = ""

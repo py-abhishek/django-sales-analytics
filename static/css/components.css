@@ -8,6 +8,7 @@
 .card-soft {
     background-color: var(--clr-primary-soft);
     border-radius: var(--radius);
+    height: 100%;
 }
 
 .info-label {
