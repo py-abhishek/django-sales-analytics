@@ -14,7 +14,7 @@ nameField.addEventListener("focusout", function() {
     }, 80)
 })
 nameField.addEventListener("focusin", function() {
-    getCustomerData("Walk-in Customer")
+    getCustomerData("a")
 })
 // Detect Typing
 nameField.addEventListener("input", function(e) {

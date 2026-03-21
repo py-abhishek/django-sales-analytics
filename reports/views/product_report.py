@@ -28,7 +28,6 @@ class ProductReportView(View):
 
 # Filter API
 def get_filtered_data(request):
-    print('API')
     if request.method == 'POST':
         filter_values = json.loads(request.body)
 
@@ -50,8 +49,6 @@ def get_filtered_data(request):
             category_id = int(category_id)
             category = ProductCategory.objects.get(id=category_id).name
         
-
-        print(category)
 
         insights = product_analysis.get_insights(from_date, to_date, category_id)
 

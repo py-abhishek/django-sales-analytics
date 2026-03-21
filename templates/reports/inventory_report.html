@@ -75,7 +75,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Products</p>
                 <h4 class="metric-value">
-                    {{ inventory_insights.total_products }}
+                    {{ summary.total_products }}
                 </h4>
             </div>
         </div>
@@ -84,7 +84,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Inventory Value</p>
                 <h4 class="metric-value">
-                    ₹ {{ inventory_insights.inventory_value|floatformat:0|intcomma }}
+                    ₹ {{ summary.inventory_value|floatformat:0|intcomma }}
                 </h4>
             </div>
         </div>
@@ -93,7 +93,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Low Stock Products</p>
                 <h4 class="metric-value text-warning">
-                    {{ inventory_insights.low_stock }}
+                    {{ summary.low_stock_count }}
                 </h4>
             </div>
         </div>
@@ -102,7 +102,7 @@
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Out of Stock</p>
                 <h4 class="metric-value text-danger">
-                    {{ inventory_insights.out_of_stock }}
+                    {{ summary.out_of_stock_count }}
                 </h4>
             </div>
         </div>
@@ -117,8 +117,8 @@
 
         <div id="inventoryCategoryChart"></div>
 
-        {{ inventory_category.labels|json_script:"inventory_cat_labels" }}
-        {{ inventory_category.data|json_script:"inventory_cat_data" }}
+        {{ inv_category_value.labels|json_script:"inventory_cat_labels" }}
+        {{ inv_category_value.data|json_script:"inventory_cat_data" }}
 
     </div>
 
@@ -290,6 +290,6 @@
 {% block scripts %}
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="{% static 'js/inventory_report.js' %}"></script>
+<script type="module" src="{% static 'js/reports/inventory_report.js' %}"></script>
 
 {% endblock %}

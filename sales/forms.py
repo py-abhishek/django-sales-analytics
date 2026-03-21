@@ -9,9 +9,9 @@ class CustomerForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-name', 'placeholder': 'Search or enter new customer'}),
-            'phone': forms.NumberInput(attrs={'class': 'form-control', 'id': 'customer-phone', 'placeholder': '9845678325'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'customer-email', 'placeholder': 'email_address@domain.com'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-address', 'placeholder': 'City, State (Country)'})
+            'phone': forms.NumberInput(attrs={'class': 'form-control', 'id': 'customer-phone', 'placeholder': '10 digits mobile'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'customer-email', 'placeholder': 'Email (optional)'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-address', 'placeholder': 'Address (optional)'})
         }
 
 class SaleForm(forms.ModelForm):

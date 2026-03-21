@@ -289,6 +289,109 @@ export class HorizontalBarchart {
     }
 }
 
+
+export class Barchart {
+    constructor(chartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit="", tpUnitPos="") {
+        this.container = chartContainer
+        this.labels = labels
+        this.data = data
+        this.seriesName = seriesName
+        this.titleX = titleX
+        this.titleY = titleY
+        this.toolTipUnit = toolTipUnit
+        this.tpUnitPos = tpUnitPos
+
+        this.options = {
+            chart: {
+                type: "bar",
+                height: 350,
+                toolbar: { show: false }
+            },
+
+            series: [{
+                name: seriesName,
+                data: data
+            }],
+
+            colors: chartPalette,
+
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    borderRadius: 5,
+                    barHeight: "50%",
+                    borderRadiusApplication: "end"
+                }
+            },
+
+            xaxis: {
+                categories: labels,
+                title: { text: titleX }
+            },
+
+            yaxis: {
+                title: { text: titleY }
+            },
+
+            dataLabels: {
+                enabled: false
+            },
+
+            tooltip: {
+                y: {
+                    formatter: (value) => {
+
+                        if (this.tpUnitPos === "prefix") {
+                                return this.toolTipUnit + " " + value.toLocaleString("en-IN")
+                            }
+                            
+                        if (this.tpUnitPos === "suffix") {
+                            return value.toLocaleString("en-IN") + " " + this.toolTipUnit
+                        }
+
+                        return value.toLocaleString("en-IN")
+                    }
+                }
+            },
+
+            grid: {
+                strokeDashArray: 3
+            },
+
+            fill: {
+            type: "gradient",
+            gradient: {
+                shade: "light",
+                type: "horizontal",
+                shadeIntensity: 0.1,
+                opacityFrom: 1,
+                opacityTo: 0.7,
+                stops: [0, 100]
+            }
+            }
+        };
+    }
+
+    create() {
+        this.chart = new ApexCharts(this.container, this.options);
+        this.chart.render();
+    }
+
+    update(labels, data) {
+        this.labels = labels
+        this.data = data
+        this.chart.updateOptions({
+            xaxis: {
+                categories: labels
+            },
+            series: [{
+                name: this.seriesName,
+                data: data
+            }]
+        })
+    }
+}
+
 export class DonutChart {
      constructor(chartContainer, labels, data, seriesName, toolTipUnit="", tpUnitPos="") {
         this.container = chartContainer

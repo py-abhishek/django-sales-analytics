@@ -9,5 +9,4 @@ class RevenueExpReportView(View):
 
         insights = revenue_exp_analysis.get_insights()
 
-        print(insights['exp_by_category'])
         return render(request, 'reports/revenue_exp_report.html', insights)
