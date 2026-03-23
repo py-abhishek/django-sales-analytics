@@ -57,13 +57,33 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
-                    <button class="btn btn-primary w-100">Filter</button>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100">Apply Filter</button>
                 </div>
 
             </div>
 
         </form>
+
+    </div>
+
+    
+    <!-- CURRENT FILTER INFORMATION -->
+    <div class="card-soft p-3 mb-3">
+
+        <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
+
+            <span class="filter-label">Showing results for:</span>
+
+            <div class="filter-chip">
+                category: All Categories
+            </div>
+
+            <div class="filter-chip">
+                Stock Status: All
+            </div>
+
+        </div>
 
     </div>
 
@@ -133,10 +153,10 @@
 
                 <h5 class="mb-3">Stock Status Distribution</h5>
 
-                <div id="stockStatusChart"></div>
+                <div id="stockDistributionChart"></div>
 
-                {{ stock_status.labels|json_script:"stock_status_labels" }}
-                {{ stock_status.data|json_script:"stock_status_data" }}
+                {{ distributed_stock.labels|json_script:"dist_stock_labels" }}
+                {{ distributed_stock.data|json_script:"dist_stock_data" }}
 
             </div>
 
@@ -150,10 +170,10 @@
 
                 <h5 class="mb-3">Top Inventory Value Products</h5>
 
-                <div id="topInventoryValueChart"></div>
+                <div id="TopInvProductsChart"></div>
 
-                {{ top_inventory_products.labels|json_script:"top_inventory_labels" }}
-                {{ top_inventory_products.data|json_script:"top_inventory_data" }}
+                {{ top_inventory_products.labels|json_script:"top_inv_pro_labels" }}
+                {{ top_inventory_products.data|json_script:"top_inv_pro_data" }}
 
             </div>
 
@@ -195,7 +215,7 @@
                             <td>{{ product.name }}</td>
 
                             <td class="text-warning fw-semibold">
-                                {{ product.stock }}
+                                {{ product.stock_quantity }}
                             </td>
 
                             <td>{{ product.reorder_level }}</td>
@@ -223,13 +243,13 @@
         </div>
 
 
-        <!-- OVERSTOCK PRODUCTS -->
+        <!-- OUT OF STOCK PRODUCTS -->
         <div class="col-md-6">
 
             <div class="card-soft">
 
                 <div class="p-3 border-bottom">
-                    <h5 class="mb-0">Overstock Products</h5>
+                    <h5 class="mb-0">Out of Stock Products</h5>
                 </div>
 
                 <div class="table-responsive">
@@ -240,23 +260,23 @@
                             <tr>
                                 <th>Product</th>
                                 <th>Stock</th>
-                                <th>Ideal Stock</th>
+                                <th>Reorder Level</th>
                             </tr>
                         </thead>
 
                         <tbody>
 
-                        {% for product in overstock_products %}
+                        {% for product in out_of_stock_products %}
 
                         <tr>
 
                             <td>{{ product.name }}</td>
 
-                            <td class="fw-semibold">
-                                {{ product.stock }}
+                            <td class="fw-semibold text-danger">
+                                {{ product.stock_quantity }}
                             </td>
 
-                            <td>{{ product.ideal_stock }}</td>
+                            <td>{{ product.reorder_level }}</td>
 
                         </tr>
 
@@ -264,7 +284,7 @@
 
                         <tr>
                             <td colspan="3" class="text-center py-3 text-muted">
-                                No overstock products
+                                No Out of Stock products
                             </td>
                         </tr>
 

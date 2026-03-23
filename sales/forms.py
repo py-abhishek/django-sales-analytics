@@ -41,7 +41,7 @@ class SaleItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        self.fields['product'].empty_label = 'Select Product'
+        self.fields['product'].empty_label = 'Choose Product'
 
 
         

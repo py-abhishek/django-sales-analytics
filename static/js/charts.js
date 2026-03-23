@@ -227,7 +227,16 @@ export class HorizontalBarchart {
 
             xaxis: {
                 categories: labels,
-                title: { text: titleX }
+                title: { text: titleX },
+                tickAmount: 5,
+                labels: {
+                    formatter: function (val) {
+                        if (val > 100000) {
+                            return (val / 100000).toLocaleString("en-IN") + " L"; // Lakh
+                        }
+                        return  val.toLocaleString("en-IN")
+                    }
+                }
             },
 
             dataLabels: {
@@ -237,6 +246,10 @@ export class HorizontalBarchart {
             tooltip: {
                 y: {
                     formatter: (value) => {
+                        // let value = val
+                        // if (val > 1000) {
+                        //     value = (val / 1000).toLocaleString("en-IN") + " Thousands"// Simplify large values
+                        // }
 
                         if (this.tpUnitPos === "prefix") {
                                 return this.toolTipUnit + " " + value.toLocaleString("en-IN")
@@ -330,7 +343,15 @@ export class Barchart {
             },
 
             yaxis: {
-                title: { text: titleY }
+                title: { text: titleY },
+                labels: {
+                    formatter: function (val) {
+                        if (val > 100000) {
+                            return (val / 100000).toLocaleString("en-IN") + " L" // Lakh
+                        }
+                        return  val.toLocaleString("en-IN")
+                    }
+                }
             },
 
             dataLabels: {
@@ -362,14 +383,14 @@ export class Barchart {
             type: "gradient",
             gradient: {
                 shade: "light",
-                type: "horizontal",
+                type: "vertical",
                 shadeIntensity: 0.1,
-                opacityFrom: 1,
-                opacityTo: 0.7,
+                opacityFrom: 0.7,
+                opacityTo: 1,
                 stops: [0, 100]
             }
             }
-        };
+        }
     }
 
     create() {
@@ -393,13 +414,14 @@ export class Barchart {
 }
 
 export class DonutChart {
-     constructor(chartContainer, labels, data, seriesName, toolTipUnit="", tpUnitPos="") {
+     constructor(chartContainer, labels, data, seriesName, toolTipUnit="", tpUnitPos="", colors=chartPalette) {
         this.container = chartContainer
         this.labels = labels
         this.data = data
         this.seriesName = seriesName
         this.toolTipUnit = toolTipUnit
         this.tpUnitPos = tpUnitPos
+        this.colors = colors
 
         this.options = {
             chart: {
@@ -411,7 +433,7 @@ export class DonutChart {
 
             labels: labels,
 
-            colors: chartPalette,
+            colors: this.colors,
 
             legend: {
                 position: "bottom"

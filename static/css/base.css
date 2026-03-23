@@ -3,17 +3,28 @@
 =================================*/
 :root {
 
-    /* Brand */
+    /* Brand Blue */
     --clr-primary: #5b6cff;
+    --clr-secondary: #4038c6;
+    --clr-primary-hover: #4a59e3;
     --clr-primary-medium: #dbdffc;
     --clr-primary-soft: #eef0ff;
-
+    
+    /* Brand Green */
+    /* --clr-secondary: #13452D;
+    --clr-primary: #227D53; */
+    
     /* Accent */
     --clr-accent: #00c2ff;
-
+    
+    /* Gradients */
+    --primary-gradient: linear-gradient(135deg, var(--clr-secondary), var(--clr-primary));
+    --secondary-gradient: linear-gradient(130deg, var(--clr-primary-hover), var(--clr-primary));
+    
     /* Backgrounds */
     --clr-bg-main: #ffffff;
     --clr-bg-content: #f4f7ff;
+    /* --clr-bg-content: #E8EAEC; */
     --clr-bg-btn-secondary: #eaeaea;
     --clr-bg-components: #f5f7fa;
 
@@ -22,6 +33,7 @@
     --clr-text-medium: #46484b;
     --clr-text-muted: #6b7280;
     --clr-text-placeholder: #c4c7cc;
+    --clr-text-light: #fefefc;
 
     /* Borders */
     --clr-border: #dce1ea;
@@ -32,6 +44,13 @@
     --radius: 5px;
 
     --nav-height: 70px;
+
+    /* Spacing */
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
 }
 
 * {
@@ -108,3 +127,10 @@ p {
     transition: all 0.2s ease;
 }
 
+
+/* Error Messages */
+.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+    color: #cd3f3f;
+}

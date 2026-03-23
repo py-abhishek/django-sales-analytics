@@ -1,3 +1,11 @@
+/* Cards */
+.card-important {
+    background: var(--primary-gradient);
+    border-radius: var(--radius);
+    height: 100%;
+    color: var(--clr-text-light) !important;
+}
+
 .custom-card {
     background: #ffffff;
     border-radius: var(--radius);
@@ -17,8 +25,13 @@
     margin-bottom: 4px;
 }
 
+.text-bold {
+    font-weight: 700 !important;
+}
+
 .info-value {
     font-weight: 500;
+    color: var(--clr-text-medium);
 }
 
 /* FILTER INFORMATINO SECTION */
@@ -84,12 +97,14 @@
 
 /* Buttons */
 .btn-primary {
-    background: var(--clr-primary);
-    border-color: var(--clr-primary);
+    background: var(--primary-gradient);
+    background-size: 130% 130%;
+    border-radius: var(--radius);
+    transition: background-position 0.5s ease, transform 0.3s ease;
 }
 
 .btn-primary:hover {
-    background: #4a59e3;
+    background-position: right center;
 }
 
 .btn-secondary {

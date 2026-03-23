@@ -52,12 +52,12 @@
                     <label class="form-label">Period</label>
                     <select name="period" class="form-select">
                         <option value="daily">Daily</option>
-                        <option value="monthly">Monthly</option>
+                        <option value="monthly" selected >Monthly</option>
                     </select>
                 </div>
 
-                <div class="col-md-1">
-                    <button class="btn btn-primary w-100">Filter</button>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100">Apply Filter</button>
                 </div>
 
             </div>
@@ -65,8 +65,25 @@
         </form>
 
     </div>
+    
+    <!-- CURRENT FILTER INFORMATION -->
+    <div class="card-soft p-3 mb-3">
 
+        <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
 
+            <span class="filter-label">Showing results for:</span>
+
+            <div class="filter-chip">
+                Date: All Time
+            </div>
+
+            <div class="filter-chip">
+                Period: Monthly
+            </div>
+            
+        </div>
+
+    </div>
 
     <!-- FINANCIAL METRICS -->
     <div class="row g-3 mb-4">

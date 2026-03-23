@@ -28,74 +28,6 @@
     background: #ffffff;
 }
 
-/* ===============================
-   LAYOUT STRUCTURE
-=================================*/
-.app-layout {
-    display: flex;
-    height: calc(100vh - var(--nav-height));
-}
-
-/* ===============================
-   SIDEBAR
-=================================*/
-.sidebar {
-    width: 230px;
-    height: calc(100vh - var(--nav-height));
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.sidebar-nav{
-    padding: 10px 15px;
-}
-.sidebar-nav .nav-link {
-    font-weight: 600;
-    color: var(--clr-text-medium);
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin: 5px 0;
-}
-
-.sidebar-nav .nav-link:hover,
-.sidebar-nav .active {
-    background: var(--clr-primary-soft);
-    color: var(--clr-primary);
-}
-
-.sub-menu {
-    padding-left: 12px;
-}
-
-.sub-menu .nav-link {
-    font-size: 14px;
-    padding: 8px 14px;
-}
-
-.arrow {
-    font-size: 16px;
-    opacity: 0.6;
-}
-
-
-/* ===============================
-   CONTENT AREA
-=================================*/
-.content-area {
-    flex: 1;
-    background: var(--clr-bg-content);
-    padding: 32px;
-    overflow-y: auto;
-}
-
-/* Empty placeholder block */
-.content-placeholder {
-    background: #ffffff;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-    min-height: 100%;
-    padding: 20px 40px;
-}
 
 /* ===============================
    ADMIN DROPDOWN
@@ -111,7 +43,7 @@
 }
 
 .admin-btn:hover {
-    background: #ffffff;
+    background: var(--clr-primary-medium);
     box-shadow: var(--shadow-soft);
 }
 
@@ -148,4 +80,77 @@
 .custom-dropdown .dropdown-item:hover {
     background: var(--clr-primary-soft);
     color: var(--clr-primary);
+}
+
+/* ===============================
+   LAYOUT STRUCTURE
+=================================*/
+.app-layout {
+    display: flex;
+    height: calc(100vh - var(--nav-height));
+}
+
+/* ===============================
+   SIDEBAR
+=================================*/
+.sidebar {
+    width: 230px;
+    height: calc(100vh - var(--nav-height));
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar-nav{
+    padding: 10px 15px;
+}
+.sidebar-nav .nav-link {
+    font-weight: 600;
+    color: var(--clr-text-medium);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 5px 0;
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .active {
+    background: var(--clr-primary-soft);
+    color: var(--clr-primary);
+}
+
+/* .sidebar-nav .active {
+    box-shadow: 1px 0 4px rgba(165, 178, 189, 0.5);
+} */
+
+.sub-menu {
+    padding-left: 12px;
+}
+
+.sub-menu .nav-link {
+    font-size: 14px;
+    padding: 8px 14px;
+}
+
+.arrow {
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+
+/* ===============================
+   CONTENT AREA
+=================================*/
+.content-area {
+    flex: 1;
+    background: var(--clr-bg-content);
+    padding: 32px;
+    overflow-y: auto;
+}
+
+/* Empty placeholder block */
+.content-placeholder {
+    background: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    min-height: 100%;
+    padding: 20px 40px;
 }

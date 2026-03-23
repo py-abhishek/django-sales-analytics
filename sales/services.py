@@ -14,34 +14,11 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
     and then create sale
     '''
 
-    logger.info("services")
     # remove empty item from formset
-    clean_formset_data = [
-        item for item in formset_data
-        if item
-        and not item.get('delete')
-        and item.get('product')
-        # and item.get('unit')
-        and item.get('quantity') is not None 
-    ]
+    cleaned_formset_data = get_cleaned_formset_data(formset_data)
 
     with transaction.atomic():
-        # validation
-        seen_products = set()
-        for item in clean_formset_data:
-            # check for duplicates
-            product_sku = item['product'].sku
-            if product_sku in seen_products:
-                print("error")
-                raise ValidationError('This product is already in the list. Update the quantity instead.')
-            seen_products.add(product_sku)
-
-            if not available_in_stock(item['product'], item):
-                raise ValidationError(
-                    f'Insufficient stock for {item['product'].name}. '
-                    f'Available: {item['product'].stock_quantity}, '
-                    f'Requested: {item['quantity']}.'
-                )
+        validate_formset_data(formset_data) # Validate Products
         
         if is_new_customer:
             customer = Customer.objects.create(
@@ -56,12 +33,12 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
         sale = Sale.objects.create(
             customer=customer,
             sale_date=sale_form_data['sale_date'],
-            total_amount=get_total_sale_amount(clean_formset_data),
-            total_profit=get_total_profit(clean_formset_data),
+            total_amount=get_total_sale_amount(cleaned_formset_data),
+            total_profit=get_total_profit(cleaned_formset_data),
             payment_method=sale_form_data['payment_method']
             )
 
-        for item in clean_formset_data:
+        for item in cleaned_formset_data:
             product = item['product']
             SaleItem.objects.create(
                 sale=sale,
@@ -77,6 +54,39 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
             deduct_stock(product, item)
 
         return sale
+    
+def validate_formset_data(formset_data):
+    cleaned_formset_data = get_cleaned_formset_data(formset_data)
+
+    if not cleaned_formset_data:
+        raise ValidationError('Please Choose a Product')
+    
+    seen_products = set()
+    for item in cleaned_formset_data:
+        # check for duplicates
+        product_sku = item['product'].sku
+
+        if product_sku in seen_products:
+            print("error")
+            raise ValidationError('This product is already in the list. Update the quantity instead.')
+        seen_products.add(product_sku)
+
+        if not available_in_stock(item['product'], item):
+            raise ValidationError(
+                f'Insufficient stock for {item['product'].name}. '
+                f'Available: {item['product'].stock_quantity}, '
+                f'Requested: {item['quantity']}.'
+            )
+    
+def get_cleaned_formset_data(formset_data):
+    return [
+        item for item in formset_data
+        if item
+        and not item.get('delete')
+        and item.get('product')
+        # and item.get('unit')
+        and item.get('quantity') is not None 
+    ]
 
 
 def available_in_stock(product, item):

@@ -4,27 +4,28 @@ from django.db.models import Q, F
 from inventory.models import Product, ProductCategory
 
 def get_insights():
-    products, categories = get_filtered_query()
+    products = get_filtered_query()
     summary = get_summary(products)
     inv_category_value = get_inv_category_value(products)
-    dist_stock = get_dist_stock(products)
-    top_inv_products = get_top_inv_products(products)
+    distributed_stock = get_dist_stock(products)
+    top_inventory_products = get_top_inv_products(products)
     low_stock_products = get_low_stock_products(products)
+    out_of_stock_products = get_out_of_stock_products(products)
 
     return {
         'summary': summary,
         'inv_category_value': inv_category_value,
-        'dist_stock': dist_stock,
-        'top_inv_products': top_inv_products,
-        'low_stock_products': low_stock_products
+        'distributed_stock': distributed_stock,
+        'top_inventory_products': top_inventory_products,
+        'low_stock_products': low_stock_products,
+        'out_of_stock_products': out_of_stock_products
     }
 
 
 def get_filtered_query():
     products = Product.objects.all().order_by('-name')
-    categories = ProductCategory.objects.all().order_by('name')
 
-    return products, categories
+    return products
 
 def get_summary(products):
     result = products.aggregate(
@@ -72,7 +73,7 @@ def get_top_inv_products(products):
         'name'
     ).annotate(
         total_value=F('cost_price') * F('stock_quantity')
-    ).order_by('-total_value')[:10]
+    ).order_by('-total_value')[:5]
     )
 
     result = {

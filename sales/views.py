@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db import transaction
 from django.views.generic import ListView, DetailView
 from django.views import View
 from django.urls import reverse_lazy
@@ -74,7 +73,7 @@ class SalesCreateView(View):
                 return redirect(reverse_lazy('sale_success', kwargs={'pk':saved_sale.id}))
             except Exception as e:
                 logger.error(e)
-                sale_form.add_error(None, str(e))
+                sale_form.add_error(None, e)
 
         logger.info("Error while creating sale")
         return render(request, 'sales/create_sale.html', {
