@@ -33,7 +33,38 @@
 
                     <li class="nav-item">
                         <a class="nav-link {% active 'sales_list' %}" href="{% url 'sales_list' %}">
-                            Sales List
+                            Sales History
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </li>
+
+        <!-- PURCHASE -->
+        <li class="nav-item">
+
+            <a class="nav-link d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            href="#purchaseMenu"
+            role="button">
+                Purchase
+                <span class="arrow">▾</span>
+            </a>
+
+            <div class="collapse {% show_menu 'add_purchase' 'purchase_list' %}" id="purchaseMenu">
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'add_purchase' %}" href="{% url 'add_purchase' %}">
+                            Add Purchase
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'purchase_list' %}" href="{% url 'purchase_list' %}">
+                            Purchase History
                         </a>
                     </li>
 
@@ -53,7 +84,7 @@
                 <span class="arrow">▾</span>
             </a>
 
-            <div class="collapse {% show_menu 'add_product' 'product_list' 'product_categories' %}" id="inventoryMenu">
+            <div class="collapse {% show_menu 'add_product' 'product_list' 'product_categories' 'stock_movements' %}" id="inventoryMenu">
                 <ul class="nav flex-column sub-menu">
 
                     <li class="nav-item">
@@ -74,6 +105,12 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'stock_movements' %}" href="{% url 'stock_movements' %}">
+                            Stock Movements
+                        </a>
+                    </li>
+
                 </ul>
             </div>
 
@@ -86,7 +123,6 @@
             <a class="nav-link d-flex justify-content-between align-items-center"
             data-bs-toggle="collapse"
             href="#financeMenu">
-
                 Expense
                 <span class="arrow">▾</span>
             </a>
@@ -102,13 +138,13 @@
 
                     <li class="nav-item">
                         <a class="nav-link {% active 'expense_categories' %}" href="{% url 'expense_categories' %}">
-                            Expense Categories
+                            Manage Categories
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {% active 'expense_list' %}" href="{% url 'expense_list' %}">
-                            Expense List
+                            Expense History
                         </a>
                     </li>
 

@@ -65,3 +65,29 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class InventoryLedger(models.Model):
+    # record every stock trasactio (as history)
+    class TransTypeChoices(models.TextChoices):
+        PURCHASE = 'pur', 'Purchase'
+        SALE = 'sale', 'Sale'
+        ADJUSTMENT = 'adj', 'Adjustment'
+        RETURN_IN = 'return_in', 'Return In'
+        RETURN_OUT = 'return_out', 'Return Out'
+        DAMAGE = 'dmg', 'Damage'
+
+    product = models.ForeignKey(Product, db_index=True, on_delete=models.PROTECT)
+    transaction_type = models.CharField(choices=TransTypeChoices.choices, db_index=True, max_length=20)
+    quantity_change = models.IntegerField()
+    before_quantity = models.IntegerField()
+    after_quantity = models.IntegerField()
+    unit_cost = models.DecimalField(max_digits=12, decimal_places=2) # unit cost at that moment
+    total_cost = models.DecimalField(max_digits=12, decimal_places=2)
+
+    # Reference Linking with FKs (where Only ONE of these must be set per row)
+    purchase = models.ForeignKey('purchase.Purchase', on_delete=models.PROTECT, null=True, blank=True)
+    sale = models.ForeignKey('sales.Sale', on_delete=models.PROTECT, null=True, blank=True)
+    # adjustment = models.ForeignKey('', on_delete=models.PROTECT, null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    

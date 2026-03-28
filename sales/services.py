@@ -1,6 +1,6 @@
 from django.db import transaction
 from .models import Sale, SaleItem, Customer
-from inventory.models import Product
+from inventory.services import create_sale_ledger
 from django.core.exceptions import ValidationError
 
 import logging
@@ -40,10 +40,12 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
 
         for item in cleaned_formset_data:
             product = item['product']
+            quantity = item['quantity']
+
             SaleItem.objects.create(
                 sale=sale,
                 product=product,
-                quantity=item['quantity'],
+                quantity=quantity,
                 unit=product.unit,
                 price_at_sale=product.selling_price,
                 cost_at_sale=product.cost_price,
@@ -52,6 +54,11 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
             )
             
             deduct_stock(product, item)
+
+            # Updating Stock Ledger
+            unit_cost = product.cost_price
+            total_cost = (unit_cost * quantity)
+            create_sale_ledger(product, quantity, unit_cost, total_cost, sale)
 
         return sale
     

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}Create New Sale{% endblock %}
+{% block page_title %}Add New Purchase{% endblock %}
 {% block css_files%}
     <link rel="stylesheet" href="{% static 'css/apps/form.css' %}">
 {% endblock %}
@@ -12,38 +12,38 @@
         <!-- ================= HEADER ================= -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h3 class="fw-bold mb-1">Create New Sale</h3>
-                <small class="text-muted">Record a new sale</small>
+                <h3 class="fw-bold mb-1">Add New Purchase</h3>
+                <small class="text-muted">Record a new purchase</small>
             </div>
-                <a href="{% url 'sales_list' %}" class="btn btn-secondary">
-                View Sales List 
-            </a>
+                {% comment %} <a href="{% url 'sales_list' %}" class="btn btn-secondary">
+                View Purchase History 
+            </a> {% endcomment %}
         </div> 
 
         <!-- ================= TRANSACTION HEADER ================= -->
-        <form method="post" id="saleForm">
+        <form method="post" id="purchaseForm">
             {% csrf_token %} 
 
             <div class="row transaction-header g-3 align-items-end mb-4">
 
-                <!-- Customer Name Search -->
+                <!-- Supplier Name Search -->
                 <div class="col-lg-8">
                     <div class="card custom-card p-4">
                         <div class="row">
                             <div class="col-lg-7">
-                                <label class="form-label">Customer Name*</label>
+                                <label class="form-label">Supplier Name*</label>
 
                                 <div class="position-relative">
-                                    {{ customer_form.name}}
-                                    {{ customer_form.name.errors}}
+                                    {{ supplier_form.name}}
+                                    {{ supplier_form.name.errors}}
 
-                                    <!-- Hidden customer id -->
+                                    <!-- Hidden supplier id -->
                                     <input type="hidden"
-                                        id="customer-id"
-                                        name="customer_id" value="">
+                                        id="supplier-id"
+                                        name="supplier_id" value="">
 
                                     <!-- Search Results -->
-                                    <div id="customer-suggestions"
+                                    <div id="supplier-suggestions"
                                         class="suggestion-results"></div>
 
                                 </div>
@@ -53,8 +53,8 @@
                             <div class="col-lg-5">
                                 <label class="form-label">Phone*</label>
 
-                                {{ customer_form.phone }}
-                                {{ customer_form.phone.errors }}
+                                {{ supplier_form.phone }}
+                                {{ supplier_form.phone.errors }}
                             </div>
                         </div>
                     
@@ -63,15 +63,15 @@
                             <!-- Email -->
                             <div class="col-lg-5">
                                 <label class="form-label">Email</label>
-                                {{ customer_form.email }}
-                                {{ customer_form.email.errors }}
+                                {{ supplier_form.email }}
+                                {{ supplier_form.email.errors }}
                             </div>
 
                             <!-- Address -->
                             <div class="col-lg-7">
                                 <label class="form-label">Address</label>
-                                {{ customer_form.address }}
-                                {{ customer_form.address.errors }}
+                                {{ supplier_form.address }}
+                                {{ supplier_form.address.errors }}
                             </div>
                         </div>
                     </div>
@@ -80,18 +80,18 @@
                 <div class="col-lg-4">
                     <div class="card custom-card p-4">
 
-                        <!-- Sale Date -->
+                        <!-- Purchase Date -->
                         <div class="row">
-                            <label class="form-label">Sale Date</label>
-                            {{ sale_form.sale_date }}
-                            {{ sale_form.sale_date.errors }}
+                            <label class="form-label">Purchase Date</label>
+                            {{ purchase_form.purchase_date }}
+                            {{ purchase_form.purchase_date.errors }}
                         </div>
 
                         <!-- Payment Method -->
                         <div class="row mt-3">
                             <label class="form-label">Payment Method</label>
-                            {{ sale_form.payment_method }}
-                            {{ sale_form.payment_method.errors }}
+                            {{ purchase_form.payment_method }}
+                            {{ purchase_form.payment_method.errors }}
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@
                     <div class="card custom-card p-4 mb-4">
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="section-title mb-0">Sale Items</h5>
+                            <h5 class="section-title mb-0">Purchase Items</h5>
                             <button id="add-product" type="button" class="btn btn-sm btn-secondary">
                                 + Add Product
                             </button>
@@ -124,22 +124,23 @@
                                         <th>Product</th>
                                         <th width="100">Qty</th>
                                         <th width="80">Unit</th>
-                                        <th width="110">Unit Price (₹)</th>
+                                        <th width="110">Unit Cost (₹)</th>
                                         <th width="120">Total (₹)</th>
                                         <th width="10"></th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="sale-items">
+                                <tbody id="purchase-items">
 
                                     {% for form in formset %}
-                                    <tr class="sale-row">
+                                    <tr class="purchase-row">
                                         <td>{{ form.product }}</td>
                                         {{ form.product.errors }}
                                         <td>{{ form.quantity }}</td>
                                         {{ form.quantity.errors }}
                                         <td><input value="" type="text" class="readonly unit" readonly></td>
-                                        <td><input value="0.00" type="text" class="readonly price" readonly></td>
+                                        <td>{{ form.unit_cost }}</td>
+                                        {{ form.unit_cost.errors }}
                                         <td class="row-total text-muted">
                                             <input value="0.00" type="text" class="readonly product-total" readonly>
                                         </td>
@@ -150,13 +151,14 @@
                                     {% endfor %}
 
                                     <!-- Empty Template -->
-                                    <tr id="empty-form" class="sale-row" style="display: none;">
+                                    <tr id="empty-form" class="purchase-row" style="display: none;">
                                         <td>{{ formset.empty_form.product }}</td>
                                         {{ formset.empty_form.product.errors }}
                                         <td>{{ formset.empty_form.quantity }}</td>
                                         {{ formset.empty_form.quantity.errors }}
                                         <td><input value="" type="text" class="readonly unit" readonly></td>
-                                        <td><input value="0.00" type="text" class="readonly price" readonly></td>
+                                        <td>{{ formset.empty_form.unit_cost }}</td>
+                                        {{ formset.empty_form.unit_cost.errors }}
                                         <td class="row-total text-muted">
                                             <input value="0.00" type="text" class="readonly product-total" readonly>
                                         </td>
@@ -172,17 +174,9 @@
                         </div>
                         <!-- Dislpay Errors -->
                         <div class="error-msg text-danger">
-                            {% for error in sale_form.non_field_errors %}
+                            {% for error in purchase_form.non_field_errors %}
                                 {{ error }}
                             {% endfor %}
-
-                            {% comment %} {% for item in formset %}
-                                {% for errors in item.errors.values %}
-                                    {% for error in errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endfor %} {% endcomment %}
                            
                         </div>
 
@@ -217,9 +211,9 @@
                         </div>
 
                         <button type="submit"
-                                form="saleForm"
+                                form="purchaseForm"
                                 class="btn btn-primary w-100 mt-4 py-2">
-                            Complete Sale
+                            Save Purchase
                         </button>
 
                     </div>
@@ -233,7 +227,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/sales/create_sale.js' %}"></script>
-    <script src="{% static 'js/sales/customer_suggestions.js' %}"></script>
+    <script src="{% static 'js/purchase/add_purchase.js' %}"></script>
+    <script src="{% static 'js/purchase/supplier_suggestions.js' %}"></script>
 {% endblock %}
 

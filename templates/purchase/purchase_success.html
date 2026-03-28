@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}Sale Created Successfully{% endblock %}
+{% block page_title %}Purchase Saved Successfully{% endblock %}
 {% block css_files%}
     <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
 {% endblock %}
@@ -13,25 +13,25 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h3 class="section-title mb-0">Sale #{{ sale.id }}</h3>
+            <h3 class="section-title mb-0">Purchase #{{ purchase.id }}</h3>
             <small class="text-muted">
-                {{ sale.sale_date }} • {{ sale.payment_method|upper }}
+                {{ purchase.purchase_date }} • {{ purchase.payment_method|upper }}
             </small>
         </div>
 
         <div class="d-flex gap-2">
 
-            <a href="{% url 'create_sale' %}" class="btn btn-primary btn-sm">
-                Create New Sale
+            <a href="{% url 'add_purchase' %}" class="btn btn-primary btn-sm">
+                Add New Purchase
             </a>
 
-            <a href="{% url 'sales_list' %}" class="btn btn-outline-secondary btn-sm">
+            {% comment %} <a href="{% url 'sales_list' %}" class="btn btn-outline-secondary btn-sm">
                 View All Sales
-            </a>
+            </a> {% endcomment %}
 
-            <a href="#" class="btn btn-outline-secondary btn-sm">
+            {% comment %} <a href="#" class="btn btn-outline-secondary btn-sm">
                 Print Invoice
-            </a>
+            </a> {% endcomment %}
 
         </div>
 
@@ -39,41 +39,37 @@
 
 
 
-    <!-- SALE SUMMARY -->
+    <!-- PURCHASE SUMMARY -->
     <div class="card-soft border-left p-4 mb-4">
 
-        <h5 class="mb-3">Sale Information</h5>
+        <h5 class="mb-3">Purchase Information</h5>
 
         <div class="row">
 
             <div class="col-md-3 mb-3">
-                <p class="info-label">Customer</p>
+                <p class="info-label">Supplier</p>
 
                 <p class="info-value">
-                    {% if sale.customer %}
-                        {{ sale.customer.name }}
-                    {% else %}
-                        <span class="text-muted">Walk-in Customer</span>
-                    {% endif %}
+                    {{ purchase.supplier.name }}
                 </p>
             </div>
 
             <div class="col-md-3 mb-3">
-                <p class="info-label">Sale Date</p>
-                <p class="info-value">{{ sale.sale_date }}</p>
+                <p class="info-label">Purchase Date</p>
+                <p class="info-value">{{ purchase.purchase_date }}</p>
             </div>
 
             <div class="col-md-3 mb-3">
                 <p class="info-label">Payment Method</p>
                 <p class="info-value">
-                    {{ sale.payment_method|upper }}
+                    {{ purchase.payment_method|upper }}
                 </p>
             </div>
 
             <div class="col-md-3 mb-3">
                 <p class="info-label">Total Amount</p>
                 <p class="info-value text-bold">
-                    ₹ {{ sale.total_amount }}
+                    ₹ {{ purchase.total_amount }}
                 </p>
             </div>
 
@@ -99,15 +95,14 @@
                         <th>#</th>
                         <th>Product</th>
                         <th class="text-center">Quantity</th>
-                        <th class="text-end">Unit Price</th>
+                        <th class="text-end">Unit Cost</th>
                         <th class="text-end">Item Total</th>
-                        <th class="text-end">Profit</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                {% for item in sale.items.all %}
+                {% for item in purchase.items.all %}
 
                 <tr>
 
@@ -122,15 +117,11 @@
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.price_at_sale }}
+                        ₹ {{ item.unit_cost }}
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.item_total_price }}
-                    </td>
-
-                    <td class="text-end text-success">
-                        ₹ {{ item.item_profit }}
+                        ₹ {{ item.item_total_cost }}
                     </td>
 
                 </tr>
@@ -163,13 +154,13 @@
 
             <div class="col-md-6">
                 <p class="info-label">Created At</p>
-                <p class="info-value">{{ sale.created_at }}</p>
+                <p class="info-value">{{ purchase.created_at }}</p>
             </div>
 
-            <div class="col-md-6">
+            {% comment %} <div class="col-md-6">
                 <p class="info-label">Last Updated</p>
                 <p class="info-value">{{ sale.updated_at }}</p>
-            </div>
+            </div> {% endcomment %}
 
         </div>
 

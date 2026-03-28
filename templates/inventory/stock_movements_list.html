@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}All Recorded Sales{% endblock %}
+{% block page_title %}Stock Movements List{% endblock %}
 {% block css_files%}
     <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
 {% endblock %}
@@ -13,13 +13,13 @@
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="section-title mb-0">All Recorded Sales</h3>
-            <small class="text-muted">All recorded sales transactions</small>
+            <h3 class="section-title mb-0">Stock Movements</h3>
+            <small class="text-muted">Track all stock changes including purchases, sales, and adjustments</small>
         </div>
 
-        <a href="{% url 'create_sale' %}" class="btn btn-secondary">
+        {% comment %} <a href="{% url 'create_sale' %}" class="btn btn-secondary">
             + Create Sale
-        </a>
+        </a> {% endcomment %}
     </div>
 
 
@@ -30,20 +30,11 @@
             <div class="col-md-4">
                 <input type="text"
                        class="form-control"
-                       placeholder="Search customer...">
+                       placeholder="Search...">
             </div>
 
             <div class="col-md-3">
                 <input type="date" class="form-control">
-            </div>
-
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option value="">Payment Method</option>
-                    <option>Cash</option>
-                    <option>Card</option>
-                    <option>UPI</option>
-                </select>
             </div>
 
             <div class="col-md-2">
@@ -56,7 +47,7 @@
     </div>
 
 
-    <!-- SALES TABLE -->
+    <!--  TABLE -->
     <div class="">
 
         <div class="table-responsive">
@@ -66,40 +57,43 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Customer</th>
+                        <th>Product</th>
                         <th>Date</th>
-                        <th>Payment Method</th>
-                        <th>Total Amount</th>
-                        <th>Profit</th>
+                        <th>transaction Type</th>
+                        <th>Change (Qty)</th>
+                        <th>Stock Before</th>
+                        <th>Stock After</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    {% for sale in sales %}
+                    {% for movement in stock_movements %}
 
-                    <tr class="clickable-row" data-url="{% url 'sale_detail' sale.id %}">
+                    {% comment %} <tr class="clickable-row" data-url="{% url 'sale_detail' sale.id %}"> {% endcomment %}
 
                         <td>{{ forloop.counter }}</td>
 
                         <td>
-                            {{ sale.customer.name }}
+                            {{ movement.product.name }}
                         </td>
 
-                        <td>{{ sale.sale_date }}</td>
+                        <td>{{ movement.created_at|date }}</td>
 
                         <td>
-                            <span class="badge-soft badge-success">
-                                {{ sale.get_payment_method_display }}
-                            </span>
+                            {{ movement.get_transaction_type_display }}
                         </td>
 
-                        <td class="fw-semibold">
-                            ₹ {{ sale.total_amount }}
+                        <td class="{% if movement.quantity_change > 0 %}text-success{% elif movement.quantity_change < 0 %}text-danger{% endif %}">
+                             {{ movement.quantity_change }}
                         </td>
 
-                        <td class="text-success fw-semibold">
-                            ₹ {{ sale.total_profit }}
+                        <td class="">
+                             {{ movement.before_quantity }}
+                        </td>
+
+                        <td class="">
+                             {{ movement.after_quantity }}
                         </td>
                         
                     </tr>

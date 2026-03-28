@@ -69,7 +69,7 @@ class SalesCreateView(View):
                     sale_form_data,
                     formset_data
                 )
-                logger.info('saved data', saved_sale)
+                logger.info('saved data %s', saved_sale)
                 return redirect(reverse_lazy('sale_success', kwargs={'pk':saved_sale.id}))
             except Exception as e:
                 logger.error(e)
@@ -104,17 +104,6 @@ class SaleSuccessView(DetailView):
 
 
 # APIs
-def product_info(request, id):
-    product = get_object_or_404(Product, id=id)
-
-    product_info ={
-        'selling_price': product.selling_price,
-        'unit': product.get_unit_display()
-    }
-
-    return JsonResponse(product_info)
-
-
 def search_customers(request):
     query = request.GET.get('q', '')
 

@@ -1,4 +1,4 @@
-// Real Time Price Calcalations 
+// Real Time Cost Calcalations 
 async function getProductInfo(productId){
     const response = await fetch(`/inventory/product-details/${productId}`)
     if (!response.ok){
@@ -8,15 +8,15 @@ async function getProductInfo(productId){
 }
 
 function calProductTotal(row){
-    const price = parseFloat(row.querySelector(".price").value) || 0
+    const cost = parseFloat(row.querySelector(".cost").value) || 0
     const qty = parseInt(row.querySelector(".quantity").value) || 0
 
-    row.querySelector(".product-total").value = (price*qty).toFixed(2)
+    row.querySelector(".product-total").value = (cost*qty).toFixed(2)
 }
 
 function calGrandTotal(){
     let grandTotal = 0
-    document.querySelectorAll(".sale-row").forEach(row => {
+    document.querySelectorAll(".purchase-row").forEach(row => {
         const rowTotal = parseFloat(row.querySelector(".product-total").value) || 0
         grandTotal += rowTotal
     });
@@ -29,24 +29,22 @@ function calGrandTotal(){
     document.querySelector("#sub_total").innerHTML = total
 }
 
-const saleItemForm = document.querySelector("tbody")
-saleItemForm.addEventListener("change", function(e) {
+const purchaseItemForm = document.querySelector("tbody")
+purchaseItemForm.addEventListener("change", function(e) {
     if(e.target.classList.contains("product-select"))
     {
-        const row = e.target.closest(".sale-row")
+        const row = e.target.closest(".purchase-row")
         const productId = row.querySelector(".product-select").value
 
-        const priceField = row.querySelector(".price")
         const unitField = row.querySelector(".unit")
         
         if (!productId) return
 
         getProductInfo(productId)
         .then(productInfo => {
-        priceField.value = productInfo.selling_price
-        unitField.value = productInfo.unit
-        calProductTotal(row)
-        calGrandTotal()
+            unitField.value = productInfo.unit
+            calProductTotal(row)
+            calGrandTotal()
         
         })
         .catch(error => {
@@ -54,7 +52,7 @@ saleItemForm.addEventListener("change", function(e) {
         })
 
         // Auto adding new product rows
-        const itemTable = document.getElementById("sale-items")
+        const itemTable = document.getElementById("purchase-items")
         const allProductCells = itemTable.querySelectorAll(".product-select")
         let emptyForms = 0
         for (const cell of allProductCells){
@@ -69,8 +67,14 @@ saleItemForm.addEventListener("change", function(e) {
 
     }
 
-    if (e.target.classList.contains("quantity")){
-        const row = e.target.closest(".sale-row")
+    else if (e.target.classList.contains("quantity")){
+        const row = e.target.closest(".purchase-row")
+        calProductTotal(row)
+        calGrandTotal()
+    }
+
+    else if (e.target.classList.contains("cost")){
+        const row = e.target.closest(".purchase-row")
         calProductTotal(row)
         calGrandTotal()
     }
@@ -84,7 +88,7 @@ function addProduct() {
     const totalForms = document.getElementById("id_items-TOTAL_FORMS")
     const formCount = parseInt(totalForms.value)
 
-    const saleItemsContainer = document.getElementById("sale-items")
+    const purchaseItemsContainer = document.getElementById("purchase-items")
     const emptyForm = document.getElementById("empty-form").cloneNode(true)
 
     emptyForm.innerHTML = emptyForm.innerHTML.replace(/__prefix__/g, formCount)
@@ -92,7 +96,7 @@ function addProduct() {
     emptyForm.style.display = ""
     emptyForm.removeAttribute = "id"
 
-    saleItemsContainer.appendChild(emptyForm)
+    purchaseItemsContainer.appendChild(emptyForm)
 
     totalForms.value = formCount+1
 }
@@ -104,8 +108,8 @@ document.addEventListener("click", function(e) {
     if (e.target.classList.contains("remove-product")) {
         console.log("remove product")
 
-        const saleRow = e.target.closest(".sale-row")
-        saleRow.remove()
+        const purchaseRow = e.target.closest(".purchase-row")
+        purchaseRow.remove()
         calGrandTotal()
     }
 })

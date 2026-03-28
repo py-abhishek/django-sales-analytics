@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}All Recorded Sales{% endblock %}
+{% block page_title %}All Recorded Purchases{% endblock %}
 {% block css_files%}
     <link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
 {% endblock %}
@@ -13,12 +13,12 @@
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="section-title mb-0">All Recorded Sales</h3>
-            <small class="text-muted">All recorded sales transactions</small>
+            <h3 class="section-title mb-0">All Recorded Purchases</h3>
+            <small class="text-muted">All recorded purchase transactions</small>
         </div>
 
-        <a href="{% url 'create_sale' %}" class="btn btn-secondary">
-            + Create Sale
+        <a href="{% url 'add_purchase' %}" class="btn btn-secondary">
+            + Add Purchase
         </a>
     </div>
 
@@ -30,7 +30,7 @@
             <div class="col-md-4">
                 <input type="text"
                        class="form-control"
-                       placeholder="Search customer...">
+                       placeholder="Search...">
             </div>
 
             <div class="col-md-3">
@@ -56,7 +56,7 @@
     </div>
 
 
-    <!-- SALES TABLE -->
+    <!-- Purchase TABLE -->
     <div class="">
 
         <div class="table-responsive">
@@ -66,40 +66,39 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Customer</th>
+                        <th>Supplier</th>
                         <th>Date</th>
                         <th>Payment Method</th>
                         <th>Total Amount</th>
-                        <th>Profit</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    {% for sale in sales %}
+                    {% for purchase in purchases %}
 
-                    <tr class="clickable-row" data-url="{% url 'sale_detail' sale.id %}">
+                    <tr class="clickable-row" data-url="{% url 'purchase_detail' purchase.id %}">
 
                         <td>{{ forloop.counter }}</td>
 
                         <td>
-                            {{ sale.customer.name }}
+                            {% if purchase.supplier %}
+                                {{ purchase.supplier.name }}
+                            {% else %}
+                                <span class="text-muted">Walk-in</span>
+                            {% endif %}
                         </td>
 
-                        <td>{{ sale.sale_date }}</td>
+                        <td>{{ purchase.purchase_date }}</td>
 
                         <td>
                             <span class="badge-soft badge-success">
-                                {{ sale.get_payment_method_display }}
+                                {{ purchase.get_payment_method_display }}
                             </span>
                         </td>
 
                         <td class="fw-semibold">
-                            ₹ {{ sale.total_amount }}
-                        </td>
-
-                        <td class="text-success fw-semibold">
-                            ₹ {{ sale.total_profit }}
+                            ₹ {{ purchase.total_amount }}
                         </td>
                         
                     </tr>
@@ -109,7 +108,7 @@
 
                     <tr>
                         <td colspan="7" class="text-center py-4 text-muted">
-                            No sales recorded
+                            No purchases recorded
                         </td>
                     </tr>
 
