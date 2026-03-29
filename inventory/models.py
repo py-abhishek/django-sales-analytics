@@ -38,7 +38,7 @@ class Product(models.Model):
         db_index=True,
         related_name='products'
         )
-    cost_price = models.DecimalField(
+    current_avg_cost = models.DecimalField(
         max_digits=12,
         decimal_places=2
         )
@@ -46,7 +46,7 @@ class Product(models.Model):
         max_digits=12,
         decimal_places=2
         )
-    stock_quantity = models.IntegerField(
+    current_stock = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
         )
@@ -66,8 +66,8 @@ class Product(models.Model):
         return self.name
 
 
+# Record every stock movement (as history)
 class InventoryLedger(models.Model):
-    # record every stock trasactio (as history)
     class TransTypeChoices(models.TextChoices):
         PURCHASE = 'pur', 'Purchase'
         SALE = 'sale', 'Sale'

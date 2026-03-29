@@ -6,24 +6,27 @@ from .forms import ExpenseForm, ExpenseCategoryForm
 
 # Create your views here.
 
+# Create new expense
 class AddExpenseView(CreateView):
     model = Expense
     form_class = ExpenseForm
     template_name = 'expense/add_expense.html'
     success_url = reverse_lazy('expense_success')
 
+# View all expenses
 class ExpenseListView(ListView):
     model = Expense
     template_name = 'expense/expense_list.html'
     context_object_name = 'expenses'
     ordering = '-expense_date'
 
-
+# View a particuler expense in detail
 class ExpenseDetailView(DetailView):
     model = Expense
     context_object_name = 'expense'
     template_name = 'expense/expense_detail.html'
 
+# Manage and create expense categories
 class ExpenseCategoryView(CreateView):
     model = ExpenseCategory
     form_class = ExpenseCategoryForm

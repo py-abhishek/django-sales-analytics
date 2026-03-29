@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Core function
 def get_insights(sales):
     top_customers = get_top_customers(sales)
     payment_methods = get_payment_methods(sales)
@@ -40,6 +41,7 @@ def get_payment_methods(sales):
         payment_methods['count'].append(data['count'])
     
     return payment_methods
+
 
 def get_summary(sales):
     return sales.aggregate(

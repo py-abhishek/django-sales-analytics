@@ -74,7 +74,7 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Cost Price</p>
-                <p class="text-semibold">₹ {{ product.cost_price }}</p>
+                <p class="text-semibold">₹ {{ product.current_avg_cost }}</p>
             </div>
 
             <div class="col-md-3">
@@ -84,7 +84,7 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Current Stock</p>
-                <p class="text-semibold">{{ product.stock_quantity }} {{ product.unit }}</p>
+                <p class="text-semibold">{{ product.current_stock }} {{ product.unit }}</p>
             </div>
 
             <div class="col-md-3">

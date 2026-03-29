@@ -81,7 +81,7 @@
                         <td>{{ product.sku }}</td>
 
                         <td>
-                            ₹ {{ product.cost_price }}
+                            ₹ {{ product.current_avg_cost }}
                         </td>
 
                         <td>
@@ -89,7 +89,7 @@
                         </td>
 
                         <td>
-                            {{ product.stock_quantity  }} {{ product.get_unit_display }}
+                            {{ product.current_stock  }} {{ product.get_unit_display }}
                         </td>
 
                         <td>

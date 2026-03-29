@@ -20,7 +20,6 @@ class Supplier(models.Model):
         return self.name
 
 
-
 class Purchase(models.Model):
 
     class PaymentMethod(models.TextChoices):

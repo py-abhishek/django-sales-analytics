@@ -3,6 +3,7 @@ from finance.models import Expense
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 
+# Core function
 def get_insights():
     sales, expenses = get_filtered_queries()
 

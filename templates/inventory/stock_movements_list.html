@@ -85,15 +85,15 @@
                         </td>
 
                         <td class="{% if movement.quantity_change > 0 %}text-success{% elif movement.quantity_change < 0 %}text-danger{% endif %}">
-                             {{ movement.quantity_change }}
+                             {{ movement.quantity_change }} {{ movement.product.get_unit_display }}
                         </td>
 
                         <td class="">
-                             {{ movement.before_quantity }}
+                             {{ movement.before_quantity }} {{ movement.product.get_unit_display }}
                         </td>
 
                         <td class="">
-                             {{ movement.after_quantity }}
+                             {{ movement.after_quantity }} {{ movement.product.get_unit_display }}
                         </td>
                         
                     </tr>

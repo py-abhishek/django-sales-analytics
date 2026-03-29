@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 import logging
 logger = logging.getLogger(__name__)
 
+# Validate and create sale
 def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data):
     '''
     This function will validate if item available in the stock,
@@ -48,7 +49,7 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
                 quantity=quantity,
                 unit=product.unit,
                 price_at_sale=product.selling_price,
-                cost_at_sale=product.cost_price,
+                cost_at_sale=product.current_avg_cost,
                 item_total_price=get_item_total_price(product, item),
                 item_profit=get_item_profit(product, item)
             )
@@ -56,7 +57,7 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
             deduct_stock(product, item)
 
             # Updating Stock Ledger
-            unit_cost = product.cost_price
+            unit_cost = product.current_avg_cost
             total_cost = (unit_cost * quantity)
             create_sale_ledger(product, quantity, unit_cost, total_cost, sale)
 
@@ -81,7 +82,7 @@ def validate_formset_data(formset_data):
         if not available_in_stock(item['product'], item):
             raise ValidationError(
                 f'Insufficient stock for {item['product'].name}. '
-                f'Available: {item['product'].stock_quantity}, '
+                f'Available: {item['product'].current_stock}, '
                 f'Requested: {item['quantity']}.'
             )
     
@@ -96,15 +97,17 @@ def get_cleaned_formset_data(formset_data):
     ]
 
 
+# Check product availability
 def available_in_stock(product, item):
-    stock_quantity = product.stock_quantity
-    return stock_quantity >= item['quantity']
+    current_stock = product.current_stock
+    return current_stock >= item['quantity']
 
 
+# Update product quantity
 def deduct_stock(product, item):
-    c_stock_quantity = product.stock_quantity
+    c_current_stock = product.current_stock
     sale_quantity = item['quantity']
-    product.stock_quantity = c_stock_quantity - sale_quantity
+    product.current_stock = c_current_stock - sale_quantity
     product.save()
 
 
@@ -113,7 +116,7 @@ def get_item_total_price(product, item):
 
 
 def get_item_profit(product, item):
-    return (product.selling_price - product.cost_price) * item['quantity']
+    return (product.selling_price - product.current_avg_cost) * item['quantity']
 
 
 def get_total_sale_amount(clean_formset_data):

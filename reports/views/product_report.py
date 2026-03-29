@@ -26,7 +26,7 @@ class ProductReportView(View):
         return render(request, 'reports/product_report.html', context)
     
 
-# Filter API
+# API - filter results
 def get_filtered_data(request):
     if request.method == 'POST':
         filter_values = json.loads(request.body)

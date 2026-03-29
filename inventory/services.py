@@ -2,6 +2,7 @@ from django.db.models import Sum
 
 from .models import InventoryLedger
 
+# Core function
 def get_sales_insights(all_sales):
     totals =all_sales.aggregate(
         total_quantity_sold = Sum('quantity'),
@@ -10,29 +11,38 @@ def get_sales_insights(all_sales):
     )
     return { k: v or 0 for k, v in totals.items() }
 
-
+# Record purchase history
 def create_purchase_ledger(product, quantity, unit_cost, total_cost, purchase):
     InventoryLedger.objects.create(
         product = product,
         transaction_type = InventoryLedger.TransTypeChoices.PURCHASE,
         quantity_change = quantity,
-        before_quantity = product.stock_quantity,
-        after_quantity = product.stock_quantity + quantity,
+        before_quantity = product.current_stock,
+        after_quantity = product.current_stock + quantity,
         unit_cost = unit_cost,
         total_cost = total_cost,
         purchase = purchase
     )
 
+# Record sales history
 def create_sale_ledger(product, quantity, unit_cost, total_cost, sale):
     InventoryLedger.objects.create(
         product = product,
         transaction_type = InventoryLedger.TransTypeChoices.SALE,
         quantity_change = (-quantity),
-        before_quantity = product.stock_quantity,
-        after_quantity = product.stock_quantity - quantity,
+        before_quantity = product.current_stock,
+        after_quantity = product.current_stock - quantity,
         unit_cost = unit_cost,
         total_cost = total_cost,
         sale = sale
     )
     
-    
+
+# Calculate new average cost
+def calc_new_avg_cost(product, new_qty, new_cost):
+    old_stock = product.current_stock
+    old_avg_cost = product.current_avg_cost
+
+    # calc new average cost
+    new_avg_cost = ((old_stock * old_avg_cost) + (new_qty * new_cost)) / (old_stock + new_qty)
+    return new_avg_cost

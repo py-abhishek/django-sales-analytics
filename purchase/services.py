@@ -2,11 +2,12 @@ from django.db import transaction
 from django.core.exceptions import ValidationError
 
 from .models import Purchase, PurchaseItem, Supplier
-from inventory.services import create_purchase_ledger
+from inventory.services import create_purchase_ledger, calc_new_avg_cost
 
 import logging
 logger = logging.getLogger(__name__)
 
+# Validate data and create purchase
 def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_form_data, formset_data):
 
     # remove empty item from formset
@@ -48,7 +49,7 @@ def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_f
                 item_total_cost=total_cost
             )
 
-            add_stock(product, item) # increase stock of purchased products
+            update_stock(product, item) # increase stock and update avg cost of purchased products
             create_purchase_ledger(product, item['quantity'], unit_cost, total_cost, purchase) # recording ledger for history
             
 
@@ -82,12 +83,19 @@ def get_cleaned_formset_data(formset_data):
     ]
 
 
-
-def add_stock(product, item):
-    # add stock instead
-    c_stock_quantity = product.stock_quantity
+# Update product stock cost and quantity
+def update_stock(product, item):
+    # Update stock quantity
+    c_current_stock = product.current_stock
     sale_quantity = item['quantity']
-    product.stock_quantity = c_stock_quantity + sale_quantity
+    product.current_stock = c_current_stock + sale_quantity
+
+    # Update average cost
+    new_qty = item['quantity']
+    new_cost = item['unit_cost']
+    new_avg_cost = calc_new_avg_cost(product, new_qty, new_cost)
+    product.current_avg_cost = new_avg_cost
+
     product.save()
 
 

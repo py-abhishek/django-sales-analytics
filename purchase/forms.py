@@ -2,6 +2,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from .models import Purchase, PurchaseItem, Supplier
 
+# Create supplier
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
@@ -14,6 +15,7 @@ class SupplierForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'supplier-address', 'placeholder': 'Address (optional)'})
         }
 
+# Add purchase
 class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase
@@ -28,7 +30,7 @@ class PurchaseForm(forms.ModelForm):
             'payment_method': forms.Select(attrs={'class': 'form-select'}),
         }
     
-
+# Add purchase Items
 class PurchaseItemForm(forms.ModelForm):
     class Meta:
         model = PurchaseItem

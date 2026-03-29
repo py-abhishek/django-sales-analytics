@@ -3,6 +3,7 @@ from django.db.models.functions import TruncMonth
 from sales.models import SaleItem
 from inventory.models import Product
 
+# Core function
 def get_insights(from_date=None, to_date=None, category=None):
 
     sale_items, products = get_filtered_query(from_date, to_date, category)
@@ -52,7 +53,7 @@ def get_summary(products, sale_items):
 
     summary.update(products.aggregate(
         total_products = Count('id'),
-        low_stock_products = Count('id', filter=Q(stock_quantity__lt=F('reorder_level'))),
+        low_stock_products = Count('id', filter=Q(current_stock__lt=F('reorder_level'))),
     ))
     
     return summary
@@ -95,6 +96,7 @@ def get_top_selling_products(sale_items):
         top_products['data'].append(item['total_units_sold'])
 
     return top_products
+
 
 def get_top_categories(sale_items):
     categories = list(
@@ -145,10 +147,10 @@ def get_slow_moving_products(sale_items):
 
 def get_low_stock_products(products):
     return list(products.filter(
-        stock_quantity__lt=F('reorder_level')
-    ).order_by('stock_quantity')[:5].values(
+        current_stock__lt=F('reorder_level')
+    ).order_by('current_stock')[:5].values(
         'id',
         'name',
-        'stock_quantity',
+        'current_stock',
         'reorder_level'
     ))

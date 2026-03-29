@@ -12,13 +12,14 @@ from . import services
 
 # Create your views here.
 
-
+# create new product
 class AddProductView(CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'inventory/add_product.html'
     success_url = reverse_lazy('add_product_success')
 
+# Manage and create product category
 class ProductCategoryView(CreateView):
     model = ProductCategory
     form_class = ProductCategoryForm
@@ -31,13 +32,15 @@ class ProductCategoryView(CreateView):
         return context
     
 
-
+# View all products
 class ProductListView(ListView):
     model = Product
     template_name = 'inventory/product_list.html'
     context_object_name = 'products'
     ordering = '-created_at'
 
+
+# View a particuler product in detail
 class ProductDetailView(View):
     def get(self, request, pk):
         product = get_object_or_404(Product, id=pk)
@@ -59,6 +62,7 @@ class ProductDetailView(View):
         return render(request, 'inventory/product_detail.html', context)
     
 
+# View all stock changes
 class StockMovementListView(ListView):
     model = InventoryLedger
     template_name = 'inventory/stock_movements_list.html'
@@ -66,7 +70,7 @@ class StockMovementListView(ListView):
     ordering = '-created_at'
 
 
-# API
+# API - get product info
 def product_info(request, id):
     product = get_object_or_404(Product, id=id)
 

@@ -3,6 +3,7 @@ from django.db.models import Q, F
 
 from inventory.models import Product, ProductCategory
 
+# Core function
 def get_insights():
     products = get_filtered_query()
     summary = get_summary(products)
@@ -30,10 +31,10 @@ def get_filtered_query():
 def get_summary(products):
     result = products.aggregate(
         total_products = Count('id'),
-        inventory_value = Sum(F('cost_price')* F('stock_quantity')),
-        low_stock_count = Count('id', filter=Q(stock_quantity__lt=F('reorder_level'), stock_quantity__gt=0)),
-        out_of_stock_count = Count('id', filter=Q(stock_quantity__exact=0)),
-        in_stock_count=Sum('id', filter=Q(stock_quantity__gt=F('reorder_level')))
+        inventory_value = Sum(F('current_avg_cost')* F('current_stock')),
+        low_stock_count = Count('id', filter=Q(current_stock__lt=F('reorder_level'), current_stock__gt=0)),
+        out_of_stock_count = Count('id', filter=Q(current_stock__exact=0)),
+        in_stock_count=Sum('id', filter=Q(current_stock__gt=F('reorder_level')))
     )
 
     result['inventory_value'] = float(result['inventory_value'])
@@ -45,7 +46,7 @@ def get_inv_category_value(products):
     values = list(products.values(
         'category__name'
     ).annotate(
-        total_value=Sum(F('cost_price') * F('stock_quantity'))
+        total_value=Sum(F('current_avg_cost') * F('current_stock'))
     ).order_by('-total_value')
     )
 
@@ -56,7 +57,7 @@ def get_inv_category_value(products):
 
     return result
 
-
+# Get distributed stock - (In stock - 300 Items; Low stock - 10 Items; Out of Stock - 2 Items)
 def get_dist_stock(products):
 
     summary = get_summary(products)
@@ -72,7 +73,7 @@ def get_top_inv_products(products):
     top_products = list(products.values(
         'name'
     ).annotate(
-        total_value=F('cost_price') * F('stock_quantity')
+        total_value=F('current_avg_cost') * F('current_stock')
     ).order_by('-total_value')[:5]
     )
 
@@ -85,22 +86,22 @@ def get_top_inv_products(products):
 
 def get_low_stock_products(products):
     return list(products.filter(
-         Q(stock_quantity__lte=F('reorder_level'), stock_quantity__gt=0)
-    ).order_by('stock_quantity').values(
+         Q(current_stock__lte=F('reorder_level'), current_stock__gt=0)
+    ).order_by('current_stock').values(
         'id',
         'name',
         'reorder_level',
-        'stock_quantity'
+        'current_stock'
     )
     )
 
 def get_out_of_stock_products(products):
     return list(products.filter(
-         stock_quantity__exact=0
-    ).order_by('stock_quantity').values(
+         current_stock__exact=0
+    ).order_by('current_stock').values(
         'id',
         'name',
         'reorder_level',
-        'stock_quantity'
+        'current_stock'
     )
     )

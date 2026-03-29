@@ -2,6 +2,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from .models import Sale, SaleItem, Customer
 
+# Create customer form
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -14,6 +15,7 @@ class CustomerForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'customer-address', 'placeholder': 'Address (optional)'})
         }
 
+# Create sale form
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-
+# Create new sale
 class SalesCreateView(View):
 
     def get(self, request):
@@ -84,18 +84,21 @@ class SalesCreateView(View):
         })
     
 
+# View sales history
 class SalesListView(ListView):
     model = Sale
     template_name = 'sales/sales_list.html'
     context_object_name = 'sales'
     ordering = ['-sale_date']
         
+
+# View a particuler sale detail
 class SaleDetailView(DetailView):
     model = Sale
     template_name = 'sales/sale_detail.html'
     context_object_name = 'sale'
 
-
+# Render succes template on successfull sale
 class SaleSuccessView(DetailView):
     model = Sale
     template_name = 'sales/sale_success.html'
@@ -103,7 +106,7 @@ class SaleSuccessView(DetailView):
 
 
 
-# APIs
+# APIs - get customers for search query
 def search_customers(request):
     query = request.GET.get('q', '')
 

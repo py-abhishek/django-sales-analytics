@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
+# Create new purchase
 class PurchaseView(View):
     def get(self, request):
         purchase_form = PurchaseForm(prefix='purchase')
@@ -79,13 +80,14 @@ class PurchaseView(View):
             'formset': formset
         })
     
-
+# Render success template
 class PurchaseSuccessView(DetailView):
     model = Purchase
     template_name = 'purchase/purchase_success.html'
     context_object_name = 'purchase'
 
 
+# View purchase history
 class PurchaseListView(ListView):
     model = Purchase
     template_name = 'purchase/purchase_list.html'
@@ -93,13 +95,14 @@ class PurchaseListView(ListView):
     ordering = ['-purchase_date']
 
 
+# View a particuler product details
 class PurchaseDetailView(DetailView):
     model = Purchase
     template_name = 'purchase/purchase_detail.html'
     context_object_name = 'purchase'
 
 
-# API
+# API - get suppliers for search query
 def search_suppliers(request):
     query = request.GET.get('q', '')
 
