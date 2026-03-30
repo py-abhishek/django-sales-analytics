@@ -1,0 +1,106 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block page_title %}Sign In{% endblock %}
+{% block css_files%}
+{% endblock %}
+{% block content %}
+    <div class="card auth-card p-4" style="max-width: 600px">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h3 class="section-title">Create your account</h3>
+        <small class="text-muted">
+            Start managing your business in one place
+        </small>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" id="signupForm">
+        {% csrf_token %}
+
+        <!-- Full Name -->
+        <div class="row mb-3 ">
+            <div class="col-6">
+                <label class="form-label">First Name*</label>
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </div>
+            
+            <div class="col-6">
+                <label class="form-label">Last name</label>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label class="form-label">Email address*</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+            {% comment %} <input type="email" name="email" class="form-control" placeholder="Enter your email" required> {% endcomment %}
+        </div>
+
+        <div class="mb-3 row">
+            <!-- Password -->
+            <div class="password-toggle col-6">
+                <label class="form-label">Password*</label>
+                <input type="password" name="password1" id="password1" class="form-control" placeholder="Create a password" required>
+                <i class="bi bi-eye-slash toggle-icon" onclick="togglePassword('password1', this)"></i>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="password-toggle col-6">
+                <label class="form-label">Confirm Password*</label>
+                <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm password" required>
+                <i class="bi bi-eye-slash toggle-icon" onclick="togglePassword('password2', this)"></i>
+            </div>
+        </div>
+
+        <!-- Errors -->
+        {% if form.errors %}
+            <div class="alert alert-danger py-2">
+                {% comment %} {% for field in form %}
+                    {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endfor %} {% endcomment %}
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100">
+            Sign Up
+        </button>
+
+    </form>
+
+    <!-- Footer -->
+    <p class="text-center mt-3 mb-0">
+        Already have an account?
+        <a href="{% url 'signin' %}">Sign In</a>
+    </p>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        // Loading state - SignUp Button
+        document.getElementById("signupForm").addEventListener("submit", function () {
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.innerText = "Creating account...";
+        });
+
+    </script>
+{% endblock %}
+
+
+

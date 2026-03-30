@@ -19,25 +19,32 @@ class Command(BaseCommand):
         random_days = random.randint(0, 365)
         random_date = start_date + timedelta(days=random_days)
         return random_date
-
+    
 
     def handle(self, *args, **options):
+        sale_form_data = {}
+        customer_form_data = {}
 
         for i in range(500):
-
-            customer = random.choice(Customer.objects.all())
-            p_method = random.choice(Sale._meta.get_field('payment_method').choices)[0]
-            date = self.get_random_date()
-            products_data = []
+            customer_id = random.choice(Customer.objects.all()).id
+            sale_form_data['payment_method'] = random.choice(Sale._meta.get_field('payment_method').choices)[0]
+            sale_form_data['sale_date'] = self.get_random_date()
+            formset_data = []
 
             for j in range(random.randint(1, 10)):
-                products_data.append({
+                formset_data.append({
                     'product': random.choice(Product.objects.all()),
                     'quantity': random.randint(1,4)
                     })
             
             try:
-                services.create_sale(customer, date, p_method, products_data)
+                services.create_sale(
+                    customer_id=customer_id,
+                    is_new_customer=False, 
+                    customer_form_data=customer_form_data,
+                    sale_form_data=sale_form_data,
+                    formset_data=formset_data
+                    )
             except Exception as e:
                 print(e)
                 continue

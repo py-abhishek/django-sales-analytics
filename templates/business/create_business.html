@@ -1,0 +1,97 @@
+
+{% extends "business/base.html" %}
+{% load static %}
+
+{% block page_title %}Create a Business{% endblock %}
+{% block css_files%}
+{% endblock %}
+{% block content %}
+<div class="card auth-card p-4" style="max-width: 500px">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h3 class="section-title">Create a Business</h3>
+        <small class="text-muted">
+            Set up your business to start managing inventory and sales
+        </small>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" id="businessForm">
+        {% csrf_token %}
+
+        <!-- Business Name -->
+        <div class="mb-3">
+            <label class="form-label">Business Name</label>
+            <input type="text" name="name" class="form-control"
+                   placeholder="Enter your business name" required autofocus>
+        </div>
+
+        <!-- Business Type -->
+        <div class="mb-3">
+            <label class="form-label">Business Type</label>
+            <select name="business_type" class="form-select">
+                <option value="">Select type (optional)</option>
+                <option value="retail">Retail</option>
+                <option value="wholesale">Wholesale</option>
+                <option value="service">Service</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" name="phone" class="form-control"
+                   placeholder="Enter contact number">
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <textarea name="address" rows="3" class="form-control"
+                      placeholder="Enter business address"></textarea>
+        </div>
+
+        <!-- Errors -->
+        {% if form.errors %}
+            <div class="alert alert-danger py-2">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Submit -->
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100">
+            Create Business
+        </button>
+
+    </form>
+
+    <!-- Optional Footer -->
+    <p class="text-center mt-3 mb-0">
+        {% comment %} <a href="{% url 'logout' %}" class="text-muted">Logout</a> {% endcomment %}
+    </p>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <!-- Script -->
+    <script>
+        document.getElementById("businessForm").addEventListener("submit", function () {
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.innerText = "Creating...";
+        });
+    </script>
+{% endblock %}

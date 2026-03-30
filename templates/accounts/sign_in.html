@@ -1,0 +1,76 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block page_title %}Sign In{% endblock %}
+{% block css_files%}
+{% endblock %}
+{% block content %}
+    <div class="card auth-card p-4">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h3 class="section-title">Welcome back</h3>
+        <small class="text-muted">
+            Sign in to continue managing your business
+        </small>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" id="signinForm">
+        {% csrf_token %}
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label class="form-label">Email address</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3 password-toggle">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Create a password" required>
+            <i class="bi bi-eye-slash toggle-icon" onclick="togglePassword('password', this)"></i>
+        </div>
+
+
+        <!-- Errors -->
+        {% if errors %}
+            <div class="alert alert-danger py-2">
+                {% for error in errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% comment %} <div class="d-flex justify-content-between mt-2">
+            <small><a href="#">Forgot password?</a></small>
+        </div> {% endcomment %}
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100">
+            Sign In
+        </button>
+
+    </form>
+
+    <!-- Footer -->
+    <p class="text-center mt-3 mb-0">
+        Don’t have an account?
+        <a class="anchor-text" href="{% url 'signup' %}">Sign Up</a>
+    </p>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    
+    <script>
+        // Loading state - SignIn Button
+        document.getElementById("signinForm").addEventListener("submit", function () {
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.innerText = "Signing in...";
+        });
+    </script>
+{% endblock %}

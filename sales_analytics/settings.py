@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'purchase',
     'reports',
     'accounts',
+    'business',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -135,6 +137,13 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Add custom user model
+AUTH_USER_MODEL = 'accounts.User'
+
+# Register custom backend
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',
+]
 
 # Configure Logging
 

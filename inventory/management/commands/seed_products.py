@@ -200,9 +200,9 @@ class Command(BaseCommand):
                 description = item['description'],
                 sku = item['sku'],
                 category = ProductCategory.objects.get(name=item['category']),
-                cost_price = item['cost_price'],
+                current_avg_cost = item['cost_price'],
                 selling_price = item['selling_price'],
-                stock_quantity = item['stock_quantity'],
+                current_stock = item['stock_quantity'],
                 unit = item['unit'],
                 reorder_level = item['reorder_level']
                 )

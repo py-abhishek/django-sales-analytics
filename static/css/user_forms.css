@@ -1,0 +1,118 @@
+/* CSS FOR SIGN UP AND BUSINESS FORMS */
+.content {
+    background: #f5f7fb;
+    min-height: calc(100vh - var(--nav-height));
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-weight: 600;
+}
+
+.two-field-container {
+    display: flex;
+}
+
+.form-control {
+    border-radius: 8px;
+}
+
+.btn-primary {
+    border-radius: 8px;
+}
+
+.password-toggle {
+    position: relative;
+}
+
+.toggle-icon {
+    position: absolute;
+    bottom: 7px;
+    right: 20px;
+    /* transform: translateY(-50%); */
+    cursor: pointer;
+    color: #888;
+}
+
+.btn-primary{
+    background-color: var(--clr-primary);
+    transition: background-color 0.5s ease;
+}
+
+.btn-primary:hover {
+    background: var(--clr-primary-hover);
+}
+
+.anchor-text {
+    color: var(--clr-primary);
+    transition: color 0.5s ease;
+}
+
+.anchor-text:hover {
+    color: var(--clr-primary-hover);
+}
+
+
+/* SELECT BUSINESS PAGE */
+
+.container-box {
+    max-width: 900px !important;
+    width: 100%;
+    margin: auto;
+    background-color: #fcfeff;
+    border-radius: 12px;
+    padding: 25px 50px;
+    border: 1px solid #dde1e6
+}
+
+.business-card {
+    border-radius: 12px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    height: 100%;
+}
+
+.business-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.business-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.badge-role {
+    font-size: 0.75rem;
+}
+
+.create-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border: 2px dashed #ccc;
+}
+
+.create-card:hover {
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}

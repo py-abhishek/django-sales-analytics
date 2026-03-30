@@ -1,0 +1,78 @@
+{% extends "business/base.html" %}
+{% load static %}
+
+{% block page_title %}Select a Business{% endblock %}
+{% block css_files%}
+{% endblock %}
+{% block content %}
+<div class="container-box">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h3 class="section-title">Select a Business</h3>
+        <p class="text-muted mb-0">
+            Choose a business to continue managing your operations
+        </p>
+    </div>
+
+    <!-- Business Grid -->
+    <div class="row g-4">
+
+        {% for membership in memberships %}
+        <div class="col-md-6 col-lg-4">
+            <a href="{% url 'set_active_business' membership.business.id %}" class="card-link">
+                <div class="business-card">
+
+                    <div class="mb-2">
+                        <div class="business-name">
+                            {{ membership.business.name }}
+                        </div>
+                    </div>
+
+                    <div class="text-muted small mb-2">
+                        {{ membership.business.business_type|default:"Business" }}
+                    </div>
+
+                    <div>
+                        {% if membership.role == 'admin' %}
+                            <span class="badge bg-success badge-role">Admin</span>
+                        {% else %}
+                            <span class="badge bg-secondary badge-role">Member</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+        <!-- Create New Business Card -->
+        <div class="col-md-6 col-lg-4">
+            <a href="{% url 'create_business' %}" class="card-link">
+                <div class="business-card create-card">
+
+                    <div class="text-center">
+                        <div style="font-size: 28px;">+</div>
+                        <div>Create New Business</div>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Empty State -->
+    {% if not memberships %}
+    <div class="text-center mt-5">
+        <p class="text-muted">No businesses found</p>
+        <a href="{% url 'create_business' %}" class="btn btn-primary">
+            Create Business
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}
