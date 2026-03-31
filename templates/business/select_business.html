@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="text-muted small mb-2">
-                        {{ membership.business.business_type|default:"Business" }}
+                        {{ membership.business.get_business_type_display|default:"Business" }}
                     </div>
 
                     <div>

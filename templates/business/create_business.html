@@ -6,7 +6,7 @@
 {% block css_files%}
 {% endblock %}
 {% block content %}
-<div class="card auth-card p-4" style="max-width: 500px">
+<div class="card auth-card p-4" style="max-width: 700px">
 
     <!-- Header -->
     <div class="text-center mb-4">
@@ -20,47 +20,52 @@
     <form method="POST" id="businessForm">
         {% csrf_token %}
 
-        <!-- Business Name -->
-        <div class="mb-3">
-            <label class="form-label">Business Name</label>
-            <input type="text" name="name" class="form-control"
-                   placeholder="Enter your business name" required autofocus>
+        <div class="row mb-3">
+            <!-- Business Name -->
+            <div class="col-6">
+                <label class="form-label">Business Name</label>
+                {{ form.name }}
+                {{ form.name.erros }}
+            </div>
+
+            <!-- Business Type -->
+            <div class="col-6">
+                <label class="form-label">Business Type</label>
+                {{ form.business_type }}
+                {{ form.business_type.errors }}
+            </div>
+
         </div>
 
-        <!-- Business Type -->
-        <div class="mb-3">
-            <label class="form-label">Business Type</label>
-            <select name="business_type" class="form-select">
-                <option value="">Select type (optional)</option>
-                <option value="retail">Retail</option>
-                <option value="wholesale">Wholesale</option>
-                <option value="service">Service</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
+        <div class="row mb-3">
+            <!-- Phone -->
+            <div class="col-6">
+                <label class="form-label">Phone Number</label>
+                {{ form.phone }}
+                {{ form.phone.errors }}
+            </div>
 
-        <!-- Phone -->
-        <div class="mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="text" name="phone" class="form-control"
-                   placeholder="Enter contact number">
+            <!-- Email -->
+            <div class="col-6">
+                <label class="form-label">Business Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
         </div>
 
         <!-- Address -->
         <div class="mb-3">
             <label class="form-label">Address</label>
-            <textarea name="address" rows="3" class="form-control"
-                      placeholder="Enter business address"></textarea>
+            {{ form.address }}
+            {{ form.address.errors }}
+            {% comment %} <textarea name="address" rows="3" class="form-control"
+                      placeholder="Enter business address"></textarea> {% endcomment %}
         </div>
 
         <!-- Errors -->
-        {% if form.errors %}
+        {% if form.non_field_errors %}
             <div class="alert alert-danger py-2">
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div>{{ error }}</div>
-                    {% endfor %}
-                {% endfor %}
                 {% for error in form.non_field_errors %}
                     <div>{{ error }}</div>
                 {% endfor %}

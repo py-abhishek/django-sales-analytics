@@ -12,7 +12,7 @@ def get_sales_insights(all_sales):
     return { k: v or 0 for k, v in totals.items() }
 
 # Record purchase history
-def create_purchase_ledger(product, quantity, unit_cost, total_cost, purchase):
+def create_purchase_ledger(product, quantity, unit_cost, total_cost, purchase, business_id):
     InventoryLedger.objects.create(
         product = product,
         transaction_type = InventoryLedger.TransTypeChoices.PURCHASE,
@@ -21,11 +21,12 @@ def create_purchase_ledger(product, quantity, unit_cost, total_cost, purchase):
         after_quantity = product.current_stock + quantity,
         unit_cost = unit_cost,
         total_cost = total_cost,
-        purchase = purchase
+        purchase = purchase,
+        business_id=business_id
     )
 
 # Record sales history
-def create_sale_ledger(product, quantity, unit_cost, total_cost, sale):
+def create_sale_ledger(product, quantity, unit_cost, total_cost, sale, business_id):
     InventoryLedger.objects.create(
         product = product,
         transaction_type = InventoryLedger.TransTypeChoices.SALE,
@@ -34,7 +35,8 @@ def create_sale_ledger(product, quantity, unit_cost, total_cost, sale):
         after_quantity = product.current_stock - quantity,
         unit_cost = unit_cost,
         total_cost = total_cost,
-        sale = sale
+        sale = sale,
+        business_id=business_id
     )
     
 

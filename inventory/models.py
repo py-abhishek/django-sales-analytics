@@ -9,6 +9,7 @@ class ProductCategory(models.Model):
     '''
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='product_categories')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -59,6 +60,8 @@ class Product(models.Model):
         validators=[MinValueValidator(0)]
         )
     is_active = models.BooleanField(default=True)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='products')
+    created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -76,7 +79,7 @@ class InventoryLedger(models.Model):
         RETURN_OUT = 'return_out', 'Return Out'
         DAMAGE = 'dmg', 'Damage'
 
-    product = models.ForeignKey(Product, db_index=True, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     transaction_type = models.CharField(choices=TransTypeChoices.choices, db_index=True, max_length=20)
     quantity_change = models.IntegerField()
     before_quantity = models.IntegerField()
@@ -89,5 +92,7 @@ class InventoryLedger(models.Model):
     sale = models.ForeignKey('sales.Sale', on_delete=models.PROTECT, null=True, blank=True)
     # adjustment = models.ForeignKey('', on_delete=models.PROTECT, null=True, blank=True)
     
+    
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='stock_movements')
     created_at = models.DateTimeField(auto_now_add=True)
     

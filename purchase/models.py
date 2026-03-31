@@ -13,6 +13,7 @@ class Supplier(models.Model):
     phone = models.CharField(max_length=10, unique=True)
     email = models.EmailField(max_length=100, blank=True)
     address = models.CharField(max_length=200, blank=True)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='suppliers')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -46,6 +47,8 @@ class Purchase(models.Model):
         choices=PaymentMethod.choices,
         default=PaymentMethod.CASH
         )
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='purchases')
+    created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_purchases')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,6 +83,8 @@ class PurchaseItem(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)]
         )
+    
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='purchase_items')
 
 
     def __str__(self):

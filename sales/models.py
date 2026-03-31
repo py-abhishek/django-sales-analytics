@@ -18,6 +18,7 @@ class Customer(models.Model):
     address = models.CharField(max_length=200, blank=True)
     is_walkin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='customers')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -57,6 +58,8 @@ class Sale(models.Model):
         choices=PaymentMethod.choices,
         default=PaymentMethod.CASH
         )
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='sales')
+    created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_sales')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -102,6 +105,7 @@ class SaleItem(models.Model):
         validators=[MinValueValidator(0)]
         )
     item_profit = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='sale_items')
 
 
     def __str__(self):

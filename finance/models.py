@@ -6,6 +6,7 @@ from django.utils.timezone import localdate
 class ExpenseCategory(models.Model):
     name = models.CharField(db_index=True, max_length=100, unique=True)
     description = models.TextField(blank=True)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='expense_categories')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -14,10 +15,12 @@ class ExpenseCategory(models.Model):
 
 class Expense(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE, related_name='expenses', db_index=True)
+    category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE, related_name='expenses')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     description = models.TextField(blank=True)
     expense_date = models.DateField(db_index=True, default=localdate)
+    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='expenses')
+    created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_expenses')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

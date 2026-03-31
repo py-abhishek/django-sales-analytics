@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
@@ -53,3 +53,4 @@ class SignInView(View):
         errors.append('Email or password is incorrect')
         
         return render(request, 'accounts/sign_in.html', {'errors': errors})
+    

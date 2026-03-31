@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Validate data and create purchase
-def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_form_data, formset_data):
+def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_form_data, formset_data, business_id):
 
     # remove empty item from formset
     cleaned_formset_data = get_cleaned_formset_data(formset_data)
@@ -31,7 +31,8 @@ def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_f
             supplier=supplier,
             purchase_date=purchase_form_data['purchase_date'],
             total_amount=get_total_purchase_amount(cleaned_formset_data),
-            payment_method=purchase_form_data['payment_method']
+            payment_method=purchase_form_data['payment_method'],
+            business_id=business_id
             )
 
         for item in cleaned_formset_data:
