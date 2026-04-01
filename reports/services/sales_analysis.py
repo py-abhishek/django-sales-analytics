@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Core function
-def get_insights(sales):
+def get_insights(sales, business_id):
     top_customers = get_top_customers(sales)
     payment_methods = get_payment_methods(sales)
     summary = get_summary(sales)

@@ -4,8 +4,8 @@ from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 
 # Core function
-def get_insights():
-    sales, expenses = get_filtered_queries()
+def get_insights(business_id):
+    sales, expenses = get_filtered_queries(business_id)
 
     summary = get_summary(sales, expenses)
     revenue_expense_trend = get_revenue_expense_trend(sales, expenses)
@@ -20,9 +20,9 @@ def get_insights():
     }
 
 
-def get_filtered_queries():
-    sales = Sale.objects.all()
-    expenses = Expense.objects.all()
+def get_filtered_queries(business_id):
+    sales = Sale.objects.filter(business_id=business_id)
+    expenses = Expense.objects.filter(business_id=business_id)
 
     return sales, expenses
 

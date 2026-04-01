@@ -4,8 +4,8 @@ from django.db.models import Q, F
 from inventory.models import Product, ProductCategory
 
 # Core function
-def get_insights():
-    products = get_filtered_query()
+def get_insights(business_id):
+    products = get_filtered_query(business_id)
     summary = get_summary(products)
     inv_category_value = get_inv_category_value(products)
     distributed_stock = get_dist_stock(products)
@@ -23,8 +23,8 @@ def get_insights():
     }
 
 
-def get_filtered_query():
-    products = Product.objects.all().order_by('-name')
+def get_filtered_query(business_id):
+    products = Product.objects.filter(business_id=business_id).order_by('-name')
 
     return products
 

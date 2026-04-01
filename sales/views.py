@@ -13,6 +13,11 @@ from . import services
 import logging
 logger = logging.getLogger(__name__)
 
+
+
+def get_business_id(request):
+    return request.session.get('business_id')
+
 # Create your views here.
 
 # Create new sale
@@ -29,6 +34,7 @@ class SalesCreateView(View):
         })
 
     def post(self, request):
+
         customer_form = CustomerForm(request.POST, prefix='customer')
         sale_form = SaleForm(request.POST, prefix='sale')
         formset = SaleItemFormSet(request.POST)
@@ -67,7 +73,8 @@ class SalesCreateView(View):
                     is_new_customer,
                     customer_form_data,
                     sale_form_data,
-                    formset_data
+                    formset_data,
+                    get_business_id(request)
                 )
                 logger.info('saved data %s', saved_sale)
                 return redirect(reverse_lazy('sale_success', kwargs={'pk':saved_sale.id}))
@@ -90,6 +97,9 @@ class SalesListView(ListView):
     template_name = 'sales/sales_list.html'
     context_object_name = 'sales'
     ordering = ['-sale_date']
+    
+    def get_queryset(self):
+        return Sale.objects.filter(business_id=get_business_id(self.request))
         
 
 # View a particuler sale detail
@@ -97,12 +107,18 @@ class SaleDetailView(DetailView):
     model = Sale
     template_name = 'sales/sale_detail.html'
     context_object_name = 'sale'
+    
+    def get_queryset(self):
+        return Sale.objects.filter(business_id=get_business_id(self.request))
 
 # Render succes template on successfull sale
 class SaleSuccessView(DetailView):
     model = Sale
     template_name = 'sales/sale_success.html'
     context_object_name = 'sale'
+    
+    def get_queryset(self):
+        return Sale.objects.filter(business_id=get_business_id(self.request))
 
 
 
@@ -111,6 +127,7 @@ def search_customers(request):
     query = request.GET.get('q', '')
 
     customers = Customer.objects.filter(
+        Q(business_id=get_business_id(request)) &
         Q(name__contains=query) | Q(phone__contains=query)
         )[:10]
     data = list(customers.values('id', 'name', 'email', 'phone', 'address'))

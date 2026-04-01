@@ -33,7 +33,8 @@ class SignUpView(View):
         
         else:
             return render(request, 'accounts/sign_up.html', {'form': form})
-    
+        
+        
 
 class SignInView(View):
     def get(self, request):
@@ -48,7 +49,7 @@ class SignInView(View):
         
         if user is not None:
             login(request, user)
-            return redirect(reverse_lazy('dashboard'))
+            return redirect(reverse_lazy('select_business'))
             
         errors.append('Email or password is incorrect')
         

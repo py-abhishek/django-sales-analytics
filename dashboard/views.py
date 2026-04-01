@@ -9,7 +9,8 @@ from sales.models import Sale
 class DashboardView(View):
 
     def get(self, request):
-        recent_sales = Sale.objects.all().order_by('sale_date')[:5]
+        business_id = request.session.get('business_id')
+        recent_sales = Sale.objects.filter(business_id=business_id).order_by('sale_date')[:5]
 
         context = {
             'recent_sales': recent_sales 

@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Validate and create sale
-def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data):
+def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data, business_id):
     '''
     This function will validate if item available in the stock,
     then deduct it from the stock,
@@ -26,7 +26,8 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
                 name=customer_form_data['name'],
                 phone=customer_form_data['phone'],
                 email=customer_form_data['email'],
-                address=customer_form_data['address']
+                address=customer_form_data['address'],
+                business_id=business_id
             )
         else:
             customer = Customer.objects.get(id=customer_id)
@@ -36,7 +37,8 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
             sale_date=sale_form_data['sale_date'],
             total_amount=get_total_sale_amount(cleaned_formset_data),
             total_profit=get_total_profit(cleaned_formset_data),
-            payment_method=sale_form_data['payment_method']
+            payment_method=sale_form_data['payment_method'],
+                business_id=business_id
             )
 
         for item in cleaned_formset_data:
@@ -51,7 +53,8 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
                 price_at_sale=product.selling_price,
                 cost_at_sale=product.current_avg_cost,
                 item_total_price=get_item_total_price(product, item),
-                item_profit=get_item_profit(product, item)
+                item_profit=get_item_profit(product, item),
+                business_id=business_id
             )
             
             deduct_stock(product, item)
@@ -59,7 +62,7 @@ def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data
             # Updating Stock Ledger
             unit_cost = product.current_avg_cost
             total_cost = (unit_cost * quantity)
-            create_sale_ledger(product, quantity, unit_cost, total_cost, sale)
+            create_sale_ledger(product, quantity, unit_cost, total_cost, sale, business_id)
 
         return sale
     

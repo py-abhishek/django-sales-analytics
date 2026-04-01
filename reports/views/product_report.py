@@ -10,12 +10,17 @@ from sales.models import SaleItem
 from ..services import product_analysis 
 
 
+
+def get_business_id(request):
+    return request.session.get('business_id')
+
 class ProductReportView(View):
     def get(self, request):
-        product_categories = ProductCategory.objects.all().order_by('name')
+        business_id = get_business_id(self.request)
+        product_categories = ProductCategory.objects.filter(business_id=business_id).order_by('name')
 
         # calling function from services layer
-        insights = product_analysis.get_insights()
+        insights = product_analysis.get_insights(business_id)
 
         context = {
             'product_categories': product_categories
@@ -47,10 +52,10 @@ def get_filtered_data(request):
         category = 'All Categories'
         if category_id:
             category_id = int(category_id)
-            category = ProductCategory.objects.get(id=category_id).name
+            category = ProductCategory.objects.get(id=category_id, business_id=get_business_id(request)).name
         
 
-        insights = product_analysis.get_insights(from_date, to_date, category_id)
+        insights = product_analysis.get_insights(from_date, to_date, category_id, get_business_id(request))
 
         insights['results_for'] = {
             'date':{

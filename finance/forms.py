@@ -17,7 +17,7 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = '__all__'
-        exclude = ['updated_at', 'created_at']
+        exclude = ['created_by', 'business', 'updated_at', 'created_at']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),

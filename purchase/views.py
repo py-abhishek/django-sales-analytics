@@ -13,8 +13,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
 
+def get_business_id(request):
+    return request.session.get('business_id')
+
+# Create your views here.
 # Create new purchase
 class PurchaseView(View):
     def get(self, request):
@@ -64,7 +67,8 @@ class PurchaseView(View):
                     is_new_supplier,
                     supplier_form_data,
                     purchase_form_data,
-                    formset_data
+                    formset_data,
+                    get_business_id(request)
                 )
                 logger.info('saved data %s', saved_purchase)
                 return redirect(reverse_lazy('purchase_success', kwargs={'pk':saved_purchase.id}))
@@ -80,19 +84,28 @@ class PurchaseView(View):
             'formset': formset
         })
     
+
 # Render success template
 class PurchaseSuccessView(DetailView):
     model = Purchase
     template_name = 'purchase/purchase_success.html'
     context_object_name = 'purchase'
+    
+    def get_queryset(self):
+        return Purchase.objects.filter(business_id=get_business_id(self.request))
 
 
 # View purchase history
 class PurchaseListView(ListView):
+    
     model = Purchase
     template_name = 'purchase/purchase_list.html'
     context_object_name = 'purchases'
     ordering = ['-purchase_date']
+
+    def get_queryset(self):
+        return Purchase.objects.filter(business_id=get_business_id(self.request))
+
 
 
 # View a particuler product details
@@ -101,13 +114,17 @@ class PurchaseDetailView(DetailView):
     template_name = 'purchase/purchase_detail.html'
     context_object_name = 'purchase'
 
+    def get_queryset(self):
+        return Purchase.objects.filter(business_id=get_business_id(self.request))
+
 
 # API - get suppliers for search query
 def search_suppliers(request):
     query = request.GET.get('q', '')
 
     supplier = Supplier.objects.filter(
-        Q(name__contains=query) | Q(phone__contains=query)
+        Q(business_id=get_business_id(request)) &
+        Q(name__icontains=query) | Q(phone__icontains=query)
         )[:10]
     data = list(supplier.values('id', 'name', 'email', 'phone', 'address'))
     

@@ -3,7 +3,7 @@ from django.db.models import Sum
 from .models import InventoryLedger
 
 # Core function
-def get_sales_insights(all_sales):
+def get_sales_insights(all_sales, business_id):
     totals =all_sales.aggregate(
         total_quantity_sold = Sum('quantity'),
         total_revenue = Sum('item_total_price'),

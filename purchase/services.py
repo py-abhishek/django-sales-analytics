@@ -22,7 +22,8 @@ def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_f
                 name=supplier_form_data['name'],
                 phone=supplier_form_data['phone'],
                 email=supplier_form_data['email'],
-                address=supplier_form_data['address']
+                address=supplier_form_data['address'],
+                business_id=business_id
             )
         else:
             supplier = Supplier.objects.get(id=supplier_id)
@@ -47,11 +48,12 @@ def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_f
                 quantity=item['quantity'],
                 unit=product.unit,
                 unit_cost=item['unit_cost'],
-                item_total_cost=total_cost
+                item_total_cost=total_cost,
+                business_id=business_id
             )
 
             update_stock(product, item) # increase stock and update avg cost of purchased products
-            create_purchase_ledger(product, item['quantity'], unit_cost, total_cost, purchase) # recording ledger for history
+            create_purchase_ledger(product, item['quantity'], unit_cost, total_cost, purchase, business_id) # recording ledger for history
             
 
         return purchase

@@ -10,6 +10,11 @@ from .models import Product, ProductCategory, InventoryLedger
 from sales.models import SaleItem
 from . import services
 
+
+
+def get_business_id(request):
+    return request.session.get('business_id')
+
 # Create your views here.
 
 # create new product
@@ -18,6 +23,13 @@ class AddProductView(CreateView):
     form_class = ProductForm
     template_name = 'inventory/add_product.html'
     success_url = reverse_lazy('add_product_success')
+
+    def form_valid(self, form):
+        form.instance.business_id = get_business_id(self.request)
+        form.instance.created_by = self.request.user
+
+        return super().form_valid(form)
+    
 
 # Manage and create product category
 class ProductCategoryView(CreateView):
@@ -28,8 +40,13 @@ class ProductCategoryView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.all().order_by('-created_at')
+        context["categories"] = ProductCategory.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
         return context
+    
+    def form_valid(self, form):
+        form.instance.business_id = get_business_id(self.request)
+        return super().form_valid(form)
+    
     
 
 # View all products
@@ -39,16 +56,22 @@ class ProductListView(ListView):
     context_object_name = 'products'
     ordering = '-created_at'
 
+    def get_queryset(self):
+
+        return Product.objects.filter(business_id=get_business_id(self.request))
+
 
 # View a particuler product in detail
 class ProductDetailView(View):
     def get(self, request, pk):
+        business_id = get_business_id(request)
+
         product = get_object_or_404(Product, id=pk)
         current_year = now().year
-        all_sales = SaleItem.objects.filter(product=product, sale__sale_date__year__gte=current_year).select_related('sale').order_by('-sale__sale_date')
+        all_sales = SaleItem.objects.filter(business_id=business_id, product=product, sale__sale_date__year__gte=current_year).select_related('sale').order_by('-sale__sale_date')
         recent_sales = all_sales[:5]
 
-        sales_insights = services.get_sales_insights(all_sales)
+        sales_insights = services.get_sales_insights(all_sales, business_id)
 
         context = {
             'product': product,
@@ -68,11 +91,15 @@ class StockMovementListView(ListView):
     template_name = 'inventory/stock_movements_list.html'
     context_object_name = 'stock_movements'
     ordering = '-created_at'
+    
+    def get_queryset(self):
+
+        return InventoryLedger.objects.filter(business_id=get_business_id(self.request))
 
 
 # API - get product info
 def product_info(request, id):
-    product = get_object_or_404(Product, id=id)
+    product = get_object_or_404(Product, id=id, business_id=get_business_id(request))
 
     product_info ={
         'selling_price': product.selling_price,
