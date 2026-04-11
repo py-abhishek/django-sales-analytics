@@ -10,6 +10,8 @@ from .models import Sale, Customer
 from inventory.models import Product
 from . import services
 
+from core.permissions.mixins import RoleRequiredMixin
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -69,6 +71,7 @@ class SalesCreateView(View):
                 Calling function from services to validate and create sale
                 '''
                 saved_sale = services.create_sale(
+                    request,
                     customer_id,
                     is_new_customer,
                     customer_form_data,

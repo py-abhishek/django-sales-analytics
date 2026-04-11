@@ -18,7 +18,8 @@ class CreateBusinessView(View):
         user = request.user # Get current signed in user
 
         if business_form.is_valid():
-            create_business(business_form, user)
+            created_business = create_business(business_form, user)
+            request.session['business_id'] = created_business.id # Saving buiness_id in session
             return redirect('dashboard')
         
         return render(request, 'business/create_business.html', {'form': business_form})

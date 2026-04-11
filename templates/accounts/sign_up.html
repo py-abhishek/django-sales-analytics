@@ -5,6 +5,7 @@
 {% block css_files%}
 {% endblock %}
 {% block content %}
+<div class="content">
     <div class="card auth-card p-4" style="max-width: 600px">
 
     <!-- Header -->
@@ -59,13 +60,8 @@
         </div>
 
         <!-- Errors -->
-        {% if form.errors %}
+        {% if form.non_field_errors %}
             <div class="alert alert-danger py-2">
-                {% comment %} {% for field in form %}
-                    {% for error in field.errors %}
-                        <div>{{ error }}</div>
-                    {% endfor %}
-                {% endfor %} {% endcomment %}
                 {% for error in form.non_field_errors %}
                     <div>{{ error }}</div>
                 {% endfor %}
@@ -85,6 +81,7 @@
         <a href="{% url 'signin' %}">Sign In</a>
     </p>
 
+</div>
 </div>
 
 {% endblock %}

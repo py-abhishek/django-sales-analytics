@@ -40,28 +40,28 @@
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Revenue</p>
-                <h4 class="card-value">₹ 10000{{ revenue }}</h4>
+                <h4 class="card-value">₹{{ summary.total_revenue }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Expenses</p>
-                <h4 class="card-value text-danger">₹ 2000{{ expenses }}</h4>
+                <h4 class="card-value text-danger">₹ {{ summary.total_exps }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Net Profit</p>
-                <h4 class="card-value text-success">₹ 3000{{ profit }}</h4>
+                <h4 class="card-value text-success">₹ {{ summary.net_profit }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Total Sales</p>
-                <h4 class="card-value">50 {{ total_sales }}</h4>
+                <h4 class="card-value">{{ summary.total_sales }}</h4>
             </div>
         </div>
 
@@ -75,8 +75,10 @@
             <h5 class="mb-0">Revenue vs Expense ({{ current_year }})</h5>
         </div>
 
-        <canvas id="revenueExpenseChart" height="100"></canvas>
-
+        <div id="revenueExpenseChart" height="100"></div>
+        {{ rev_exp_trend.labels|json_script:"rev_exp_trend_labels" }}
+        {{ rev_exp_trend.revenue|json_script:"rev_data" }}
+        {{ rev_exp_trend.expense|json_script:"exp_data" }}
     </div>
 
 
@@ -201,7 +203,10 @@
 
                 <h5 class="mb-3">Top Selling Products</h5>
 
-                <canvas id="topProductsChart"></canvas>
+                <div id="topProductsChart"></div>
+                
+                {{ top_selling_products.labels|json_script:"top_products_labels" }}
+                {{ top_selling_products.data|json_script:"top_products_data" }}
 
             </div>
 
@@ -214,7 +219,11 @@
 
                 <h5 class="mb-3">Expense Breakdown</h5>
 
-                <canvas id="expenseChart"></canvas>
+                <div id="expenseBreakdownChart"></div>
+                
+                {{ exp_breakdown.labels|json_script:"exp_breakdown_labels" }}
+                {{ exp_breakdown.data|json_script:"exp_breakdown_data" }}
+                
 
             </div>
 
@@ -228,11 +237,22 @@
 
         <h5 class="mb-3">Monthly Profit ({{ current_year }})</h5>
 
-        <canvas id="profitChart"></canvas>
+        <div id="profitTrendChart"></div>
+                
+        {{ profit_trend.labels|json_script:"profit_trend_labels" }}
+        {{ profit_trend.data|json_script:"profit_trend_data" }}
 
     </div>
 
 
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script type="module" src="{% static 'js/dashboard/dashboard.js' %}"></script>
 
 {% endblock %}

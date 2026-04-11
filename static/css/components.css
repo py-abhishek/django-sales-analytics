@@ -1,3 +1,7 @@
+.content-area-height {
+    height: calc(100vh - var(--nav-height));
+}
+
 /* Cards */
 .card-important {
     background: var(--primary-gradient);
@@ -135,4 +139,26 @@
 
 .btn-soft:hover {
     background-color: var(--clr-primary-medium);
+}
+
+
+.btn-outline-primary {
+    border-color: var(--clr-primary);
+    border-radius: var(--radius) !important;
+    transition: all 0.5s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--clr-primary-hover) !important;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.table-responsive {
+    overflow: visible;
 }

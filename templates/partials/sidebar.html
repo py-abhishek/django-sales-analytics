@@ -10,70 +10,6 @@
             </a>
         </li>
 
-
-        <!-- SALES -->
-        <li class="nav-item">
-
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#salesMenu"
-            role="button">
-                Sales
-                <span class="arrow">▾</span>
-            </a>
-
-            <div class="collapse {% show_menu 'create_sale' 'sales_list' %}" id="salesMenu">
-                <ul class="nav flex-column sub-menu">
-
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'create_sale' %}" href="{% url 'create_sale' %}">
-                            Create Sale
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'sales_list' %}" href="{% url 'sales_list' %}">
-                            Sales History
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-
-        </li>
-
-        <!-- PURCHASE -->
-        <li class="nav-item">
-
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#purchaseMenu"
-            role="button">
-                Purchase
-                <span class="arrow">▾</span>
-            </a>
-
-            <div class="collapse {% show_menu 'add_purchase' 'purchase_list' %}" id="purchaseMenu">
-                <ul class="nav flex-column sub-menu">
-
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'add_purchase' %}" href="{% url 'add_purchase' %}">
-                            Add Purchase
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'purchase_list' %}" href="{% url 'purchase_list' %}">
-                            Purchase History
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-
-        </li>
-
-
         <!-- INVENTORY -->
         <li class="nav-item">
 
@@ -116,6 +52,67 @@
 
         </li>
 
+        <!-- PURCHASE -->
+        <li class="nav-item">
+
+            <a class="nav-link d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            href="#purchaseMenu"
+            role="button">
+                Purchase
+                <span class="arrow">▾</span>
+            </a>
+
+            <div class="collapse {% show_menu 'add_purchase' 'purchase_list' %}" id="purchaseMenu">
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'add_purchase' %}" href="{% url 'add_purchase' %}">
+                            Add Purchase
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'purchase_list' %}" href="{% url 'purchase_list' %}">
+                            Purchase History
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </li>
+
+        <!-- SALES -->
+        <li class="nav-item">
+
+            <a class="nav-link d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            href="#salesMenu"
+            role="button">
+                Sales
+                <span class="arrow">▾</span>
+            </a>
+
+            <div class="collapse {% show_menu 'create_sale' 'sales_list' %}" id="salesMenu">
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'create_sale' %}" href="{% url 'create_sale' %}">
+                            Create Sale
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'sales_list' %}" href="{% url 'sales_list' %}">
+                            Sales History
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </li>
 
         <!-- Expense -->
         <li class="nav-item">

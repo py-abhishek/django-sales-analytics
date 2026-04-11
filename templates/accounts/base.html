@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/user_forms.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
     {% block css_files %}
     {% endblock %}
 </head>
@@ -21,7 +22,7 @@
     <!-- NAVBAR -->
     {% include "partials/navbar.html" %}
 
-    <div class="content">
+    <div class="">
         {% block content %}
         {% endblock %}
     </div>

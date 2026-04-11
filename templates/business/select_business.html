@@ -47,18 +47,20 @@
         {% endfor %}
 
         <!-- Create New Business Card -->
-        <div class="col-md-6 col-lg-4">
-            <a href="{% url 'create_business' %}" class="card-link">
-                <div class="business-card create-card">
+        {% if memberships %}
+            <div class="col-md-6 col-lg-4">
+                <a href="{% url 'create_business' %}" class="card-link">
+                    <div class="business-card create-card">
 
-                    <div class="text-center">
-                        <div style="font-size: 28px;">+</div>
-                        <div>Create New Business</div>
+                        <div class="text-center">
+                            <div style="font-size: 28px;">+</div>
+                            <div>Create New Business</div>
+                        </div>
+
                     </div>
-
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        {% endif %}
 
     </div>
 

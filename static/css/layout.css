@@ -33,6 +33,11 @@
     background: #ffffff;
 }
 
+.signin-btn-container a {
+    text-decoration: none;
+    padding: 8px 20px;
+}
+
 
 /* ===============================
    ADMIN DROPDOWN
@@ -158,4 +163,9 @@
     box-shadow: var(--shadow-soft);
     min-height: 100%;
     padding: 20px 40px;
+}
+
+/* Ṃanage users page */
+.table td {
+    vertical-align: middle;
 }

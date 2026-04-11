@@ -22,3 +22,6 @@ class SignInForm(ModelForm):
         widgets = {
             'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'})
         }
+        
+
+        
