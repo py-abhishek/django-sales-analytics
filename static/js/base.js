@@ -18,13 +18,15 @@ document.getElementById("nav-date").innerHTML = date
 
 // Clickable list rows
 
-document.querySelectorAll(".clickable-row").forEach(row => {
-    row.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
+  const row = e.target.closest(".clickable-row");
 
-        if (e.target.tagName === "A" || e.target.tagName === "BUTTON") {
-            return 
-        }
+  if (!row) return;
 
-        window.location = this.dataset.url
-    })
-})
+  // Ignore clicks on links or buttons
+  if (e.target.closest("a, button")) return;
+
+  if (row.dataset.url) {
+    window.location = row.dataset.url;
+  }
+});

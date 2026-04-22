@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Sale Created Successfully{% endblock %}
 {% block css_files%}
@@ -73,7 +74,7 @@
             <div class="col-md-3 mb-3">
                 <p class="info-label">Total Amount</p>
                 <p class="info-value text-bold">
-                    ₹ {{ sale.total_amount }}
+                    ₹ {{ sale.total_amount|floatformat:0|intcomma }}
                 </p>
             </div>
 
@@ -122,15 +123,15 @@
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.price_at_sale }}
+                        ₹ {{ item.price_at_sale|floatformat:0|intcomma }}
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.item_total_price }}
+                        ₹ {{ item.item_total_price|floatformat:0|intcomma }}
                     </td>
 
                     <td class="text-end text-success">
-                        ₹ {{ item.item_profit }}
+                        ₹ {{ item.item_profit|floatformat:0|intcomma }}
                     </td>
 
                 </tr>

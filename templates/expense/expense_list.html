@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}All Recorded Expense{% endblock %}
 {% block css_files%}
@@ -28,17 +29,17 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
                        placeholder="Search expense...">
             </div>
 
             <div class="col-md-3">
-                <input type="date" class="form-control">
+                <input id="date_field" type="date" class="form-control">
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-soft w-100">
+                <button id="btn_filter" class="btn btn-soft w-100">
                     Filter
                 </button>
             </div>
@@ -64,7 +65,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="tbody">
 
                     {% for expense in expenses %}
 
@@ -85,7 +86,7 @@
                         </td>
 
                         <td class="fw-semibold">
-                            ₹ {{ expense.amount }}
+                            ₹ {{ expense.amount|floatformat:0|intcomma }}
                         </td>
                         
                     </tr>
@@ -111,4 +112,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/expense/expense_filters.js' %}"></script>
 {% endblock %}

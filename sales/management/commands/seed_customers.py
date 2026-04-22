@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from sales.models import Customer
+from sales.views.models.models import Customer
 
 
 class Command(BaseCommand):

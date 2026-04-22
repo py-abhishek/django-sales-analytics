@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}All Available Products{% endblock %}
 {% block css_files%}
@@ -28,17 +29,17 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
                        placeholder="Search customer...">
             </div>
 
             <div class="col-md-3">
-                <input type="date" class="form-control">
+                <input type="date" id="date_field" class="form-control">
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-soft w-100">
+                <button id="btn_filter" class="btn btn-soft w-100">
                     Filter
                 </button>
             </div>
@@ -66,7 +67,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="products_tbody">
 
                     {% for product in products %}
 
@@ -81,11 +82,11 @@
                         <td>{{ product.sku }}</td>
 
                         <td>
-                            ₹ {{ product.current_avg_cost }}
+                            ₹ {{ product.current_avg_cost|floatformat:0|intcomma }}
                         </td>
 
                         <td>
-                            ₹ {{ product.selling_price }}
+                            ₹ {{ product.selling_price|floatformat:0|intcomma }}
                         </td>
 
                         <td>
@@ -119,4 +120,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/inventory/product_filters.js' %}"></script>
 {% endblock %}

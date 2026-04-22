@@ -78,20 +78,20 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
                        placeholder="Search Category...">
             </div>
 
-            <div class="col-md-3">
-                <input type="date" class="form-control">
+            {% comment %} <div class="col-md-3">
+                <input type="date" id="date_field" class="form-control">
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-soft w-100">
+                <button id="btn_filter" class="btn btn-soft w-100">
                     Filter
                 </button>
-            </div>
+            </div> {% endcomment %}
 
         </div>
     </div>
@@ -113,7 +113,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="tbody">
 
                     {% for category in categories %}
 
@@ -160,4 +160,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/inventory/category_filters.js' %}"></script>
 {% endblock %}

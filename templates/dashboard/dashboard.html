@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Dashboard{% endblock %}
 {% block css_files%}
@@ -40,28 +41,28 @@
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Revenue</p>
-                <h4 class="card-value">₹{{ summary.total_revenue }}</h4>
+                <h4 class="card-value">₹{{ summary.total_revenue|floatformat:0|intcomma }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Expenses</p>
-                <h4 class="card-value text-danger">₹ {{ summary.total_exps }}</h4>
+                <h4 class="card-value text-danger">₹ {{ summary.total_exps|floatformat:0|intcomma }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Net Profit</p>
-                <h4 class="card-value text-success">₹ {{ summary.net_profit }}</h4>
+                <h4 class="card-value text-success">₹ {{ summary.net_profit|floatformat:0|intcomma }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft p-3 border-left">
                 <p class="card-label">Total Sales</p>
-                <h4 class="card-value">{{ summary.total_sales }}</h4>
+                <h4 class="card-value">{{ summary.total_sales|floatformat:0|intcomma }}</h4>
             </div>
         </div>
 
@@ -124,7 +125,7 @@
                             <td>{{ sale.sale_date }}</td>
 
                             <td class="fw-semibold">
-                                ₹ {{ sale.total_amount }}
+                                ₹ {{ sale.total_amount|floatformat:0|intcomma }}
                             </td>
 
                         </tr>

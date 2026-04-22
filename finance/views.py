@@ -43,7 +43,7 @@ class ExpenseDetailView(DetailView):
     template_name = 'expense/expense_detail.html'
 
     def get_queryset(self):
-        return Expense.objects.get(business_id=get_business_id(self.request))
+        return Expense.objects.filter(business_id=get_business_id(self.request))
 
 # Manage and create expense categories
 class ExpenseCategoryView(CreateView):

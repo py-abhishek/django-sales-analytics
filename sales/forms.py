@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Sale, SaleItem, Customer
+from sales.models import Sale, SaleItem, Customer
 
 # Create customer form
 class CustomerForm(forms.ModelForm):

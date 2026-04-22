@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Purchase Saved Successfully{% endblock %}
 {% block css_files%}
@@ -69,7 +70,7 @@
             <div class="col-md-3 mb-3">
                 <p class="info-label">Total Amount</p>
                 <p class="info-value text-bold">
-                    ₹ {{ purchase.total_amount }}
+                    ₹ {{ purchase.total_amount|floatformat:0|intcomma }}
                 </p>
             </div>
 
@@ -117,11 +118,11 @@
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.unit_cost }}
+                        ₹ {{ item.unit_cost|floatformat:0|intcomma }}
                     </td>
 
                     <td class="text-end">
-                        ₹ {{ item.item_total_cost }}
+                        ₹ {{ item.item_total_cost|floatformat:0|intcomma }}
                     </td>
 
                 </tr>

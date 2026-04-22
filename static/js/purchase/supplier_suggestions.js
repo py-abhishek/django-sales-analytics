@@ -13,7 +13,7 @@ nameField.addEventListener("focusout", function() {
     }, 80)
 })
 nameField.addEventListener("focusin", function() {
-    getSupplierData("a")
+    getSupplierData("")
 })
 // Detect Typing
 nameField.addEventListener("input", function(e) {
@@ -29,7 +29,7 @@ nameField.addEventListener("input", function(e) {
 })
 
 function getSupplierData(query) {
-    fetch( `/purchase/suppliers/search/?q=${query}`)
+    fetch( `/purchases-api/search-suppliers/?q=${query}&type=suggestions`)
     .then(response => response.json())
     .then(data => showSuggestions(data))    
 }

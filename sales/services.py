@@ -1,7 +1,11 @@
 from django.db import transaction
-from .models import Sale, SaleItem, Customer
-from inventory.services import create_sale_ledger
 from django.core.exceptions import ValidationError
+from django.contrib import messages
+
+from .models import Sale, SaleItem
+from inventory.services import create_sale_ledger, create_cancel_sale_ledger
+from .models import Customer
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -57,13 +61,13 @@ def create_sale(request, customer_id, is_new_customer, customer_form_data, sale_
                 item_profit=get_item_profit(product, item),
                 business_id=business_id
             )
-            
-            deduct_stock(product, item)
 
             # Updating Stock Ledger
             unit_cost = product.current_avg_cost
             total_cost = (unit_cost * quantity)
             create_sale_ledger(product, quantity, unit_cost, total_cost, sale, business_id)
+
+            deduct_stock(product, item) # Update stock
 
         return sale
     
@@ -109,9 +113,9 @@ def available_in_stock(product, item):
 
 # Update product quantity
 def deduct_stock(product, item):
-    c_current_stock = product.current_stock
+    # c_current_stock = product.current_stock
     sale_quantity = item['quantity']
-    product.current_stock = c_current_stock - sale_quantity
+    product.current_stock -= sale_quantity
     product.save()
 
 
@@ -137,4 +141,23 @@ def get_total_profit(clean_formset_data):
     return profit
 
 
+# Cancel a sale
+def cancel_sale(request, sale_id, business_id):
+    sale = Sale.objects.get(business_id=business_id, id=sale_id)
+    if sale.is_cancelled():
+        messages.info(request, 'This sale is already cancelled')
+        return
+    
+    # Reverse stock
+    for item in sale.items.all():
+        product = item.product
+        product.current_stock += item.quantity
+        product.save()
 
+        # Update inventory ledger
+        create_cancel_sale_ledger(business_id, sale, product, item.quantity, item.cost_at_sale)
+
+    sale.status = Sale.StatusChoices.CANCELLED
+    sale.save()
+
+    messages.success(request, 'Sale cancelled successfully.')

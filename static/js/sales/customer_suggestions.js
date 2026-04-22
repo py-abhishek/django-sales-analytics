@@ -1,4 +1,3 @@
-console.log("working")
 
 const nameField = document.getElementById("customer-name")
 const idField = document.getElementById("customer-id")
@@ -14,7 +13,7 @@ nameField.addEventListener("focusout", function() {
     }, 80)
 })
 nameField.addEventListener("focusin", function() {
-    getCustomerData("a")
+    getCustomerData("")
 })
 // Detect Typing
 nameField.addEventListener("input", function(e) {
@@ -30,7 +29,7 @@ nameField.addEventListener("input", function(e) {
 })
 
 function getCustomerData(query) {
-    fetch( `/sales/customers/search/?q=${query}`)
+    fetch( `/sales-api/search-customers/?q=${query}`)
     .then(response => response.json())
     .then(data => showSuggestions(data))    
 }

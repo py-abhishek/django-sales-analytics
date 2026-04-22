@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import localdate
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -26,3 +27,12 @@ class Expense(models.Model):
 
     def __str__(self):
         return self.name
+    
+      # Override save
+    def save(self, *args, **kwargs):
+        if self.category:
+            # Check for business inconsistancy
+            if self.category.business != self.business:
+                raise ValidationError('Expense and Category belong to different businesses')
+            
+        super().save(*args, **kwargs)

@@ -5,12 +5,16 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.db.models import Q
 
-from .forms import SaleForm, SaleItemFormSet, CustomerForm
-from .models import Sale, Customer
+from ..forms import SaleForm, SaleItemFormSet, CustomerForm
+from sales.models import Sale, Customer
 from inventory.models import Product
-from . import services
+from .. import services
+from business.models import Membership
 
 from core.permissions.mixins import RoleRequiredMixin
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 import logging
 logger = logging.getLogger(__name__)
@@ -99,10 +103,9 @@ class SalesListView(ListView):
     model = Sale
     template_name = 'sales/sales_list.html'
     context_object_name = 'sales'
-    ordering = ['-sale_date']
     
     def get_queryset(self):
-        return Sale.objects.filter(business_id=get_business_id(self.request))
+        return Sale.objects.filter(business_id=get_business_id(self.request)).order_by('-sale_date')
         
 
 # View a particuler sale detail
@@ -124,15 +127,12 @@ class SaleSuccessView(DetailView):
         return Sale.objects.filter(business_id=get_business_id(self.request))
 
 
+# Cancel sale
+class CancelSaleView(RoleRequiredMixin, View):
+    allowed_roles = [Membership.UserRoleChoices.ADMIN]
 
-# APIs - get customers for search query
-def search_customers(request):
-    query = request.GET.get('q', '')
+    def post(self, request, sale_id):
+        services.cancel_sale(request, sale_id, request.session.get('business_id'))
 
-    customers = Customer.objects.filter(
-        Q(business_id=get_business_id(request)) &
-        Q(name__contains=query) | Q(phone__contains=query)
-        )[:10]
-    data = list(customers.values('id', 'name', 'email', 'phone', 'address'))
-    
-    return JsonResponse(data, safe=False)
+        return redirect('sale_detail', sale_id)
+

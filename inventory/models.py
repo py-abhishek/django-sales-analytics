@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -41,7 +42,9 @@ class Product(models.Model):
         )
     current_avg_cost = models.DecimalField(
         max_digits=12,
-        decimal_places=2
+        decimal_places=2,
+        blank=True,
+        null=True
         )
     selling_price = models.DecimalField(
         max_digits=12,
@@ -67,6 +70,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.category:
+            # Check for business inconsistancy
+            if self.category.business != self.business:
+                raise ValidationError('Expense and Category belong to different businesses')
+            
+        super().save(*args, **kwargs)
 
 
 # Record every stock movement (as history)
@@ -78,6 +90,7 @@ class InventoryLedger(models.Model):
         RETURN_IN = 'return_in', 'Return In'
         RETURN_OUT = 'return_out', 'Return Out'
         DAMAGE = 'dmg', 'Damage'
+        CANCEL_SALE = 'cancel_sale', 'Cancel Sale'
 
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     transaction_type = models.CharField(choices=TransTypeChoices.choices, db_index=True, max_length=20)
@@ -88,11 +101,27 @@ class InventoryLedger(models.Model):
     total_cost = models.DecimalField(max_digits=12, decimal_places=2)
 
     # Reference Linking with FKs (where Only ONE of these must be set per row)
-    purchase = models.ForeignKey('purchase.Purchase', on_delete=models.PROTECT, null=True, blank=True)
+    purchase = models.ForeignKey('purchases.Purchase', on_delete=models.PROTECT, null=True, blank=True)
     sale = models.ForeignKey('sales.Sale', on_delete=models.PROTECT, null=True, blank=True)
     # adjustment = models.ForeignKey('', on_delete=models.PROTECT, null=True, blank=True)
     
     
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='stock_movements')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.product:
+            # Check for business inconsistancy
+            if self.product.business != self.business:
+                raise ValidationError('Invetory Ledger: Product Business missmatch')
+            
+            if self.purchase:
+                if self.purchase.business != self.business:
+                    raise ValidationError('Invetory Ledger: Purchase Business missmatch')
+            elif self.sale:
+                if self.sale.business != self.business:
+                    raise ValidationError('Invetory Ledger: Sale Business missmatch')
+                
+        super().save(*args, **kwargs)
     

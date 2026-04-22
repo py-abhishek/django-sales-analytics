@@ -1,30 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.timezone import localdate
+from django.core.exceptions import ValidationError
+
+from sales.models import Customer
 # Create your models here.
-
-
-class Customer(models.Model):
-    """
-    Represents a buyer
-    """
-
-    class Meta:
-        ordering = ['-is_walkin','name']
-
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, blank=True)
-    phone = models.CharField(max_length=10, unique=True)
-    address = models.CharField(max_length=200, blank=True)
-    is_walkin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='customers')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
 
 
 class Sale(models.Model):
@@ -38,6 +18,10 @@ class Sale(models.Model):
         CASH = 'cash', 'Cash'
         CARD = 'card', 'Card'
         UPI = 'upi', 'UPI'
+
+    class StatusChoices(models.TextChoices):
+        COMPLETED = 'completed', 'Completed'
+        CANCELLED = 'cancelled', 'Cancelled'
 
     customer = models.ForeignKey(
         Customer,
@@ -58,10 +42,25 @@ class Sale(models.Model):
         choices=PaymentMethod.choices,
         default=PaymentMethod.CASH
         )
+    
+    status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.COMPLETED, db_index=True)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='sales')
     created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_sales')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    def is_cancelled(self):
+        return self.status == self.StatusChoices.CANCELLED
+    
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.customer:
+            # Validate business consitency 
+            if self.customer.business != self.business:
+                raise('Sale and Customer belongs to different businesses')
+            
+        super().save(*args, **kwargs)
 
 
 class SaleItem(models.Model):
@@ -110,4 +109,14 @@ class SaleItem(models.Model):
 
     def __str__(self):
         return self.product.name
+    
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.sale and self.product:
+            # Validate business consitency 
+            if self.sale.business != self.product.business:
+                raise ValidationError('Sale and Product belong to different businesses')
+            
+            self.business = self.sale.business # Enforce correct business
+        super().save(*args, **kwargs)
     

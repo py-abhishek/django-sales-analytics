@@ -13,6 +13,7 @@ def get_sales_insights(all_sales, business_id):
 
 # Record purchase history
 def create_purchase_ledger(product, quantity, unit_cost, total_cost, purchase, business_id):
+    
     InventoryLedger.objects.create(
         product = product,
         transaction_type = InventoryLedger.TransTypeChoices.PURCHASE,
@@ -48,3 +49,17 @@ def calc_new_avg_cost(product, new_qty, new_cost):
     # calc new average cost
     new_avg_cost = ((old_stock * old_avg_cost) + (new_qty * new_cost)) / (old_stock + new_qty)
     return new_avg_cost
+
+# Record cancel sale entry
+def create_cancel_sale_ledger(business_id, sale, product, quantity, cost_at_sale):
+    InventoryLedger.objects.create(
+        product = product,
+        transaction_type = InventoryLedger.TransTypeChoices.CANCEL_SALE,
+        quantity_change = quantity,
+        before_quantity = product.current_stock,
+        after_quantity = product.current_stock + quantity,
+        unit_cost = cost_at_sale,
+        total_cost = cost_at_sale * quantity,
+        sale=sale,
+        business_id=business_id
+    )

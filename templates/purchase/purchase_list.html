@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}All Recorded Purchases{% endblock %}
 {% block css_files%}
@@ -28,25 +29,25 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
                        placeholder="Search...">
             </div>
 
             <div class="col-md-3">
-                <input type="date" class="form-control">
+                <input type="date" id="date_field" class="form-control">
             </div>
 
-            <div class="col-md-3">
-                <select class="form-select">
+            {% comment %} <div class="col-md-3">
+                <select class="form-select" id="p_method_field">
                     <option value="">Payment Method</option>
                     <option>Cash</option>
                     <option>Card</option>
                     <option>UPI</option>
                 </select>
-            </div>
+            </div> {% endcomment %}
 
-            <div class="col-md-2">
+            <div class="col-md-2" id="btn_filter">
                 <button class="btn btn-soft w-100">
                     Filter
                 </button>
@@ -73,7 +74,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="purchases_tbody">
 
                     {% for purchase in purchases %}
 
@@ -98,7 +99,7 @@
                         </td>
 
                         <td class="fw-semibold">
-                            ₹ {{ purchase.total_amount }}
+                            ₹ {{ purchase.total_amount|floatformat:0|intcomma }}
                         </td>
                         
                     </tr>
@@ -124,4 +125,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/purchase/purchase_filters.js' %}"></script>
 {% endblock %}

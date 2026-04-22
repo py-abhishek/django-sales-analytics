@@ -63,7 +63,7 @@
                 <span class="arrow">▾</span>
             </a>
 
-            <div class="collapse {% show_menu 'add_purchase' 'purchase_list' %}" id="purchaseMenu">
+            <div class="collapse {% show_menu 'add_purchase' 'purchases_list' %}" id="purchaseMenu">
                 <ul class="nav flex-column sub-menu">
 
                     <li class="nav-item">
@@ -73,7 +73,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {% active 'purchase_list' %}" href="{% url 'purchase_list' %}">
+                        <a class="nav-link {% active 'purchases_list' %}" href="{% url 'purchases_list' %}">
                             Purchase History
                         </a>
                     </li>
@@ -81,6 +81,13 @@
                 </ul>
             </div>
 
+        </li>
+
+        <!-- Suppliers -->
+        <li class="nav-item">
+            <a class="nav-link {% active 'suppliers_list' %}" href="{% url 'suppliers_list' %}">
+                Suppliers
+            </a>
         </li>
 
         <!-- SALES -->
@@ -112,6 +119,13 @@
                 </ul>
             </div>
 
+        </li>
+
+        <!-- Customers -->
+        <li class="nav-item">
+            <a class="nav-link {% active 'customers_list' %}" href="{% url 'customers_list' %}">
+                Customers
+            </a>
         </li>
 
         <!-- Expense -->

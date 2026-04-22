@@ -35,11 +35,13 @@ INSTALLED_APPS = [
     'sales',
     'finance',
     'dashboard',
-    'purchase',
+    'purchases',
     'reports',
     'accounts',
     'business',
     'users',
+    'core',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -147,6 +149,11 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = [
     'accounts.backends.EmailBackend',
 ]
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'SEARCH_PARAM': 'q'
+}
 
 # Configure Logging
 

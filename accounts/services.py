@@ -1,5 +1,6 @@
 
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 
 def update_profile(request):
@@ -13,6 +14,7 @@ def update_profile(request):
         request.user.last_name = request.POST.get('last_name')
         request.user.save()
         context['form1_info'] = 'Profile updated successfully'
+        messages.success(request, context.get('form1_info'))
     
     return context
 
@@ -40,5 +42,6 @@ def update_password(request):
         request.user.save()
         update_session_auth_hash(request, request.user)
         context['form2_info'] = 'Password changed successfully'
+        messages.success(request, context.get('form2_info'))
     
     return context

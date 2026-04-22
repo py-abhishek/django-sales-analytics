@@ -52,8 +52,8 @@ def create_purchase(supplier_id, is_new_supplier, supplier_form_data, purchase_f
                 business_id=business_id
             )
 
-            update_stock(product, item) # increase stock and update avg cost of purchased products
             create_purchase_ledger(product, item['quantity'], unit_cost, total_cost, purchase, business_id) # recording ledger for history
+            update_stock(product, item) # increase stock and update avg cost of purchased products
             
 
         return purchase
@@ -89,9 +89,9 @@ def get_cleaned_formset_data(formset_data):
 # Update product stock cost and quantity
 def update_stock(product, item):
     # Update stock quantity
-    c_current_stock = product.current_stock
-    sale_quantity = item['quantity']
-    product.current_stock = c_current_stock + sale_quantity
+    # c_current_stock = product.current_stock
+    purchase_quantity = item['quantity']
+    product.current_stock += purchase_quantity
 
     # Update average cost
     new_qty = item['quantity']

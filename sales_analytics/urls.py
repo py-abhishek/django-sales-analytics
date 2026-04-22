@@ -24,8 +24,13 @@ urlpatterns = [
     path('expense/', include('finance.urls')),
     path('', include('dashboard.urls')),
     path('reports/', include('reports.urls')),
-    path('purchase/', include('purchase.urls')),
+    path('purchases/', include('purchases.urls')),
     path('accounts/', include('accounts.urls')),
     path('business/', include('business.urls')),
     path('users/', include('users.urls')),
+
+    path('sales-api/', include('sales.api.urls')),
+    path('purchases-api/', include('purchases.api.urls')),
+    path('inventory-api/', include('inventory.api.urls')),
+    path('expense-api/', include('finance.api.urls')),
 ]

@@ -75,12 +75,12 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
                        placeholder="Search Category...">
             </div>
 
-            <div class="col-md-3">
+            {% comment %} <div class="col-md-3">
                 <input type="date" class="form-control">
             </div>
 
@@ -88,7 +88,7 @@
                 <button class="btn btn-soft w-100">
                     Filter
                 </button>
-            </div>
+            </div> {% endcomment %}
 
         </div>
     </div>
@@ -110,7 +110,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="tbody">
 
                     {% for category in categories %}
 
@@ -157,4 +157,9 @@
 
 </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/expense/category_filters.js' %}"></script>
 {% endblock %}

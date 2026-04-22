@@ -209,7 +209,7 @@
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_type" value="edit_role">
-                <input type="hidden" name="name" id="editUserName1" value="{{ edit_form.data.name|default:''}}">
+                <input type="hidden" name="name" id="input_editUserName" value="{{ edit_form.data.name|default:''}}">
                 <input type="hidden" name="user_id" id="editUserId" value="{{ edit_form.data.user_id|default:''}}">
 
                 <div class="modal-header">
@@ -219,7 +219,7 @@
 
                 <div class="modal-body">
                     <p>
-                        Update role for <strong id="editUserName2">{{ edit_form.data.name|default:''}}</strong>
+                        Update role for <strong id="editUserName">{{ edit_form.data.name|default:'' }}</strong>
                     </p>
 
                     <label class="form-label">Role</label>
@@ -255,7 +255,7 @@
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_type" value="delete_user">
-                <input type="hidden" name="name" id="deleteUserName1" value="{{ delete_form.data.name|default:''}}">
+                <input type="hidden" name="name" id="input_deleteUserName" value="{{ delete_form.data.name|default:''}}">
                 <input type="hidden" name="user_id" id="deleteUserId" value="{{ delete_form.data.user_id|default:''}}">
 
                 <div class="modal-header">
@@ -266,7 +266,7 @@
                 <div class="modal-body">
                     <p>
                         Are you sure you want to remove 
-                        <strong id="deleteUserName2">{{ edit_form.data.name|default:''}}</strong>?
+                        <strong id="deleteUserName">{{ delete_form.data.name|default:'' }}</strong>?
                     </p>
                     <small class="text-muted">
                         This will remove their access to this business.
@@ -308,7 +308,6 @@
 
 {% if edit_form.error %}
 <script>
-        console.log('error')
         const modal = new bootstrap.Modal(document.getElementById("editRoleModal"))
         modal.show()
     </script>
@@ -327,8 +326,8 @@
         const button = event.relatedTarget
 
         document.getElementById("editUserId").value = button.getAttribute("data-user-id")
-        document.getElementById("editUserName1").innerHTML = button.getAttribute("data-user-name")
-        document.getElementById("editUserName2").innerHTML = button.getAttribute("data-user-name")
+        document.getElementById("input_editUserName").value = button.getAttribute("data-user-name")
+        document.getElementById("editUserName").innerHTML = button.getAttribute("data-user-name")
         // document.getElementById("editUserRole").selected = button.getAttribute("data-role")
     })
 
@@ -337,8 +336,8 @@
         const button = event.relatedTarget
 
         document.getElementById("deleteUserId").value = button.getAttribute("data-user-id")
-        document.getElementById("deleteUserName1").innerHTML = button.getAttribute("data-user-name")
-        document.getElementById("deleteUserName2").innerHTML = button.getAttribute("data-user-name")
+        document.getElementById("input_deleteUserName").value = button.getAttribute("data-user-name")
+        document.getElementById("deleteUserName").innerHTML = button.getAttribute("data-user-name")
     })
 
 </script>

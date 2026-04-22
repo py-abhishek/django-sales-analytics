@@ -13,7 +13,7 @@ def get_business_id(request):
 class SaleReportView(View):
     def get(self, request):
         business_id = get_business_id(request)
-        sales = Sale.objects.filter(business_id=business_id).order_by('-sale_date')
+        sales = Sale.objects.filter(business_id=business_id, status=Sale.StatusChoices.COMPLETED).order_by('-sale_date')
         cutomers = Customer.objects.filter(business_id=business_id).order_by('name')
 
         sales_insights = sales_analysis.get_insights(sales, business_id)

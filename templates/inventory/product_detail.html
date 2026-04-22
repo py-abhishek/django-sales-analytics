@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Product Details{% endblock %}
 {% block css_files%}
@@ -74,12 +75,12 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Cost Price</p>
-                <p class="text-semibold">₹ {{ product.current_avg_cost }}</p>
+                <p class="text-semibold">₹ {{ product.current_avg_cost|floatformat:0|intcomma }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Selling Price</p>
-                <p class="text-semibold">₹ {{ product.selling_price }}</p>
+                <p class="text-semibold">₹ {{ product.selling_price|floatformat:0|intcomma }}</p>
             </div>
 
             <div class="col-md-3">
@@ -111,13 +112,13 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Revenue</p>
-                <p class="text-semibold">₹ {{ total_revenue }}</p>
+                <p class="text-semibold">₹ {{ total_revenue|floatformat:0|intcomma }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Profit</p>
                 <p class="text-success text-semibold">
-                    ₹ {{ total_profit }}
+                    ₹ {{ total_profit|floatformat:0|intcomma }}
                 </p>
             </div>
 
@@ -175,10 +176,10 @@
 
                     <td>{{ item.quantity }} {{ item.product.unit }}</td>
 
-                    <td>₹ {{ item.item_total }}</td>
+                    <td>₹ {{ item.item_total|floatformat:0|intcomma }}</td>
 
                     <td class="text-success">
-                        ₹ {{ item.item_profit }}
+                        ₹ {{ item.item_profit|floatformat:0|intcomma }}
                     </td>
 
                 </tr>

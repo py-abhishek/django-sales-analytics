@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}All Recorded Sales{% endblock %}
 {% block css_files%}
@@ -28,26 +29,26 @@
         <div class="row g-3">
 
             <div class="col-md-4">
-                <input type="text"
+                <input type="text" id="search_field"
                        class="form-control"
-                       placeholder="Search customer...">
+                       placeholder="Search...">
             </div>
 
             <div class="col-md-3">
-                <input type="date" class="form-control">
+                <input id="date_field" type="date" class="form-control">
             </div>
-
+{% comment %} 
             <div class="col-md-3">
-                <select class="form-select">
+                <select id="p_method_field" class="form-select">
                     <option value="">Payment Method</option>
                     <option>Cash</option>
                     <option>Card</option>
                     <option>UPI</option>
                 </select>
-            </div>
+            </div> {% endcomment %}
 
             <div class="col-md-2">
-                <button class="btn btn-soft w-100">
+                <button id="btn_filter" class="btn btn-soft w-100">
                     Filter
                 </button>
             </div>
@@ -74,7 +75,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="sales_tbody">
 
                     {% for sale in sales %}
 
@@ -95,11 +96,11 @@
                         </td>
 
                         <td class="fw-semibold">
-                            ₹ {{ sale.total_amount }}
+                            ₹ {{ sale.total_amount|floatformat:0|intcomma }}
                         </td>
 
-                        <td class="text-success fw-semibold">
-                            ₹ {{ sale.total_profit }}
+                        <td class="{% if sale.total_profit < 0 %}text-danger{% else %}text-success{% endif %} fw-semibold">
+                            ₹ {{ sale.total_profit|floatformat:0|intcomma }}
                         </td>
                         
                     </tr>
@@ -125,4 +126,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static 'js/sales/sale_filters.js' %}"></script>
 {% endblock %}

@@ -29,8 +29,9 @@ export function formatDate(dateStr){
         }
         
         return date.toLocaleDateString("en-US", {
+            timeZone: "UTC",
             year: "numeric",
-            month: "short",
+            month: "long",
             day: "numeric"
         })
     }
@@ -40,3 +41,13 @@ export function formatDate(dateStr){
     }
     
 }
+
+
+// convert date string to this format (April 5, 2026)
+// export function customDate(date){
+//     return new Date(date).toLocaleDateString('en-US', {
+//     year: 'numeric',
+//     month: 'long',
+//     day: 'numeric'
+//   })
+// }

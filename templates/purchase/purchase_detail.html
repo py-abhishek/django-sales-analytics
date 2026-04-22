@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Purchase Details{% endblock %}
 {% block css_files%}
@@ -16,7 +17,7 @@
                 <small class="text-muted">Transaction information</small>
             </div>
 
-            <a href="{% url 'purchase_list' %}" class="btn btn-secondary">
+            <a href="{% url 'purchases_list' %}" class="btn btn-secondary">
                 Back to List
             </a>
         </div>
@@ -83,8 +84,8 @@
                             <td>{{ item.product.name }}</td>
                             <td>{{ item.unit }}</td>
                             <td>{{ item.quantity }}</td>
-                            <td>₹ {{ item.unit_cost }}</td>
-                            <td class="text-semibold">₹ {{ item.item_total_cost }}</td>
+                            <td>₹ {{ item.unit_cost|floatformat:0|intcomma }}</td>
+                            <td class="text-semibold">₹ {{ item.item_total_cost|floatformat:0|intcomma }}</td>
 
                         </tr>
 
@@ -106,7 +107,7 @@
 
             <div class="d-flex justify-content-between mb-2">
                 <span class="text-semibold">Total Amount</span>
-                <span class="text-semibold">₹ {{ purchase.total_amount }}</span>
+                <span class="text-semibold">₹ {{ purchase.total_amount|floatformat:0|intcomma }}</span>
             </div>
 
             {% comment %} <div class="d-flex justify-content-between">

@@ -1,6 +1,6 @@
 from django.db.models import Sum, Count, Q, F, Max
 from django.db.models.functions import TruncMonth
-from sales.models import SaleItem
+from sales.models import SaleItem, Sale
 from inventory.models import Product
 
 # Core function
@@ -25,18 +25,18 @@ def get_insights(business_id, from_date=None, to_date=None, category=None):
     }
 
 def get_filtered_query(business_id, from_date=None, to_date=None, category=None):
-    sale_items = SaleItem.objects.select_related('product', 'sale')
+    sale_items = SaleItem.objects.select_related('product', 'sale').filter(business_id=business_id, sale__status=Sale.StatusChoices.COMPLETED)
     products = Product.objects.filter(business_id=business_id)
 
     if from_date:
-        sale_items = sale_items.filter(business_id=business_id, sale__sale_date__gte=from_date)
+        sale_items = sale_items.filter(sale__sale_date__gte=from_date)
 
     if to_date:
-        sale_items = sale_items.filter(business_id=business_id, sale__sale_date__lte=to_date)
+        sale_items = sale_items.filter(sale__sale_date__lte=to_date)
 
     if category:
-        sale_items = sale_items.filter(business_id=business_id, product__category_id=category)
-        products = products.filter(business_id=business_id, category_id=category)
+        sale_items = sale_items.filter(product__category_id=category)
+        products = products.filter(category_id=category)
 
     return sale_items, products
 

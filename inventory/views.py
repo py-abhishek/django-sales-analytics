@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .forms import ProductForm, ProductCategoryForm
 from .models import Product, ProductCategory, InventoryLedger
-from sales.models import SaleItem
+from sales.models.sales import SaleItem
 from . import services
 
 
@@ -54,11 +54,10 @@ class ProductListView(ListView):
     model = Product
     template_name = 'inventory/product_list.html'
     context_object_name = 'products'
-    ordering = '-created_at'
 
     def get_queryset(self):
 
-        return Product.objects.filter(business_id=get_business_id(self.request))
+        return Product.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
 
 
 # View a particuler product in detail
@@ -90,11 +89,9 @@ class StockMovementListView(ListView):
     model = InventoryLedger
     template_name = 'inventory/stock_movements_list.html'
     context_object_name = 'stock_movements'
-    ordering = '-created_at'
     
     def get_queryset(self):
-
-        return InventoryLedger.objects.filter(business_id=get_business_id(self.request))
+        return InventoryLedger.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
 
 
 # API - get product info

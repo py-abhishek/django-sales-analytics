@@ -1,24 +1,10 @@
 from django.db import models
 from django.utils.timezone import localdate
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
-
-class Supplier(models.Model):
-
-    class Meta:
-        ordering = ['name']
-
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=10, unique=True)
-    email = models.EmailField(max_length=100, blank=True)
-    address = models.CharField(max_length=200, blank=True)
-    business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='suppliers')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Purchase(models.Model):
@@ -30,7 +16,7 @@ class Purchase(models.Model):
         UPI = 'upi', 'UPI'
 
     supplier = models.ForeignKey(
-        Supplier,
+        'purchases.Supplier',
         on_delete=models.SET_NULL,
         null=True,
         db_index=True,
@@ -51,6 +37,16 @@ class Purchase(models.Model):
     created_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_purchases')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.supplier:
+            # Check for business inconsistancy
+            if self.supplier.business != self.business:
+                raise ValidationError('Business missmatch')
+            
+        super().save(*args, **kwargs)
 
 
 class PurchaseItem(models.Model):
@@ -90,4 +86,14 @@ class PurchaseItem(models.Model):
     def __str__(self):
         return self.product.name
     
+    # Override save
+    def save(self, *args, **kwargs):
+        if self.purchase and self.product:
+            # Check for business inconsistancy
+            if self.purchase.business != self.product.business:
+                raise ValidationError('Business missmatch')
+            
+            self.business = self.purchase.business
+            
+        super().save(*args, **kwargs)
 

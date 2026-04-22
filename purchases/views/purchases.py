@@ -5,9 +5,9 @@ from logging import Logger
 from django.http import JsonResponse
 from django.db.models import Q
 
-from .forms import PurchaseForm, SupplierForm, PurchaseItemFormSet
-from . import services
-from .models import Purchase, Supplier
+from ..forms import PurchaseForm, SupplierForm, PurchaseItemFormSet
+from .. import services
+from ..models import Purchase, Supplier
 
 import logging
 logger = logging.getLogger(__name__)
@@ -101,10 +101,9 @@ class PurchaseListView(ListView):
     model = Purchase
     template_name = 'purchase/purchase_list.html'
     context_object_name = 'purchases'
-    ordering = ['-purchase_date']
 
     def get_queryset(self):
-        return Purchase.objects.filter(business_id=get_business_id(self.request))
+        return Purchase.objects.filter(business_id=get_business_id(self.request)).order_by('-purchase_date')
 
 
 
@@ -116,16 +115,3 @@ class PurchaseDetailView(DetailView):
 
     def get_queryset(self):
         return Purchase.objects.filter(business_id=get_business_id(self.request))
-
-
-# API - get suppliers for search query
-def search_suppliers(request):
-    query = request.GET.get('q', '')
-
-    supplier = Supplier.objects.filter(
-        Q(business_id=get_business_id(request)) &
-        Q(name__icontains=query) | Q(phone__icontains=query)
-        )[:10]
-    data = list(supplier.values('id', 'name', 'email', 'phone', 'address'))
-    
-    return JsonResponse(data, safe=False)

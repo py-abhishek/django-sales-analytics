@@ -24,10 +24,10 @@ def get_insights(business_id):
 
 # Apply filters to each query
 def get_filtered_queries(business_id):
-    sales = Sale.objects.filter(business_id=business_id)
+    sales = Sale.objects.filter(business_id=business_id, status=Sale.StatusChoices.COMPLETED)
     expenses = Expense.objects.filter(business_id=business_id)
     products = Product.objects.filter(business_id=business_id)
-    sale_items = SaleItem.objects.filter(business_id=business_id)
+    sale_items = SaleItem.objects.filter(business_id=business_id, sale__status=Sale.StatusChoices.COMPLETED)
 
     return sales, expenses, products, sale_items
 

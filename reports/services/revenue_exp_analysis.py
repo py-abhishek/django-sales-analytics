@@ -21,7 +21,7 @@ def get_insights(business_id):
 
 
 def get_filtered_queries(business_id):
-    sales = Sale.objects.filter(business_id=business_id)
+    sales = Sale.objects.filter(business_id=business_id, status=Sale.StatusChoices.COMPLETED)
     expenses = Expense.objects.filter(business_id=business_id)
 
     return sales, expenses

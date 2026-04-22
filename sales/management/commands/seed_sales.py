@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from inventory.models import Product
-from sales.models import Customer, Sale
+from sales.views.models.models import Customer, Sale
 from sales import services
 
 

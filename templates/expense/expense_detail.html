@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block page_title %}Expense Details{% endblock %}
 {% block css_files%}
@@ -43,7 +44,7 @@
             <div class="col-md-4">
                 <p class="text-muted mb-1">Amount</p>
                 <p class="text-semibold text-danger">
-                    ₹ {{ expense.amount }}
+                    ₹ {{ expense.amount|floatformat:0|intcomma }}
                 </p>
             </div>
 

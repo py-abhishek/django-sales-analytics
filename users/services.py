@@ -1,8 +1,9 @@
 from accounts.models import User
 from business.models import Membership, Business
 from django.db import transaction, IntegrityError
+from django.contrib import messages
 
-
+# Validate and add new user
 def add_user(request):
     context = {}
     user_form = {}
@@ -65,8 +66,11 @@ def add_user(request):
                     role=user_role
                 )
                 user_form['info'] = 'User added successfully'
+                messages.success(request, user_form.get('info'))
+
             except IntegrityError:
-                user_form['error'] = 'User already exits in this business'
+                user_form['info'] = 'User already exits in this business'
+                messages.info(request, user_form.get('info'))
 
     # Resending fields data in case of any error
     if user_form.get('error'):
@@ -86,6 +90,7 @@ def edit_role(request):
     edit_form = {}
     user_id = request.POST.get('user_id')
     role = request.POST.get('role')
+    name = request.POST.get('name')
     
     user = User.objects.get(id=user_id)
     business = Business.objects.get(id=request.session.get('business_id'))
@@ -104,13 +109,14 @@ def edit_role(request):
         membership.role = user_role
         membership.save()
         edit_form['info'] = 'User role changed successfully'
+        messages.success(request, edit_form.get('info'))
     
     # if error occures
-    if edit_form['error']:
+    if edit_form.get('error'):
         edit_form['data'] = {}
         edit_form['data']['user_id'] = user_id
-        edit_form['data']['name'] = request.POST.get('name')
         edit_form['data']['role'] = role
+        edit_form['data']['name'] = name
 
     return edit_form
     
@@ -120,6 +126,8 @@ def delete_user(request):
     delete_form = {}
     user_id = request.POST.get('user_id')
     user = User.objects.get(id=user_id)
+    name = request.POST.get('name')
+
     business = Business.objects.get(id=request.session.get('business_id'))
     membership = Membership.objects.get(user=user, business=business)
 
@@ -131,11 +139,12 @@ def delete_user(request):
     else:
         membership.delete()
         delete_form['info'] = 'User deleted successfully'
+        messages.success(request, delete_form.get('info'))
     
         # if error occures
-    if delete_form['error']:
+    if delete_form.get('error'):
         delete_form['data'] = {}
         delete_form['data']['user_id'] = user_id
-        delete_form['data']['name'] = request.POST.get('name')
+        delete_form['data']['name'] = name
     
     return delete_form
