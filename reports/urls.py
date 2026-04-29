@@ -7,6 +7,4 @@ urlpatterns = [
     path('revenue-vs-expense/',  revenue_exp_report.RevenueExpReportView.as_view(), name='revenue_exp_report'),
     path('inventory/',  inventory_report.InventoryReportView.as_view(), name='inventory_report'),
 
-    # API
-    path('product/filter-data', product_report.get_filtered_data)
 ]

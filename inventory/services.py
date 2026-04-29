@@ -39,6 +39,22 @@ def create_sale_ledger(product, quantity, unit_cost, total_cost, sale, business_
         sale = sale,
         business_id=business_id
     )
+
+# New product history
+def new_product_ledger(product, quantity, unit_cost, total_cost, business_id):
+    if int(quantity) == 0:
+        return
+    
+    InventoryLedger.objects.create(
+        product = product,
+        transaction_type = InventoryLedger.TransTypeChoices.NEW_PRODUCT,
+        quantity_change = quantity,
+        before_quantity = 0,
+        after_quantity = quantity,
+        unit_cost = unit_cost,
+        total_cost = total_cost,
+        business_id=business_id
+    )
     
 
 # Calculate new average cost

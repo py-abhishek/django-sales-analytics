@@ -162,3 +162,14 @@
 .table-responsive {
     overflow: visible;
 }
+
+.active-pill {
+    background-color: #d3d5f9;
+}
+
+.rounded-pill:hover,
+.rounded-pill:focus {
+    background-color: #d3d5f9;
+    outline: none;
+    box-shadow: none;
+}

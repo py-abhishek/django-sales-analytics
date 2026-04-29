@@ -2,10 +2,14 @@ from django.db.models import Sum, Count, Avg
 from django.db.models.functions import TruncMonth
 import logging
 
+from sales.models import Sale
+
 logger = logging.getLogger(__name__)
 
 # Core function
-def get_insights(sales, business_id):
+def get_insights(business_id, from_date=None, to_date=None, customer_id=None, p_method=None):
+    sales = get_filtered_query(business_id, from_date, to_date, customer_id, p_method)
+
     top_customers = get_top_customers(sales)
     payment_methods = get_payment_methods(sales)
     summary = get_summary(sales)
@@ -17,6 +21,23 @@ def get_insights(sales, business_id):
         'summary': summary,
         'sales_trend': sales_trend
     }
+
+def get_filtered_query(business_id, from_date, to_date, customer_id, p_method):
+    sales = Sale.objects.filter(business_id=business_id, status=Sale.StatusChoices.COMPLETED).order_by('-sale_date')
+
+    if from_date:
+        sales = sales.filter(sale_date__gte=from_date)
+
+    if to_date:
+        sales = sales.filter(sale_date__lte=to_date)
+
+    if customer_id:
+        sales = sales.filter(customer_id=customer_id)
+
+    if p_method:
+        sales = sales.filter(payment_method=p_method)
+
+    return sales
 
 
 def get_top_customers(sales):
@@ -31,13 +52,15 @@ def get_payment_methods(sales):
         count = Count('id')
     ).order_by('-count')
 
+    p_method_choices = dict(Sale.PaymentMethod.choices)
+
     payment_methods = {
         'labels': [],
         'count': []
     }
 
     for data in payments_distribution:
-        payment_methods['labels'].append(data['payment_method'].upper())
+        payment_methods['labels'].append(p_method_choices.get(data['payment_method']))
         payment_methods['count'].append(data['count'])
     
     return payment_methods

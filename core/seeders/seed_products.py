@@ -1,6 +1,7 @@
 import json
 
 from inventory.models import ProductCategory, Product
+from inventory.services import new_product_ledger
 
 def seed_products(business, user):
     with open('core/fixtures/inventory/products.json', 'r') as f:
@@ -9,7 +10,7 @@ def seed_products(business, user):
     products = []
 
     for item in product_list:
-        products.append(Product(
+        product = Product(
             name = item['name'],
             description = item['description'],
             sku = item['sku'],
@@ -22,6 +23,16 @@ def seed_products(business, user):
             business=business,
             created_by=user
             )
+        
+        # Save product
+        product.save()
+        
+        # Create new product ledger
+        new_product_ledger(
+            product,
+            item['stock_quantity'],
+            item['cost_price'],
+            item['cost_price']*item['stock_quantity'],
+            business.id
         )
-
-    Product.objects.bulk_create(products)
+        

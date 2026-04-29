@@ -117,6 +117,16 @@ export class LineChart {
                     size: 6
                 }
             },
+
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
+                }
+            },
         }
     }
 
@@ -132,7 +142,7 @@ export class LineChart {
             xaxis: {
                 categories: labels
             },
-            series: series
+            series: this.series
         })
     }
 }
@@ -172,6 +182,16 @@ export class PieChart {
 
                         return value.toLocaleString("en-IN")
                     }
+                }
+            },
+            
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
                 }
             },
         };
@@ -278,7 +298,17 @@ export class HorizontalBarchart {
                 opacityTo: 0.7,
                 stops: [0, 100]
             }
-            }
+            },
+            
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
+                }
+            },
         };
     }
 
@@ -304,11 +334,10 @@ export class HorizontalBarchart {
 
 
 export class Barchart {
-    constructor(chartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit="", tpUnitPos="") {
+    constructor(chartContainer, labels, series, titleX, titleY, toolTipUnit="", tpUnitPos="", colors=chartPalette) {
         this.container = chartContainer
         this.labels = labels
-        this.data = data
-        this.seriesName = seriesName
+        this.series = series
         this.titleX = titleX
         this.titleY = titleY
         this.toolTipUnit = toolTipUnit
@@ -321,10 +350,7 @@ export class Barchart {
                 toolbar: { show: false }
             },
 
-            series: [{
-                name: seriesName,
-                data: data
-            }],
+            series: series,
 
             colors: chartPalette,
 
@@ -389,7 +415,17 @@ export class Barchart {
                 opacityTo: 1,
                 stops: [0, 100]
             }
-            }
+            },
+            
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
+                }
+            },
         }
     }
 
@@ -398,17 +434,13 @@ export class Barchart {
         this.chart.render();
     }
 
-    update(labels, data) {
-        this.labels = labels
-        this.data = data
+    update(series) {
+        this.series = series
         this.chart.updateOptions({
             xaxis: {
                 categories: labels
             },
-            series: [{
-                name: this.seriesName,
-                data: data
-            }]
+            series: series
         })
     }
 }
@@ -481,7 +513,17 @@ export class DonutChart {
 
             stroke: {
                 width: 2
-            }
+            },
+            
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
+                }
+            },
         };
     }
 
@@ -499,8 +541,6 @@ export class DonutChart {
         })
     }
 }
-
-
 
 export class AreaChart {
     constructor(chartContainer, labels, series, titleX, titleY, toolTipUnit="", tpUnitPos="", colors=chartPalette) {
@@ -598,6 +638,16 @@ export class AreaChart {
                 size: 0,
                 hover: {
                     size: 6
+                }
+            },
+
+            noData: {
+                text: "No data available",
+                align: "center",
+                verticalAlign: "middle",
+                style: {
+                    color: "#666",
+                    fontSize: "16px"
                 }
             },
         }

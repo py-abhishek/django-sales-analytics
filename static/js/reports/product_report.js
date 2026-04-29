@@ -1,13 +1,10 @@
 import * as charts from "../charts.js"
 import * as utils from "../utils.js"
 
-const trendChartContainer = document.querySelector("#productSalesTrendChart");
 
-let productSalesTrendChart
-let topProductsChart
-let topCategoriesChart
 
 function createProSalesTrendChart() {
+    const trendChartContainer = document.querySelector("#productSalesTrendChart");
     const labels = utils.parseJson(document.querySelector("#product_trend_lables"));
     const data = utils.parseJson(document.querySelector("#product_trend_data"));
     let titleX = "Month"
@@ -15,11 +12,22 @@ function createProSalesTrendChart() {
     let toolTipUnit = "Units"
     let tpUnitPos = "suffix"
     
-    productSalesTrendChart = new charts.LineChart(trendChartContainer, labels, [{ name: "Sales", data: data }], titleX, titleY, toolTipUnit, tpUnitPos)
+    const productSalesTrendChart = new charts.LineChart(
+        trendChartContainer,
+        labels, 
+        [{
+            name: "Sales",
+            data: data
+        }],
+        titleX,
+        titleY,
+        toolTipUnit,
+        tpUnitPos
+    )
     productSalesTrendChart.create()
+
+    return productSalesTrendChart;
 }
-
-
 
 function createTopProductsChart() {
     const chartContainer = document.querySelector("#topProductsChart");
@@ -30,8 +38,10 @@ function createTopProductsChart() {
     let toolTipUnit = "Units"
     let tpUnitPos = "suffix"
 
-    topProductsChart = new charts.HorizontalBarchart(chartContainer, labels, data, seriesName, titleX, toolTipUnit, tpUnitPos)
+    const topProductsChart = new charts.HorizontalBarchart(chartContainer, labels, data, seriesName, titleX, toolTipUnit, tpUnitPos)
     topProductsChart.create()
+
+    return topProductsChart;
 
 }
 
@@ -43,126 +53,188 @@ function createTopCategoriesChart() {
     let toolTipUnit = "Units"
     let tpUnitPos = "suffix"
 
-    topCategoriesChart = new charts.DonutChart(chartContainer, labels, data, seriesName, toolTipUnit, tpUnitPos)
+    const topCategoriesChart = new charts.DonutChart(chartContainer, labels, data, seriesName, toolTipUnit, tpUnitPos)
     topCategoriesChart.create()
 
+    return topCategoriesChart;
+
 }
 
 
-createProSalesTrendChart()
-createTopProductsChart()
-createTopCategoriesChart()
+export const productSalesTrendChart = createProSalesTrendChart();
+export const topProductsChart = createTopProductsChart();
+export const topCategoriesChart = createTopCategoriesChart();
 
 
 
-// ************** Working with filters **************** //
-const btnProductFilter = document.getElementById("btnProductFilter")
+// ***************  WORKING WITH FILTERS *************** //
 
-function getFilterValues() {
-    const fromDateField = document.getElementById("fromDate")
-    const toDateField = document.getElementById("toDate")
-    const categoryField = document.getElementById("selectCategory")
-    var fromDate = fromDateField.value
-    var toDate = toDateField.value
-    var category  = categoryField.value
+// Update data on each filter
+const dateBtns = document.querySelectorAll("#dateFilters .btn");
+const categoryFilter = document.getElementById("categoryFilter");
 
-    return {
-        fromDate: fromDate,
-        toDate: toDate,
-        category: category
-    }
-}
+dateBtns.forEach( btn => {
+    btn.addEventListener('click', function(){
+        if (btn.classList.contains("active-pill")) return;
 
-btnProductFilter.addEventListener("click", function() {
-    const filterValues = getFilterValues()
-    if (!filterValues) return
+        dateBtns.forEach(b => b.classList.remove("active-pill"));
+        btn.classList.add("active-pill")
 
-    getFilteredData(filterValues)
-    .then(data => {
-        console.log(data)
-        updateCharts(data)
-        updateCardsTables(data)
+        fetchData()
     })
-})
+});
 
-function getFilteredData(filterValues) {
+categoryFilter.addEventListener('change', fetchData);
 
-    // calling function from utils file
-    return utils.fetchWithCSRF(
-            "/reports/product/filter-data",
-            filterValues,
-            "POST"
-        )
-        .catch(error => console.log(error))
+function updateFilterSummary(dateRange, categoryName){
+
+    let dateRangeDict = {
+        "all": "All Time",
+        "6m": "6 Months",
+        "1y": "1 Year",
+        "2y": "2 Years"
+    }
+
+    const filterSummary = document.getElementById("filter_summary").innerHTML = `${dateRangeDict[dateRange]} • ${categoryName}`
+
+}
+
+function fetchData(){
     
+    const dateBtn = document.querySelector("#dateFilters .active-pill");
+    const dateRange = dateBtn.dataset.range;
+    const categoryId = categoryFilter.value;
+    var categoryName = categoryFilter.selectedOptions[0]?.dataset.name || "All Categories";
+
+    var filter = `date=${dateRange}&category=${categoryId}`
+
+    fetch(`/reports-api/product-report/?${filter}`)
+    .then(response => response.json())
+    .then(data => updateData(data))
+
+    // Update showing results for (filter summary)
+    updateFilterSummary(dateRange, categoryName)
+    }
+
+
+function updateData(data){
+
+    // Update cards
+    document.getElementById("cardTotalProducts").innerHTML = Math.trunc(Number(data.summary.total_products)).toLocaleString('en-IN')
+    document.getElementById("cardUnitsSold").innerHTML = Math.trunc(Number(data.summary.units_sold)).toLocaleString('en-IN')
+    document.getElementById("cardProductRevenue").innerHTML = "₹ " + Math.trunc(Number(data.summary.product_revenue)).toLocaleString('en-IN')
+    document.getElementById("cardLowStock").innerHTML = Math.trunc(Number(data.summary.low_stock_products)).toLocaleString('en-IN')
+
+    // Update charts
+
+    //Product sales chart
+    productSalesTrendChart.update(
+        data.product_sales_trend.labels,
+        [{
+            name: "Sales",
+            data: data.product_sales_trend.data
+        }]
+    )
+
+    // Top products chart
+    topProductsChart.update(
+        data.top_selling_products.labels,
+        data.top_selling_products.data
+    )
+
+    // Top categories chart
+    topCategoriesChart.update(
+        data.top_categories.labels,
+        data.top_categories.data
+    )
+
+    // Update table
+    updateSlowProductTable(data.slow_products)
+    updateLowStockTable(data.low_stock_products)
+
 }
 
-function updateCharts(data) {
-    let proSaleTrend = {
-        labels: data['product_sales_trend']['labels'],
-        data: data['product_sales_trend']['data']
-    }
+function updateSlowProductTable(slowProducts){
+    const tbody = document.getElementById("slowProducts_tbody");
+    tbody.innerHTML = ""
 
-    let topSellingProducts = {
-        labels: data['top_selling_products']['labels'],
-        data: data['top_selling_products']['data']
-    }
+    
+        if(slowProducts.length == 0) {
+            tbody.innerHTML = `
+            <tr>
+            <td colspan='6' class="text-center">No record found</td>
+            </tr>
+            `;
+            return;
+        }
+    
+        slowProducts.forEach((product, index) => {
 
-    let topCategories = {
-        labels: data['top_categories']['labels'],
-        data: data['top_categories']['data']
-    }
-    productSalesTrendChart.update(proSaleTrend['labels'], proSaleTrend['data'])
-    topProductsChart.update(topSellingProducts['labels'], topSellingProducts['data'])
-    topCategoriesChart.update(topCategories['labels'], topCategories['data'])
+            const row = document.createElement("tr");
 
-    if (!data.summary.total_products){
-        trendChartContainer.innerHTML = "No data available for selected filter."
-    }
-}
-
-function updateCardsTables(data) {
-    const cardTotalProducts = document.getElementById("cardTotalProducts")
-    const cardUnitsSold = document.getElementById("cardUnitsSold")
-    const cardProductRevenue = document.getElementById("cardProductRevenue")
-    const cardLowStock = document.getElementById("cardLowStock")
-
-    const resultForDate = document.getElementById("resultFor_date")
-    const resultForCat = document.getElementById("resultFor_category")
-
-    const tableSlowProducts = document.getElementById("tableSlowProducts")
-
-    let fromDate = utils.formatDate(data.results_for.date.from)
-    let toDate = utils.formatDate(data.results_for.date.to)
-
-    // // updating showing filter for section
-    resultForDate.innerHTML = "Date: " + fromDate + " – " + toDate
-    resultForCat.innerHTML = "Category: " + data.results_for.category
-
-    const summary = data.summary || {}
-    // Updating Cards
-    cardUnitsSold.innerHTML = (summary.units_sold || 0).toLocaleString('en-IN')
-    cardProductRevenue.innerHTML = "₹" + " " + (summary.product_revenue || 0).toLocaleString('en-IN')
-    cardTotalProducts.innerHTML = (summary.total_products || 0).toLocaleString('en-IN') || 0
-    cardLowStock.innerHTML = (summary.low_stock_products || 0).toLocaleString('en-IN') || 0
-
-    // Updating Slow Product Table
-    tableSlowProducts.innerHTML = ""
-
-    let slowProducts = data.slow_products || {}
-
-    if(!slowProducts){
-        tableSlowProducts.innerHTML = "No slow moving products"
-    }
-
-    slowProducts.forEach(product => {
-        tableSlowProducts.innerHTML += 
-        `
-        <tr>
+            row.innerHTML = `
             <td>${product.product_name}</td>
-            <td>${product.total_units_sold}</td>
-            <td>${product.last_sale_date}</td>
-        </tr>
-        `
-    });
+            <td>
+                ${Number(product.total_units_sold).toLocaleString("en-IN")}
+            </td>
+            <td>
+                ${utils.formatDate(product.last_sale_date)}
+            </td>
+            `;
+    
+            tbody.appendChild(row);
+        })
+
+}
+
+
+function updateLowStockTable(lowStockProducts){
+    const tbody = document.getElementById("lowStock_tbody");
+    tbody.innerHTML = ""
+
+    
+        if(lowStockProducts.length == 0) {
+            tbody.innerHTML = `
+            <tr>
+            <td colspan='6' class="text-center">No low stock products</td>
+            </tr>
+            `;
+            return;
+        }
+    
+        lowStockProducts.forEach((product, index) => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+            <td>${product.name}</td>
+            <td class="text-warning fw-semibold">
+                ${Number(product.current_stock).toLocaleString("en-IN")}
+            </td>
+            <td>
+                ${product.reorder_level}
+            </td>
+            `;
+    
+            tbody.appendChild(row);
+        })
+
+}
+
+// reset filters
+const btnReset = document.getElementById("resetFilters");
+btnReset.addEventListener("click", resetFilters)
+
+function resetFilters(){
+    const btnAllTime = document.getElementById("btnAllTime");
+
+    if(btnAllTime.classList.contains("active-pill") & categoryFilter.value === "") return;
+
+    categoryFilter.value = "";
+    dateBtns.forEach(btn => {
+        btn.classList.remove("active-pill");
+        btnAllTime.classList.add("active-pill");
+    })
+
+    fetchData()
 }

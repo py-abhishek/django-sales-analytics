@@ -1,6 +1,7 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
 from finance.models import Expense, ExpenseCategory
@@ -13,8 +14,10 @@ def get_business_id(request):
 # Search expenses
 class ExpensesSearchView(ListAPIView):
     serializer_class = ExpenseSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['name', 'category__name']
+
+    filterset_fields = ['expense_date']
 
     def get_queryset(self):
         queryset = Expense.objects.filter(

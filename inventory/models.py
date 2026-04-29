@@ -86,6 +86,7 @@ class InventoryLedger(models.Model):
     class TransTypeChoices(models.TextChoices):
         PURCHASE = 'pur', 'Purchase'
         SALE = 'sale', 'Sale'
+        NEW_PRODUCT = 'new_product', 'New Product Added'
         ADJUSTMENT = 'adj', 'Adjustment'
         RETURN_IN = 'return_in', 'Return In'
         RETURN_OUT = 'return_out', 'Return Out'
@@ -111,7 +112,7 @@ class InventoryLedger(models.Model):
 
     # Override save
     def save(self, *args, **kwargs):
-        if self.product:
+        if self.product_id:
             # Check for business inconsistancy
             if self.product.business != self.business:
                 raise ValidationError('Invetory Ledger: Product Business missmatch')

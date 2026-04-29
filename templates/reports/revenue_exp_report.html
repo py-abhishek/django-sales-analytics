@@ -30,57 +30,51 @@
     </div>
 
 
-
-    <!-- FILTERS -->
+    <!-- Filters -->
     <div class="card-soft p-3 mb-4">
 
-        <form method="get">
+        <div class="row align-items-end g-3">
 
-            <div class="row g-3 align-items-end">
+            <!-- DATE RANGE -->
+            <div class="col-md-3">
 
-                <div class="col-md-3">
-                    <label class="form-label">From Date</label>
-                    <input type="date" name="from_date" class="form-control">
-                </div>
+                <label class="form-label text-muted small">Date Range</label>
 
-                <div class="col-md-3">
-                    <label class="form-label">To Date</label>
-                    <input type="date" name="to_date" class="form-control">
-                </div>
+                <div class="d-flex flex-wrap gap-2" id="dateFilters">
 
-                <div class="col-md-3">
-                    <label class="form-label">Period</label>
-                    <select name="period" class="form-select">
-                        <option value="daily">Daily</option>
-                        <option value="monthly" selected >Monthly</option>
-                    </select>
-                </div>
+                    <button id="btnAllTime" class="btn btn-sm btn-light border rounded-pill active-pill" data-range="all">
+                        All Time
+                    </button>
 
-                <div class="col-md-2">
-                    <button class="btn btn-primary w-100">Apply Filter</button>
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="6m">
+                        6M
+                    </button>
+
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="1y">
+                        1Y
+                    </button>
+
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="2y">
+                        2Y
+                    </button>
+
                 </div>
 
             </div>
 
-        </form>
 
-    </div>
-    
-    <!-- CURRENT FILTER INFORMATION -->
-    <div class="card-soft p-3 mb-3">
-
-        <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
-
-            <span class="filter-label">Showing results for:</span>
-
-            <div class="filter-chip">
-                Date: All Time
+            <!-- RESET BUTTON -->
+            <div class="col-md-2 d-flex align-items-end">
+                <button id="resetFilters" class="btn btn-sm btn-light border w-100">
+                    Reset Date
+                </button>
             </div>
 
-            <div class="filter-chip">
-                Period: Monthly
-            </div>
-            
+        </div>
+
+            <!-- FILTER SUMMARY -->
+        <div class="mt-4" id="filterSummary">
+            <span class="">Showing results for: </span><span id="filter_summary" class="small text-muted rounded-pill border bg-light py-1 px-3 d-inline">All Time</span>
         </div>
 
     </div>
@@ -91,7 +85,7 @@
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Revenue</p>
-                <h4 class="metric-value text-success">
+                <h4 id="cardTotalRevenue" class="metric-value text-success">
                     ₹ {{ summary.total_revenue|floatformat:0|intcomma }}
                 </h4>
             </div>
@@ -100,7 +94,7 @@
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Total Expense</p>
-                <h4 class="metric-value text-danger">
+                <h4 id="cardTotalExpense" class="metric-value text-danger">
                     ₹ {{ summary.total_expense|floatformat:0|intcomma }}
                 </h4>
             </div>
@@ -109,7 +103,7 @@
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Net Profit</p>
-                <h4 class="metric-value">
+                <h4 id="cardNetProfit" class="metric-value">
                     ₹ {{ summary.net_profit|floatformat:0|intcomma }}
                 </h4>
             </div>
@@ -118,7 +112,7 @@
         <div class="col-md-3">
             <div class="card-soft p-3 report-card">
                 <p class="metric-label">Profit Margin</p>
-                <h4 class="metric-value">
+                <h4 id="cardProfitMargin" class="metric-value">
                     {{ summary.profit_margin }} %
                 </h4>
             </div>

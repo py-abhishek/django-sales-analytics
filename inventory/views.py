@@ -9,6 +9,7 @@ from .forms import ProductForm, ProductCategoryForm
 from .models import Product, ProductCategory, InventoryLedger
 from sales.models.sales import SaleItem
 from . import services
+from inventory.services import new_product_ledger
 
 
 
@@ -25,10 +26,28 @@ class AddProductView(CreateView):
     success_url = reverse_lazy('add_product_success')
 
     def form_valid(self, form):
-        form.instance.business_id = get_business_id(self.request)
-        form.instance.created_by = self.request.user
+        request = self.request
+        form.instance.business_id = get_business_id(request)
+        form.instance.created_by = request.user
 
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        product = self.object
+        sku = request.POST.get('sku')
+        unit_cost = request.POST.get('current_avg_cost')
+        quantity = request.POST.get('current_stock')
+        total_cost = int(quantity)*int(unit_cost)
+
+        # Create new product ledger
+        new_product_ledger(
+            product,
+            quantity,
+            unit_cost,
+            total_cost,
+            get_business_id(request)
+        )
+
+        return response
     
 
 # Manage and create product category

@@ -75,13 +75,13 @@ class SalesCreateView(View):
                 Calling function from services to validate and create sale
                 '''
                 saved_sale = services.create_sale(
-                    request,
                     customer_id,
                     is_new_customer,
                     customer_form_data,
                     sale_form_data,
                     formset_data,
-                    get_business_id(request)
+                    get_business_id(request),
+                    request.user
                 )
                 logger.info('saved data %s', saved_sale)
                 return redirect(reverse_lazy('sale_success', kwargs={'pk':saved_sale.id}))

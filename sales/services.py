@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Validate and create sale
-def create_sale(request, customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data, business_id):
+def create_sale(customer_id, is_new_customer, customer_form_data, sale_form_data, formset_data, business_id, user):
     '''
     This function will validate if item available in the stock,
     then deduct it from the stock,
@@ -43,7 +43,7 @@ def create_sale(request, customer_id, is_new_customer, customer_form_data, sale_
             total_profit=get_total_profit(cleaned_formset_data),
             payment_method=sale_form_data['payment_method'],
             business_id=business_id,
-            created_by=request.user
+            created_by=user
             )
 
         for item in cleaned_formset_data:

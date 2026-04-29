@@ -1,6 +1,7 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
 from sales.models import Customer, Sale
@@ -14,8 +15,10 @@ def get_business_id(request):
 # For sales List (History)
 class SalesSearchView(ListAPIView):
     serializer_class = SaleSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['customer__name']
+
+    filterset_fields = ['sale_date']
 
     def get_queryset(self):
         return Sale.objects.filter(

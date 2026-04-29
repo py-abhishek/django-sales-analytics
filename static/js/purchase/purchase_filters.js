@@ -2,19 +2,27 @@ import { formatDate } from "../utils.js";
 
 const search_field = document.getElementById("search_field");
 const date_field = document.getElementById("date_field");
-const p_method_field = document.getElementById("p_method_field");
-const btn_filter = document.getElementById("btn_filter");
+const reset_filters = document.getElementById("reset_filters");
 
-search_field.addEventListener('input', function(e) {
-    const query = this.value;
-    console.log(query);
-    searchQuery(query);
 
-})
+search_field.addEventListener('input', fetchData)
+date_field.addEventListener('input', fetchData)
+reset_filters.addEventListener('click', resetFilters);
+
+function resetFilters(){
+    if (date_field.value == "" & search_field.value == "") return;
+
+    date_field.value = "";
+    search_field.value = "";
+    fetchData()
+}
 
 // Search Sales by Customer
-function searchQuery(query){
-    fetch(`/purchases-api/search-purchases/?q=${query}`)
+function fetchData(){
+    const query = search_field.value;
+    const date = date_field.value;
+
+    fetch(`/purchases-api/search-purchases/?q=${query}&purchase_date=${date}`)
     .then(response => response.json())
     .then(data => updateTable(data));
 }

@@ -1,11 +1,12 @@
 from django.db.models import Sum, Count
-from django.db.models import Q, F
+from django.db.models import Q, F, DecimalField, Value
+from django.db.models.functions import Coalesce
 
 from inventory.models import Product, ProductCategory
 
 # Core function
-def get_insights(business_id):
-    products = get_filtered_query(business_id)
+def get_insights(business_id, category_id=None, product_id=None):
+    products = get_filtered_query(business_id, category_id, product_id)
     summary = get_summary(products)
     inv_category_value = get_inv_category_value(products)
     distributed_stock = get_dist_stock(products)
@@ -23,8 +24,14 @@ def get_insights(business_id):
     }
 
 
-def get_filtered_query(business_id):
+def get_filtered_query(business_id, category_id=None, product_id=None):
     products = Product.objects.filter(business_id=business_id).order_by('-name')
+
+    if category_id:
+        products = products.filter(category_id=category_id)
+
+    elif product_id:
+        products = products.filter(id=product_id)
 
     return products
 
@@ -34,10 +41,10 @@ def get_summary(products):
         inventory_value = Sum(F('current_avg_cost')* F('current_stock')),
         low_stock_count = Count('id', filter=Q(current_stock__lt=F('reorder_level'), current_stock__gt=0)),
         out_of_stock_count = Count('id', filter=Q(current_stock__exact=0)),
-        in_stock_count=Sum('id', filter=Q(current_stock__gt=F('reorder_level')))
+        in_stock_count=Count('id', filter=Q(current_stock__gt=F('reorder_level')))
     )
 
-    result['inventory_value'] = float(result['inventory_value'])
+    result['inventory_value'] = float(result['inventory_value'] or 0)
 
     return result
 
@@ -52,7 +59,7 @@ def get_inv_category_value(products):
 
     result = {
         'labels': [v['category__name'] for v in values],
-        'data': [float(v['total_value']) for v in values]
+        'data': [float(v['total_value']) or 0 for v in values]
     }
 
     return result
@@ -79,7 +86,7 @@ def get_top_inv_products(products):
 
     result = {
         'labels': [tp['name'] for tp in top_products],
-        'data': [float(tp['total_value']) for tp in top_products]
+        'data': [float(tp['total_value']) or 0 for tp in top_products]
     }
 
     return result

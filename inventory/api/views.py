@@ -1,6 +1,7 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
 from inventory.models import Product, InventoryLedger, ProductCategory
@@ -20,6 +21,11 @@ class ProductsSearchView(ListAPIView):
         queryset = Product.objects.filter(
             business_id=get_business_id(self.request)
         ).order_by('name')
+
+        date = self.request.GET.get('date')
+
+        if date:
+            queryset = queryset.filter(created_at__date=date)
         
         return queryset
     
@@ -42,7 +48,14 @@ class LedgerSearchView(ListAPIView):
     search_fields = ['product__name']
 
     def get_queryset(self):
-        return InventoryLedger.objects.filter(
+        queryset = InventoryLedger.objects.filter(
             business_id=get_business_id(self.request)
         ).order_by('-created_at')
+    
+        date = self.request.GET.get('date')
+
+        if date:
+            queryset = queryset.filter(created_at__date=date)
+        
+        return queryset
     

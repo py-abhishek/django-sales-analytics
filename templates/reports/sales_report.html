@@ -27,73 +27,78 @@
         -->
         </div>
 
-
-        <!-- FILTERS -->
+        <!-- Filters -->
         <div class="card-soft p-3 mb-4">
 
-            <form method="get">
+            <div class="row align-items-end g-3">
 
-                <div class="row g-3 align-items-end">
+                <!-- DATE RANGE -->
+                <div class="col-md-3">
 
-                    <div class="col-md-2">
-                        <label class="form-label">From Date</label>
-                        <input type="date" name="from_date" class="form-control">
-                    </div>
+                    <label class="form-label text-muted small">Date Range</label>
 
-                    <div class="col-md-2">
-                        <label class="form-label">To Date</label>
-                        <input type="date" name="to_date" class="form-control">
-                    </div>
+                    <div class="d-flex flex-wrap gap-2" id="dateFilters">
 
-                    <div class="col-md-3">
-                        <label class="form-label">Customer</label>
-                        <select name="customer" class="form-select">
-                            <option value="">All Customers</option>
-                            {% for customer in customers %}
-                            <option value="{{ customer.id }}">{{ customer.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <button id="btnAllTime" class="btn btn-sm btn-light border rounded-pill active-pill" data-range="all">
+                            All Time
+                        </button>
 
-                    <div class="col-md-2">
-                        <label class="form-label">Payment Method</label>
-                        <select name="payment" class="form-select">
-                            <option value="">All</option>
-                            <option value="cash">Cash</option>
-                            <option value="upi">UPI</option>
-                            <option value="card">Card</option>
-                        </select>
-                    </div>
+                        <button class="btn btn-sm btn-light border rounded-pill" data-range="6m">
+                            6M
+                        </button>
 
-                    <div class="col-md-2">
-                        <button class="btn btn-primary w-100">Apply Filter</button>
+                        <button class="btn btn-sm btn-light border rounded-pill" data-range="1y">
+                            1Y
+                        </button>
+
+                        <button class="btn btn-sm btn-light border rounded-pill" data-range="2y">
+                            2Y
+                        </button>
+
                     </div>
 
                 </div>
 
-            </form>
+                <!-- CUSTOMER -->
+                <div class="col-md-3">
 
-        </div>
+                    <label class="form-label text-muted small">Customer</label>
 
-        <!-- CURRENT FILTER INFORMATION -->
-        <div class="card-soft p-3 mb-3">
+                    <select id="customerFilter" class="form-select form-select-sm">
+                        <option value="">All Customers</option>
+                        {% for customer in customers %}
+                        <option value="{{ customer.id }}" data-name="{{ customer.name }}">{{ customer.name }}</option>
+                        {% endfor %}
+                    </select>
 
-            <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
-
-                <span class="filter-label">Showing results for:</span>
-
-                <div class="filter-chip">
-                    Date: All Time
                 </div>
 
-                <div class="filter-chip">
-                    Customer: All Customers
+                <!-- PAYMENT -->
+                <div class="col-md-3">
+
+                    <label class="form-label text-muted small">Payment Method</label>
+
+                    <select id="paymentFilter" class="form-select form-select-sm">
+                        <option value="">All Payments</option>
+                        <option value="cash">Cash</option>
+                        <option value="upi">UPI</option>
+                        <option value="card">Card</option>
+                    </select>
+
                 </div>
 
-                <div class="filter-chip">
-                    Payment Method: All
+                <!-- RESET BUTTON -->
+                <div class="col-md-2 d-flex align-items-end">
+                    <button id="resetFilters" class="btn btn-sm btn-light border w-100">
+                        Reset Filters
+                    </button>
                 </div>
 
+            </div>
+
+                <!-- FILTER SUMMARY -->
+            <div class="mt-4" id="filterSummary">
+                <span class="">Showing results for: </span><span id="filter_summary" class="small text-muted rounded-pill border bg-light py-1 px-3 d-inline">All Time • All Customers • All Payments</span>
             </div>
 
         </div>
@@ -105,28 +110,28 @@
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Sales</p>
-                    <h4 class="metric-value">{{ summary.total_sales_count }}</h4>
+                    <h4 id="card_total_sales" class="metric-value">{{ summary.total_sales_count }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Revenue</p>
-                    <h4 class="metric-value">₹ {{ summary.total_revenue|floatformat:0|intcomma }}</h4>
+                    <h4 id="card_total_revenue" class="metric-value">₹ {{ summary.total_revenue|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Total Profit</p>
-                    <h4 class="metric-value text-success">₹ {{ summary.total_profit|floatformat:0|intcomma }}</h4>
+                    <h4 id="card_total_profit" class="metric-value text-success">₹ {{ summary.total_profit|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft p-3 report-card">
                     <p class="metric-label">Avg Order Value</p>
-                    <h4 class="metric-value">₹ {{ summary.avg_order_value|floatformat:0|intcomma }}</h4>
+                    <h4 id=card_avg_order class="metric-value">₹ {{ summary.avg_order_value|floatformat:0|intcomma }}</h4>
                 </div>
             </div>
 
@@ -187,7 +192,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="customer_tbody">
 
                             {% for customer in top_customers %}
 
@@ -215,82 +220,6 @@
 
         </div>
 
-
-        <!-- SALES TABLE -->
-        <!--
-        <div class="">
-
-            <div class="p-3 border-bottom">
-                <h5 class="mb-0 mt-4">Detailed Sales Data</h5>
-            </div>
-
-            <div class="table-responsive">
-
-                <table class="table align-middle data-table table-hover mb-0">
-
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Customer</th>
-                            <th>Date</th>
-                            <th>Payment</th>
-                            <th>Total Amount</th>
-                            <th>Profit</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                    {% for sale in sales %}
-
-                    <tr class="clickable-row" data-url="{% url 'sale_detail' sale.id %}">
-
-                        <td>{{ forloop.counter }}</td>
-
-                        <td>
-                            {% if sale.customer %}
-                                {{ sale.customer.name }}
-                            {% else %}
-                                <span class="text-muted">Walk-in</span>
-                            {% endif %}
-                        </td>
-
-                        <td>{{ sale.sale_date }}</td>
-
-                        <td>
-                            <span class="badge-soft badge-success">
-                                {{ sale.get_payment_method_display }}
-                            </span>
-                        </td>
-
-                        <td class="fw-semibold">
-                            ₹ {{ sale.total_amount }}
-                        </td>
-
-                        <td class="text-success fw-semibold">
-                            ₹ {{ sale.total_profit }}
-                        </td>
-
-                    </tr>
-
-                    {% empty %}
-
-                    <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">
-                            No sales found
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-    -->                                                                     
 
     </div>
 

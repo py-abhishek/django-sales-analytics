@@ -3,7 +3,7 @@ from inventory.models import ProductCategory
 
 def seed_product_categories(business):
 
-    with open('core/fixtures/inventory/product_categories.json', 'r') as f:
+    with open('core/fixtures/product_categories.json', 'r') as f:
         categories = json.load(f)
 
 

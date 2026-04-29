@@ -31,67 +31,65 @@
 
     </div>
 
-
-    <!-- FILTERS -->
+    <!-- Filters -->
     <div class="card-soft p-3 mb-4">
 
-        <div class="row g-3 align-items-end">
+        <div class="row align-items-end g-3">
 
-                <div class="col-md-3">
-                <label class="form-label">From Date</label>
-                <input id="fromDate" type="date" name="from_date" class="form-control">
+            <!-- DATE RANGE -->
+            <div class="col-md-3">
+
+                <label class="form-label text-muted small">Date Range</label>
+
+                <div class="d-flex flex-wrap gap-2" id="dateFilters">
+
+                    <button id="btnAllTime" class="btn btn-sm btn-light border rounded-pill active-pill" data-range="all">
+                        All Time
+                    </button>
+
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="6m">
+                        6M
+                    </button>
+
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="1y">
+                        1Y
+                    </button>
+
+                    <button class="btn btn-sm btn-light border rounded-pill" data-range="2y">
+                        2Y
+                    </button>
+
+                </div>
+
             </div>
 
+            <!-- Category -->
             <div class="col-md-3">
-                <label class="form-label">To Date</label>
-                <input id="toDate" type="date" name="to_date" class="form-control">
-            </div>
 
-            <div class="col-md-3">
-                <label class="form-label">Category</label>
-                <select id="selectCategory" name="category" class="form-select">
+                <label class="form-label text-muted small">Category</label>
+
+                <select id="categoryFilter" class="form-select form-select-sm">
                     <option value="">All Categories</option>
                     {% for category in product_categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        <option value="{{ category.id }}" data-name="{{ category.name }}">{{ category.name }}</option>
                     {% endfor %}
                 </select>
+
             </div>
 
-            {% comment %} <div class="col-md-2">
-                <label class="form-label">Stock Status</label>
-                <select name="stock_status" class="form-select">
-                    <option value="">All</option>
-                    <option value="in_stock">In Stock</option>
-                    <option value="low_stock">Low Stock</option>
-                    <option value="out_of_stock">Out of Stock</option>
-                </select>
-            </div> {% endcomment %}
 
-            {% csrf_token %}
-
-            <div class="col-md-2">
-                <button id="btnProductFilter" class="btn btn-primary w-100">Apply Filter</button>
+            <!-- RESET BUTTON -->
+            <div class="col-md-2 d-flex align-items-end">
+                <button id="resetFilters" class="btn btn-sm btn-light border w-100">
+                    Reset Filters
+                </button>
             </div>
 
         </div>
 
-    </div>
-
-    <!-- CURRENT FILTER INFORMATION -->
-    <div class="card-soft p-3 mb-3">
-
-        <div class="d-flex flex-wrap align-items-center gap-2 filter-info">
-
-            <span class="filter-label">Showing results for:</span>
-
-            <div id="resultFor_date" class="filter-chip">
-                Date: All Time
-            </div>
-
-            <div id="resultFor_category" class="filter-chip">
-                Category: All Categories
-            </div>
-
+            <!-- FILTER SUMMARY -->
+        <div class="mt-4" id="filterSummary">
+            <span class="">Showing results for: </span><span id="filter_summary" class="small text-muted rounded-pill border bg-light py-1 px-3 d-inline">All Time • All Categories</span>
         </div>
 
     </div>
@@ -206,7 +204,7 @@
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody id="lowStock_tbody">
 
                         {% for product in low_stock_products %}
 
@@ -264,7 +262,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="tableSlowProducts">
+                        <tbody id="slowProducts_tbody">
 
                         {% for product in slow_products %}
 
