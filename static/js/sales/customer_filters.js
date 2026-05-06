@@ -1,13 +1,15 @@
 import { formatDate } from "../utils.js";
 
-const search_field = document.getElementById("search_field");
+let timer;
+search_field.addEventListener("input", function () {
+    clearTimeout(timer);
 
-search_field.addEventListener('input', function(e) {
-    const query = this.value;
-    console.log(query);
-    searchQuery(query);
+    timer = setTimeout(() => {
+        searchQuery(this.value);
+    }, 300);
+});
 
-})
+
 
 // Search Sales by Customer
 function searchQuery(query){

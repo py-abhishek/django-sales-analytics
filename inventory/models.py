@@ -32,6 +32,7 @@ class Product(models.Model):
         BOX = 'box', 'Box'
         PACK = 'pack', 'Pack'
 
+
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     sku = models.CharField(max_length=100, unique=True)

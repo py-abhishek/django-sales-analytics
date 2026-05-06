@@ -117,10 +117,41 @@
 
     </div>
 
+<!-- BOTTOM PAGINATION BAR -->
+
+<div id="paginationBar" class="d-flex justify-content-between align-items-center mt-4 px-2 flex-wrap gap-3">
+
+    <!-- PAGE INFO -->
+    <div class="text-muted small">
+        Page <span id="currentPage">1</span> of
+        <span id="totalPages">{{ total_pages }}</span>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="d-flex align-items-center gap-2">
+
+
+        <button id="prevPageBtn" class="btn btn-sm btn-light border">
+            ‹
+        </button>
+
+        <span class="px-3 py-1 rounded bg-primary text-white small fw-semibold">
+            <span id="activePage">1</span>
+        </span>
+
+        <button id="nextPageBtn" class="btn btn-sm btn-light border">
+            ›
+        </button>
+
+    </div>
+
+</div>
+
 </div>
 
 {% endblock %}
 
 {% block scripts %}
     <script type="module" src="{% static 'js/inventory/stock_movements_filters.js' %}"></script>
+    <script type="module" src="{% static 'js/inventory/stock_movements.js' %}"></script>
 {% endblock %}

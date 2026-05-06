@@ -11,8 +11,12 @@ function createInvCatChart() {
         let seriesName = "Product";
         let toolTipUnit = "₹";
         let tpUnitPos = "prefix";
+        let series = [{
+            "name": "Product",
+            "data": data
+        }]
     
-        const inventoryCategoryChart = new charts.Barchart(chartContainer, labels, data, seriesName, titleX, titleY, toolTipUnit, tpUnitPos);
+        const inventoryCategoryChart = new charts.Barchart(chartContainer, labels, series, titleX, titleY, toolTipUnit, tpUnitPos);
         inventoryCategoryChart.create();
 
         return inventoryCategoryChart;
@@ -99,8 +103,10 @@ function updateData(data){
     //Inventory value by cagtegory chart
     inventoryCategoryChart.update(
         data.inv_category_value.labels,
-        data.inv_category_value.data
-        
+        [{
+            "name": "Product",
+            "data": data.inv_category_value.data
+        }]        
     )
 
     // Stock status distribution chart

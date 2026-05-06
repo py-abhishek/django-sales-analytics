@@ -1,6 +1,7 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
@@ -53,9 +54,41 @@ class LedgerSearchView(ListAPIView):
         ).order_by('-created_at')
     
         date = self.request.GET.get('date')
+        query = self.request.GET.get('q')
 
         if date:
             queryset = queryset.filter(created_at__date=date)
         
+        if not query and not date:
+            return queryset[:100]
+        
         return queryset
+
+
+class LedgerListView(ListAPIView):
+    serializer_class = InventoryLedgerSerializer
+
+    def get_queryset(self):
+        queryset = InventoryLedger.objects.filter(
+            business_id=get_business_id(self.request)
+        ).order_by('-created_at')
+
+        current_page = int(self.request.GET.get('c_page', 1))
+
+        start = (current_page - 1) * 100
+        end = start + 100
+
+        return queryset[start:end]
+    
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        current_page = int(request.GET.get('c_page', 1))
+
+        return Response({
+            'current_page': current_page,
+            'data': serializer.data
+        })
     

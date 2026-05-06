@@ -4,8 +4,15 @@ const search_field = document.getElementById("search_field");
 const date_field = document.getElementById("date_field");
 const reset_filters = document.getElementById("reset_filters");
 
+let timer;
+search_field.addEventListener("input", function () {
+    clearTimeout(timer);
 
-search_field.addEventListener('input', fetchData)
+    timer = setTimeout(() => {
+        fetchData();
+    }, 300);
+});
+
 date_field.addEventListener('input', fetchData)
 reset_filters.addEventListener('click', resetFilters);
 

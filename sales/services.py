@@ -160,4 +160,4 @@ def cancel_sale(request, sale_id, business_id):
     sale.status = Sale.StatusChoices.CANCELLED
     sale.save()
 
-    messages.success(request, 'Sale cancelled successfully.')
+    messages.success(request, f'Sale ID #{sale_id} cancelled successfully.')

@@ -43,7 +43,39 @@ class ProductForm(forms.ModelForm):
             'current_stock': forms.NumberInput(attrs={'class': 'form-control'}),
             'unit': forms.Select(attrs={'class': 'form-select'}),
             'reorder_level': forms.NumberInput(attrs={'class': 'form-control'}),
+            # 'tax_rate': forms.Select(attrs={'class': 'form-select'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+
+        }
+
+        
+
+
+# Update product
+class UpdateProductForm(forms.ModelForm):
+    '''
+    To add new product in the stock
+    '''
+
+    class Meta:
+        model = Product
+        fields = ['name', 'sku', 'category', 'description', 'selling_price', 'unit', 'reorder_level']
+
+        labels = {
+            'name': 'Product Name',
+            'sku': 'Unique ID (SKU)',
+            'selling_price': 'Selling Price',
+            'reorder_level': 'Reorder Level',
+        }
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'sku': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'selling_price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'unit': forms.Select(attrs={'class': 'form-select'}),
+            'reorder_level': forms.NumberInput(attrs={'class': 'form-control'}),
 
         }
 

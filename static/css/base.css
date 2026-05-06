@@ -135,3 +135,7 @@ p {
     color: #cd3f3f;
 }
 
+
+.bg-primary{
+    background-color: var(--clr-primary) !important;
+}

@@ -19,13 +19,13 @@
         </div>
 
         <div>
-            <a href="{% url 'product_list' %}" class="btn btn-secondary">
+            <a href="{% url 'product_list' %}" class="btn btn-secondary me-3">
                 Back to List
             </a>
 
-            {% comment %} <a href="{% url 'product_edit' product.id %}" class="btn btn-primary">
+            <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">
                 Edit Product
-            </a> {% endcomment %}
+            </a>
         </div>
     </div>
 

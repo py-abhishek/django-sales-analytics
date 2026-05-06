@@ -1,6 +1,14 @@
 import { formatDate } from "../utils.js";
 
-const search_field = document.getElementById("search_field");
+let timer;
+search_field.addEventListener("input", function () {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+        fetchData();
+    }, 300);
+});
+
 const date_field = document.getElementById("date_field");
 const reset_filters = document.getElementById("reset_filters");
 

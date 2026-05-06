@@ -12,8 +12,8 @@
         <!-- ================= HEADER ================= -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h3 class="fw-bold mb-1">Add New Product</h3>
-                <small class="text-muted">Create and manage inventory items</small>
+                <h3 class="fw-bold mb-1">Edit Product</h3>
+                <small class="text-muted">Update product details</small>
             </div>
             <a href="{% url 'product_list' %}" class="btn btn-secondary">
             View Products List 
@@ -55,12 +55,6 @@
                             {{ form.description }}
                         </div>
 
-                        <div class="form-check form-switch mt-3">
-                            {{ form.is_active }}
-                            <label class="form-check-label ms-2">
-                                Active Product
-                            </label>
-                        </div>
 
                     </div>
                     <div class="error-msg text-danger">
@@ -81,21 +75,19 @@
                         <h5 class="section-title mb-4">Pricing & Stock</h5>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Cost Price</label>
-                                {{ form.current_avg_cost }}
-                            </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label class="form-label">Selling Price</label>
                                 {{ form.selling_price }}
                             </div>
+
+                            
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Initial Stock</label>
-                                {{ form.current_stock }}
+                                <label class="form-label">Reorder Level</label>
+                                {{ form.reorder_level }}
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -104,20 +96,17 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Reorder Level</label>
-                            {{ form.reorder_level }}
-                        </div>
+                        
                         
                     </div>
                     
                     <!-- ================= SUBMIT SECTION ================= -->
                     <div class="submit-section mt-5">
-                        <a href="" class="btn btn-outline-secondary">
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-secondary">
                             Cancel
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            Add Product
+                            Update Product
                         </button>
                     </div>
 

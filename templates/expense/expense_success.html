@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Expense Added Successfully{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h3 class="section-title mb-0">Expense #{{ expense.id }}</h3>
+            <small class="text-muted">Expense added successfully</small>
+        </div>
+
+        <div>
+
+            <a href="{% url 'expense_list' %}" class="btn btn-secondary">
+                Expense List
+            </a>
+
+            <a href="{% url 'add_expense' %}" class="btn btn-primary">
+                Add New Expense
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPENSE DETAILS -->
+    <div class="custom-card border-left p-4 mb-4">
+
+        <h5 class="mb-3">Expense Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Expense Name</p>
+                <p class="text-semibold">{{ expense.name }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Category</p>
+                <p class="text-semibold">
+                    {{ expense.category.name|default:"-" }}
+                </p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Amount</p>
+                <p class="text-semibold text-danger">
+                    ₹ {{ expense.amount|floatformat:0|intcomma }}
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="text-muted mb-1">Expense Date</p>
+                <p class="text-semibold">{{ expense.expense_date }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+    <div class="custom-card p-4 mb-4">
+
+        <h5 class="mb-3">Description</h5>
+
+        {% if expense.description %}
+            <p class="text-semibold mb-0">{{ expense.description }}</p>
+        {% else %}
+            <p class="text-muted mb-0">No description provided.</p>
+        {% endif %}
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+    <div class="custom-card border-left p-4 mb-4">
+
+        <h5 class="mb-3 text-success">Success</h5>
+
+        <p class="mb-0 text-muted">
+            Expense has been added successfully and is now included in business records and reports.
+        </p>
+
+    </div>
+
+
+    <!-- RECORD INFORMATION -->
+    <div class="custom-card p-4">
+
+        <h5 class="mb-3">Record Info</h5>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Created At</p>
+                <p class="text-semibold">{{ expense.created_at }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Last Updated</p>
+                <p class="text-semibold">{{ expense.updated_at }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

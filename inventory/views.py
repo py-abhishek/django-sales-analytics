@@ -1,16 +1,18 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, View
-from django.urls import reverse_lazy
+from django.views.generic import ListView, View, DetailView, UpdateView
+from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from .forms import ProductForm, ProductCategoryForm
+from .forms import ProductForm, ProductCategoryForm, UpdateProductForm
 from .models import Product, ProductCategory, InventoryLedger
 from sales.models.sales import SaleItem
 from . import services
 from inventory.services import new_product_ledger
+import math
 
+from django.contrib import messages
 
 
 def get_business_id(request):
@@ -75,7 +77,6 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-
         return Product.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
 
 
@@ -110,7 +111,37 @@ class StockMovementListView(ListView):
     context_object_name = 'stock_movements'
     
     def get_queryset(self):
-        return InventoryLedger.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
+        return InventoryLedger.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')[:100]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_pages"] = math.ceil(InventoryLedger.objects.filter(business_id=get_business_id(self.request)).count()/100)
+        return context
+    
+
+# Product success view
+class ProductSuccessView(DetailView):
+    model = Product
+    template_name = 'inventory/product_success.html'
+    context_object_name = 'product'
+
+    def get_queryset(self):
+        return Product.objects.filter(business_id=get_business_id(self.request))
+    
+# Edit product view
+class EditProductView(UpdateView):
+    model = Product
+    form_class = UpdateProductForm
+    template_name = 'inventory/edit_product.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(business_id=get_business_id(self.request))
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Product updated successfully.')
+        return reverse('product_detail', kwargs={'pk': self.object.pk})
+    
+    
 
 
 # API - get product info

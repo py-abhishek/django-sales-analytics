@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Product Added Successfully{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/apps/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h3 class="section-title mb-0">Product #{{ product.id }}</h3>
+            <small class="text-muted">Product added successfully</small>
+        </div>
+
+        <div>
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                Back to List
+            </a>
+
+            <a href="{% url 'add_product' %}" class="btn btn-primary">
+                Add New Product
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCT INFORMATION -->
+    <div class="custom-card p-4 mb-4">
+
+        <h5 class="mb-3">Product Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Product Name</p>
+                <p class="text-semibold">{{ product.name }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">SKU</p>
+                <p class="text-semibold">{{ product.sku }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <p class="text-muted mb-1">Category</p>
+                <p class="text-semibold">
+                    {{ product.category.name|default:"-" }}
+                </p>
+            </div>
+
+            <div class="col-md-12">
+                <p class="text-muted mb-1">Description</p>
+                <p class="text-semibold">
+                    {{ product.description|default:"No description provided." }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRICING & INVENTORY -->
+    <div class="custom-card p-4 mb-4">
+
+        <h5 class="mb-3">Pricing & Inventory</h5>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Cost Price</p>
+                <p class="text-semibold">
+                    ₹ {{ product.current_avg_cost|floatformat:0|intcomma }}
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Selling Price</p>
+                <p class="text-semibold">
+                    ₹ {{ product.selling_price|floatformat:0|intcomma }}
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Current Stock</p>
+                <p class="text-semibold">
+                    {{ product.current_stock }} {{ product.unit }}
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-muted mb-1">Reorder Level</p>
+                <p class="text-semibold">
+                    {{ product.reorder_level }} {{ product.unit }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+    <div class="custom-card border-left p-4 mb-4">
+
+        <h5 class="mb-3 text-success">Success</h5>
+
+        <p class="mb-0 text-muted">
+            Product has been added successfully and is now available for purchases, inventory tracking, and reporting.
+        </p>
+
+    </div>
+
+
+    <!-- RECORD INFORMATION -->
+    <div class="custom-card p-4">
+
+        <h5 class="mb-3">Record Information</h5>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Created At</p>
+                <p class="text-semibold">{{ product.created_at|date }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-muted mb-1">Last Updated</p>
+                <p class="text-semibold">{{ product.updated_at|date }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

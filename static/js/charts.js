@@ -434,7 +434,8 @@ export class Barchart {
         this.chart.render();
     }
 
-    update(series) {
+    update(labels, series) {
+        this.labels = labels
         this.series = series
         this.chart.updateOptions({
             xaxis: {
