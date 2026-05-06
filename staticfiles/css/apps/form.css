@@ -1,0 +1,100 @@
+/* ===============================
+   FORM PAGE DESIGN - Add Stock
+=================================*/
+
+.section-title {
+    font-weight: 600;
+    color: var(--clr-text-main);
+}
+
+/* .pricing-card {
+    border-left: 4px solid var(--clr-primary);
+} */
+
+
+
+.submit-section {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    margin-top: 30px;
+    margin-right: 10px;
+}
+
+
+/* ===============================
+   SALE PAGE DESIGN - Sales form
+=================================*/
+
+/* .transaction-header {
+    border-left: 4px solid var(--clr-primary);
+} */
+
+.suggestion-results{
+    position:absolute;
+    width:100%;
+    background: var(--clr-bg-main);
+    border:1px solid var(--clr-border);
+    border-radius:var(--radius);
+    max-height:200px;
+    overflow-y:auto;
+    z-index:1000;
+    display:none;
+}
+
+.form-control::placeholder {
+    color: var(--clr-text-placeholder);
+}
+
+.suggestion-results div {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.suggestion-results div:hover {
+    background-color: var(--clr-primary-soft);
+}
+
+.total-display {
+    background: var(--clr-primary-soft);
+    padding: 14px 18px;
+    border-radius: 12px;
+}
+
+.total-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--clr-primary);
+}
+
+.profit-display {
+    font-size: 14px;
+    color: var(--clr-text-muted);
+}
+
+.data-table thead th {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--clr-text-muted);
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.data-table td {
+    vertical-align: middle;
+    border-top: 1px solid var(--clr-border);
+}
+
+.sale-row:hover {
+    background: var(--clr-primary-soft);
+}
+
+.summary-card {
+    position: sticky;
+    top: 20px;
+}
+
+.grand-total {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--clr-primary);
+}

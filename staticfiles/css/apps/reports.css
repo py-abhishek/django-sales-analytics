@@ -1,0 +1,21 @@
+.report-card {
+    border-left: 4px solid var(--clr-primary);
+}
+
+.metric-label {
+    font-size: 13px;
+    color: var(--clr-text-muted);
+    margin-bottom: 4px;
+}
+
+.metric-value {
+    font-weight: 700;
+}
+
+.chart {
+    width: 100% !important;
+}
+
+.medium-height {
+    height: 450px !important;
+}

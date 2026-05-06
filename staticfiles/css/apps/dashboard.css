@@ -1,0 +1,13 @@
+.card-label {
+    font-size: 13px;
+    color: var(--clr-text-muted);
+    margin-bottom: 4px;
+}
+
+.card-value {
+    font-weight: 700;
+}
+
+.dashboard-page canvas {
+    width: 100% !important;
+}
