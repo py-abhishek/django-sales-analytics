@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inventory/', include('inventory.urls')),
     path('sales/', include('sales.urls')),
     path('expense/', include('finance.urls')),
-    path('', include('dashboard.urls')),
+    # path('', include('dashboard.urls')),
+    path('', lambda request: HttpResponse("Railway Working")),
     path('reports/', include('reports.urls')),
     path('purchases/', include('purchases.urls')),
     path('accounts/', include('accounts.urls')),
