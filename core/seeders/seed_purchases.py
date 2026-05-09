@@ -13,15 +13,28 @@ def seed_purchases(business):
     purchase_form_data = {}
     supplier_form_data = {}
 
-    for i in range(500):
+    for i in range(219):
         supplier_id = random.choice(Supplier.objects.all()).id
         purchase_form_data['payment_method'] = random.choice(Purchase._meta.get_field('payment_method').choices)[0]
         purchase_form_data['purchase_date'] = get_random_date()
         formset_data = []
 
+        products = Product.objects.all()
+
         for j in range(random.randint(1, 10)):
+
             
-            product = random.choice(Product.objects.all())
+            is_duplicate = False
+            product = random.choice(products)
+            for item in formset_data:
+                if product == item['product']:
+                    is_duplicate = True
+                    break
+
+            if is_duplicate: 
+                continue # Return if product already in the list
+            
+            
             formset_data.append({
                 'product': product,
                 'quantity': random.randint(1,4),

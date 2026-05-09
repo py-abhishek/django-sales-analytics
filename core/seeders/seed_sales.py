@@ -13,17 +13,29 @@ def seed_sales(business, user):
     sale_form_data = {}
     customer_form_data = {}
 
-    for i in range(500):
+    for i in range(456):
         customer_id = random.choice(Customer.objects.all()).id
         sale_form_data['payment_method'] = random.choice(Sale._meta.get_field('payment_method').choices)[0]
         sale_form_data['sale_date'] = get_random_date()
         formset_data = []
+        products = list(Product.objects.all())
+
 
         for j in range(random.randint(1, 10)):
+
+            is_duplicate = False
+            new_product = random.choice(products)
+            for item in formset_data:
+                if new_product == item['product']:
+                    is_duplicate = True
+                    break
+
+            if is_duplicate: 
+                continue # Return if product already in the list
             
             formset_data.append({
-                'product': random.choice(Product.objects.all()),
-                'quantity': random.randint(1,4)
+                'product': new_product,
+                'quantity': random.randint(1,6)
                 })
         
         try:
