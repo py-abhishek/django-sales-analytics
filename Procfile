@@ -1,1 +1,1 @@
-web: gunicorn sales_analytics.wsgi
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn your_project_name.wsgi --bind 0.0.0.0:$PORT

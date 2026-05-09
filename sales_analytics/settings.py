@@ -27,9 +27,21 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config('DEBUG', defualt=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+# ─── Allowed Hosts ───────────────────────────────────────────
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',          # covers all *.railway.app subdomains
+    config('RAILWAY_DOMAIN', default=''),  # your specific domain
+]
+
+# ─── CSRF Trusted Origins ────────────────────────────────────
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    f"https://{config('RAILWAY_DOMAIN', default='placeholder.railway.app')}",
+]
 
 
 # Application definition
@@ -96,20 +108,15 @@ WSGI_APPLICATION = 'sales_analytics.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.getenv('DATABASE_URL')
-#     )
-# }
+# ─── Database ────────────────────────────────────────────────
+DATABASE_URL = config('DATABASE_URL', default=None)
 
-if os.getenv("DATABASE_URL"):
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL')
-        )
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     }
-
 else:
+    # Local SQLite fallback
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -152,11 +159,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# ─── Static Files ────────────────────────────────────────────
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static'] 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -194,6 +200,6 @@ LOGGING = {
 
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
