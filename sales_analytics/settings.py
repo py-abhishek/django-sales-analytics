@@ -30,17 +30,18 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ─── Allowed Hosts ───────────────────────────────────────────
+
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.railway.app',          # covers all *.railway.app subdomains
-    config('RAILWAY_DOMAIN', default=''),  # your specific domain
+    '.onrender.com',
+    config('RENDER_DOMAIN', default=''),
 ]
 
 # ─── CSRF Trusted Origins ────────────────────────────────────
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.railway.app',
-    f"https://{config('RAILWAY_DOMAIN', default='placeholder.railway.app')}",
+    'https://*.onrender.com',
+    f"https://{config('RENDER_DOMAIN', default='placeholder.onrender.com')}",
 ]
 
 
