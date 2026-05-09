@@ -4,7 +4,7 @@ from inventory.models import ProductCategory, Product
 from inventory.services import new_product_ledger
 
 def seed_products(business, user):
-    with open('core/fixtures/inventory/products.json', 'r') as f:
+    with open('core/fixtures/products.json', 'r') as f:
         product_list = json.load(f)
 
     products = []
