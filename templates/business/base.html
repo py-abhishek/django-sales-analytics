@@ -13,18 +13,39 @@
     <link rel="stylesheet" href="{% static 'css/user_forms.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
     {% block css_files %}
     {% endblock %}
 </head>
 <body>
     
+    <!-- ===============================
+        MAIN LAYOUT
+    =================================-->
+    
+        <!-- NAVBAR -->
+        {% include "partials/navbar.html" %}
+    <div class="">
+
+        <!-- CONTENT AREA -->
+        <div class="content content-area">
+            
+
+            <div class="content-placeholder">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+
+{% comment %}     
     <!-- NAVBAR -->
     {% include "partials/navbar.html" %}
 
-    <div class="content">
+    <div class="content app-layout">
         {% block content %}
         {% endblock %}
-    </div>
+    </div> {% endcomment %}
 
 
     <!-- Bootstap JS -->

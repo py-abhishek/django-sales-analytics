@@ -85,9 +85,9 @@ class ProductDetailView(View):
     def get(self, request, pk):
         business_id = get_business_id(request)
 
-        product = get_object_or_404(Product, id=pk)
+        product = get_object_or_404(Product.objects.select_related('category'), id=pk)
         current_year = now().year
-        all_sales = SaleItem.objects.filter(business_id=business_id, product=product, sale__sale_date__year__gte=current_year).select_related('sale').order_by('-sale__sale_date')
+        all_sales = SaleItem.objects.filter(business_id=business_id, product=product, sale__sale_date__year__gte=current_year).select_related('product', 'sale', 'sale__customer').order_by('-sale__sale_date')
         recent_sales = all_sales[:5]
 
         sales_insights = services.get_sales_insights(all_sales, business_id)
@@ -111,7 +111,9 @@ class StockMovementListView(ListView):
     context_object_name = 'stock_movements'
     
     def get_queryset(self):
-        return InventoryLedger.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')[:100]
+        return InventoryLedger.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related('product').order_by('-created_at')[:100]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -40,10 +40,16 @@ class SaleItemForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class': 'form-control quantity'}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, products=None, **kwargs):
         super().__init__(*args, **kwargs)
         
-        self.fields['product'].empty_label = 'Choose Product'
+        self.fields['product'].choices = [
+            ('', 'Choose Product'),
+            *[
+                (product.id, product.name)
+                for product in products
+            ]
+        ]
 
 
         

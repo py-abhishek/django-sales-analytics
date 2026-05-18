@@ -2,11 +2,16 @@
 <!-- ===============================
     NAVBAR
 =================================-->
-<nav class="navbar custom-navbar d-flex justify-content-between align-items-center">
+<nav class="navbar custom-navbar d-flex justify-content-between align-items-center shadow-1">
 
-    <div class="d-flex align-items-center gap-4">
-        <a class="navbar-brand" href="{% url 'dashboard' %}">SalesAnalytics</a>
-        <h5 class="mb-0 fw-semibold text-muted"></h5>
+    {% comment %} <div>
+        <h3 class="page-title mb-0">{{ page_title }}Dashboard</h3>
+    </div> {% endcomment %}
+
+        <div class="">
+        <a href="{% url 'dashboard' %}" class="brand-logo">
+            <span class="text-dark">Biz</span>Metric
+        </a>
     </div>
 
     <div class="d-flex align-items-center gap-4">

@@ -1,7 +1,6 @@
 /* CSS FOR SIGN UP AND BUSINESS FORMS */
 .content {
-    background: #f5f7fb;
-    min-height: calc(100vh - var(--nav-height));
+    min-height: 100vh;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -10,9 +9,11 @@
 
 .auth-card {
     width: 100%;
-    max-width: 420px;
-    border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    padding: 30px 40px;
+    min-width: 700px;
+    border-radius: var(--radius);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.03);
 }
 
 .section-title {
@@ -21,14 +22,6 @@
 
 .two-field-container {
     display: flex;
-}
-
-.form-control {
-    border-radius: 8px;
-}
-
-.btn-primary {
-    border-radius: 8px;
 }
 
 .password-toggle {
@@ -42,15 +35,6 @@
     /* transform: translateY(-50%); */
     cursor: pointer;
     color: #888;
-}
-
-.btn-primary{
-    background-color: var(--clr-primary);
-    transition: background-color 0.5s ease;
-}
-
-.btn-primary:hover {
-    background: var(--clr-primary-hover);
 }
 
 .anchor-text {
@@ -67,27 +51,30 @@
 
 .container-box {
     max-width: 900px !important;
-    width: 100%;
+    width: 100vw;
     margin: auto;
-    background-color: #fcfeff;
-    border-radius: 12px;
-    padding: 25px 50px;
-    border: 1px solid #dde1e6
+    background-color: var(--clr-bg-card-soft);
+    border-radius: var(--radius);
+    padding: 30px 40px;
+    border: 1px solid var(--clr-border);
 }
 
 .business-card {
-    border-radius: 12px;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border-radius: var(--radius);
+    padding: 25px;
+    background: var(--clr-bg-card);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.03);
     transition: all 0.2s ease;
     cursor: pointer;
     height: 100%;
+    border: 1px solid var(--clr-border-light);
 }
 
 .business-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    box-shadow:
+      0 6px 14px rgba(0,0,0,0.03);
 }
 
 .business-name {
@@ -105,6 +92,8 @@
     justify-content: center;
     color: #666;
     border: 2px dashed #ccc;
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.03);
 }
 
 .create-card:hover {
@@ -128,7 +117,7 @@
 }
 
 .user-img div {
-    background-color: #0d6efd;
+    background-color: var(--clr-primary);
     width: 100px;
     height: 100px;
     border-radius: 999px;
@@ -139,3 +128,7 @@
     color: #fff;
 }
 
+/* User Profile */
+.container {
+    margin-top: 95px;
+}

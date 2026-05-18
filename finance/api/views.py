@@ -22,7 +22,7 @@ class ExpensesSearchView(ListAPIView):
     def get_queryset(self):
         queryset = Expense.objects.filter(
             business_id=get_business_id(self.request)
-        ).order_by('-expense_date')
+        ).select_related('category').order_by('-expense_date')
         
         return queryset
 

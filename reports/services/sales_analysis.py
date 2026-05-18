@@ -44,7 +44,7 @@ def get_top_customers(sales):
     return sales.values('customer', 'customer__name').annotate(
             revenue = Sum('total_amount'),
             orders = Count('id')
-        ).order_by('-revenue')[:8]
+        ).order_by('-revenue')[:5]
 
 
 def get_payment_methods(sales):

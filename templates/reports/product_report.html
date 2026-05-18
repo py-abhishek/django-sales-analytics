@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Product Report{% endblock %}
 
@@ -15,7 +16,7 @@
 <div class="container-fluid">
 
     <!-- PAGE HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center gap-bottom m-2 pt-2 mb-4">
 
         <div>
             <h3 class="section-title mb-0">Product Report</h3>
@@ -32,7 +33,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="card-soft p-3 mb-4">
+    <div class="card-soft p-3 gap-bottom">
 
         <div class="row align-items-end g-3">
 
@@ -95,32 +96,32 @@
     </div>
 
     <!-- SUMMARY METRICS -->
-    <div class="row g-3 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Total Products</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Total Products</p>
                 <h4 id="cardTotalProducts" class="metric-value">{{ summary.total_products }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Units Sold</p>
-                <h4 id="cardUnitsSold" class="metric-value">{{ summary.units_sold|intcomma }}</h4>
+            <div class="card-soft report-card">
+                <p class="card-label">Units Sold</p>
+                <h4 id="cardUnitsSold" class="metric-value">{{ summary.units_sold|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Product Revenue</p>
-                <h4 id="cardProductRevenue" class="metric-value">₹ {{ summary.product_revenue|floatformat:0|intcomma }}</h4>
+            <div class="card-soft report-card">
+                <p class="card-label">Product Revenue</p>
+                <h4 id="cardProductRevenue" class="metric-value">₹ {{ summary.product_revenue|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Low Stock Products</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Low Stock Products</p>
                 <h4 id="cardLowStock" class="metric-value text-warning">{{ summary.low_stock_products }}</h4>
             </div>
         </div>
@@ -129,7 +130,7 @@
 
 
     <!-- PRODUCT SALES TREND -->
-    <div class="card-soft p-4 mb-4">
+    <div class="custom-card p-4 gap-bottom">
 
         <h5 class="mb-3">Product Demand Trend</h5>
 
@@ -142,12 +143,12 @@
 
 
     <!-- TOP PRODUCTS + CATEGORY DISTRIBUTION -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <!-- TOP PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Top Selling Products</h5>
 
@@ -164,7 +165,7 @@
         <!-- CATEGORY DISTRIBUTION -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Sales by Category</h5>
 
@@ -181,15 +182,15 @@
 
 
     <!-- INVENTORY INSIGHTS -->
-    <div class="row g-4">
+    <div class="row g-3 gap-bottom">
 
         <!-- LOW STOCK PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft">
+            <div class="custom-card">
 
                 <div class="p-3 border-bottom">
-                    <h5 class="mb-0">Low Stock Products</h5>
+                    <h5 class="mb-0 ps-2">Low Stock Products</h5>
                 </div>
 
                 <div class="table-responsive">
@@ -244,10 +245,10 @@
         <!-- SLOW MOVING PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft">
+            <div class="custom-card">
 
                 <div class="p-3 border-bottom">
-                    <h5 class="mb-0">Slow Moving Products</h5>
+                    <h5 class="mb-0 ps-2">Slow Moving Products</h5>
                 </div>
 
                 <div class="table-responsive">

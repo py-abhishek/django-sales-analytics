@@ -103,8 +103,7 @@ export class LineChart {
             },
             
             grid: {
-                borderColor: chartUI["grid"],
-                strokeDashArray: 3
+                show: false
             },
 
             dataLabels: {

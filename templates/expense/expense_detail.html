@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Expense Details{% endblock %}
 {% block css_files%}
@@ -9,7 +10,7 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid card-bg gap-bottom">
 
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -25,7 +26,7 @@
 
 
     <!-- EXPENSE DETAILS -->
-    <div class="custom-card border-left p-4 mb-4">
+    <div class="simple-card border-left p-4 mb-4">
 
         <h5 class="mb-3">Expense Information</h5>
 
@@ -44,7 +45,7 @@
             <div class="col-md-4">
                 <p class="text-muted mb-1">Amount</p>
                 <p class="text-semibold text-danger">
-                    ₹ {{ expense.amount|floatformat:0|intcomma }}
+                    ₹ {{ expense.amount|floatformat:0|format_number }}
                 </p>
             </div>
 
@@ -73,7 +74,7 @@
 
 
     <!-- RECORD INFORMATION -->
-    <div class="custom-card p-4">
+    <div class="simple-card p-4">
 
         <h5 class="mb-3">Record Info</h5>
 

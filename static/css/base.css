@@ -4,46 +4,49 @@
 :root {
 
     /* Brand Blue */
-    --clr-primary: #5b6cff;
-    --clr-secondary: #4038c6;
-    --clr-primary-hover: #4a59e3;
-    --clr-primary-medium: #dbdffc;
-    --clr-primary-soft: #eef0ff;
-    
-    /* Brand Green */
-    /* --clr-secondary: #13452D;
-    --clr-primary: #227D53; */
-    
+    --clr-primary: #4F46E5;
+    --clr-secondary: #3B82F6;
+    --clr-primary-hover: #433bd9;
+    --clr-primary-medium: #d6d5f8;
+    --clr-primary-soft: #e0e6fd;
+    --clr-highlight: #eff0fa;
+   
     /* Accent */
-    --clr-accent: #00c2ff;
+    --clr-accent: #60A5FA;
     
     /* Gradients */
     --primary-gradient: linear-gradient(135deg, var(--clr-secondary), var(--clr-primary));
     --secondary-gradient: linear-gradient(130deg, var(--clr-primary-hover), var(--clr-primary));
     
     /* Backgrounds */
-    --clr-bg-main: #ffffff;
-    --clr-bg-content: #f4f7ff;
+    --clr-bg-main: #e6ebf6;
+    --clr-bg-nav: #f7f9fe;
+    --clr-bg-card: #FFFFFF;
+    --clr-bg-card-soft: #f7f9fe;
+    --clr-bg-sidebar: #f7f9fe;
     /* --clr-bg-content: #E8EAEC; */
     --clr-bg-btn-secondary: #eaeaea;
     --clr-bg-components: #f5f7fa;
 
     /* Text */
-    --clr-text-main: #1f2937;
+    --clr-text-main: #0F172A;
     --clr-text-medium: #46484b;
-    --clr-text-muted: #6b7280;
+    --clr-text-muted: #64748B;
     --clr-text-placeholder: #c4c7cc;
     --clr-text-light: #fefefc;
 
     /* Borders */
-    --clr-border: #dce1ea;
+    --clr-border: #E2E8F0;
     --clr-border-light: #e4e7ec;
 
     /* Effects */
     --shadow-soft: 0 6px 20px rgba(17, 24, 39, 0.04);
-    --radius: 5px;
+    --radius: 24px;
+    --radius-input: 12px;
+    --gap: 15px;
+    --btn-padding: 5px 18px;;
 
-    --nav-height: 70px;
+    --nav-height: 65px;
 
     /* Spacing */
     --space-xs: 8px;
@@ -103,9 +106,9 @@ p {
     background: var(--clr-bg-content);
 }
 
-.border-left {
+/* .border-left {
     border-left: 4px solid var(--clr-primary) !important;
-}
+} */
 
 .clickable-row {
     cursor: pointer;
@@ -138,4 +141,14 @@ p {
 
 .bg-primary{
     background-color: var(--clr-primary) !important;
+}
+
+.g-3,
+.gx-3 {
+  --bs-gutter-x: var(--gap) !important;
+}
+
+.g-3,
+.gy-3 {
+  --bs-gutter-y: var(--gap) !important;
 }

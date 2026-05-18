@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container-fluid card-bg gap-bottom">
 
         <!-- ================= HEADER ================= -->
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -24,11 +24,11 @@
         <form method="post" id="purchaseForm">
             {% csrf_token %} 
 
-            <div class="row transaction-header g-3 align-items-end mb-4">
+            <div class="row transaction-header align-items-end custom-gap gap-bottom">
 
                 <!-- Supplier Name Search -->
                 <div class="col-lg-8">
-                    <div class="card custom-card p-4">
+                    <div class="card simple-card p-4">
                         <div class="row">
                             <div class="col-lg-7">
                                 <label class="form-label">Supplier Name*</label>
@@ -78,7 +78,7 @@
                 </div>
             
                 <div class="col-lg-4">
-                    <div class="card custom-card p-4">
+                    <div class="card simple-card p-4">
 
                         <!-- Purchase Date -->
                         <div class="row">
@@ -101,12 +101,12 @@
 
 
             <!-- ================= MAIN ROW ================= -->
-            <div class="row">
+            <div class="row custom-gap">
 
                 <!-- ================= ITEMS TABLE ================= -->
                 <div class="col-lg-8">
 
-                    <div class="card custom-card p-4 mb-4">
+                    <div class="card simple-card p-4 mb-4">
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="section-title mb-0">Purchase Items</h5>
@@ -189,7 +189,7 @@
                 <!-- ================= SUMMARY PANEL ================= -->
                 <div class="col-lg-4">
 
-                    <div class="card custom-card p-4 summary-card border-left">
+                    <div class="card simple-card p-4 summary-card border-left">
 
                         <h5 class="section-title mb-4">Summary</h5>
 

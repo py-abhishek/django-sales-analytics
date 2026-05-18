@@ -5,17 +5,12 @@ search_field.addEventListener("input", function () {
     clearTimeout(timer);
 
     timer = setTimeout(() => {
+        console.log("searching");
+        
         searchQuery();
     }, 300);
 });
 
-
-search_field.addEventListener('input', function(e) {
-    const query = this.value;
-    console.log(query);
-    searchQuery(query);
-
-})
 
 // Search Sales by Customer
 function searchQuery(query){

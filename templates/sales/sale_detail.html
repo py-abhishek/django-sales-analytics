@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Sale Details{% endblock %}
 {% block css_files%}
@@ -8,7 +9,7 @@
 {% endblock %}
 {% block content %}
 
-    <div class="container-fluid p-1">
+    <div class="container-fluid card-bg gap-bottom">
 
         <!-- PAGE HEADER -->
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -31,7 +32,7 @@
 
 
         <!-- SALE INFORMATION -->
-        <div class="card-soft border-left mb-4 p-4">
+        <div class="simple-card border-left mb-4 p-4">
 
             <h5 class="mb-3">Sale Information</h5>
 
@@ -102,10 +103,10 @@
                             <td>{{ item.product.name }}</td>
                             <td>{{ item.unit }}</td>
                             <td>{{ item.quantity }}</td>
-                            <td>₹ {{ item.price_at_sale|floatformat:0|intcomma }}</td>
-                            <td class="text-semibold">₹ {{ item.item_total_price|floatformat:0|intcomma }}</td>
+                            <td>₹ {{ item.price_at_sale|floatformat:0|format_number }}</td>
+                            <td class="text-semibold">₹ {{ item.item_total_price|floatformat:0|format_number }}</td>
                             <td class="text-success text-semibold">
-                                ₹ {{ item.item_profit|floatformat:0|intcomma }}
+                                ₹ {{ item.item_profit|floatformat:0|format_number }}
                             </td>
 
                         </tr>
@@ -122,19 +123,19 @@
 
 
         <!-- SUMMARY -->
-        <div class="custom-card p-4">
+        <div class="simple-card p-4">
 
             <h5 class="mb-3">Summary</h5>
 
             <div class="d-flex justify-content-between mb-2">
                 <span class="text-semibold">Total Amount</span>
-                <span class="text-semibold">₹ {{ sale.total_amount|floatformat:0|intcomma }}</span>
+                <span class="text-semibold">₹ {{ sale.total_amount|floatformat:0|format_number }}</span>
             </div>
 
             <div class="d-flex justify-content-between">
                 <span class="text-semibold">Total Profit</span>
                 <span class="text-success text-semibold">
-                    ₹ {{ sale.total_profit|floatformat:0|intcomma }}
+                    ₹ {{ sale.total_profit|floatformat:0|format_number }}
                 </span>
             </div>
 

@@ -18,6 +18,12 @@ class CustomerSearchView(ListAPIView):
     def get_queryset(self):
         queryset = Customer.objects.filter(
             business_id=get_business_id(self.request)
+        ).only(
+            'id',
+            'name',
+            'phone',
+            'email',
+            'address'
         ).order_by('name')
 
         query_type = self.request.query_params.get('type', 'search')

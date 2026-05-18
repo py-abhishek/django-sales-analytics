@@ -1,6 +1,6 @@
 // Real Time Price Calcalations 
 async function getProductInfo(productId){
-    const response = await fetch(`/inventory/product-details/${productId}`)
+    const response = await fetch(`/sales-api/product-details/${productId}`)
     if (!response.ok){
         throw Error("Product not found")
     }
@@ -43,6 +43,8 @@ saleItemForm.addEventListener("change", function(e) {
 
         getProductInfo(productId)
         .then(productInfo => {
+            console.log(productInfo);
+            
         priceField.value = productInfo.selling_price
         unitField.value = productInfo.unit
         calProductTotal(row)

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Product Details{% endblock %}
 {% block css_files%}
@@ -9,7 +10,7 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid card-bg gap-bottom">
 
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -31,7 +32,7 @@
 
 
     <!-- PRODUCT INFORMATION -->
-    <div class="custom-card p-4 mb-4">
+    <div class="simple-card p-4 mb-4">
 
         <h5 class="mb-3">Product Information</h5>
 
@@ -67,7 +68,7 @@
 
 
     <!-- PRICING & INVENTORY -->
-    <div class="custom-card p-4 mb-4">
+    <div class="simple-card p-4 mb-4">
 
         <h5 class="mb-3">Pricing & Inventory</h5>
 
@@ -75,12 +76,12 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Cost Price</p>
-                <p class="text-semibold">₹ {{ product.current_avg_cost|floatformat:0|intcomma }}</p>
+                <p class="text-semibold">₹ {{ product.current_avg_cost|floatformat:0|format_number }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Selling Price</p>
-                <p class="text-semibold">₹ {{ product.selling_price|floatformat:0|intcomma }}</p>
+                <p class="text-semibold">₹ {{ product.selling_price|floatformat:0|format_number }}</p>
             </div>
 
             <div class="col-md-3">
@@ -99,7 +100,7 @@
 
 
     <!-- SALES INSIGHTS -->
-    <div class="custom-card border-left p-4 mb-4">
+    <div class="simple-card border-left p-4 mb-4">
 
         <h5 class="mb-3">Sales Insights ({{ current_year }})</h5>
 
@@ -112,13 +113,13 @@
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Revenue</p>
-                <p class="text-semibold">₹ {{ total_revenue|floatformat:0|intcomma }}</p>
+                <p class="text-semibold">₹ {{ total_revenue|floatformat:0|format_number }}</p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Total Profit</p>
                 <p class="text-success text-semibold">
-                    ₹ {{ total_profit|floatformat:0|intcomma }}
+                    ₹ {{ total_profit|floatformat:0|format_number }}
                 </p>
             </div>
 
@@ -176,10 +177,10 @@
 
                     <td>{{ item.quantity }} {{ item.product.unit }}</td>
 
-                    <td>₹ {{ item.item_total|floatformat:0|intcomma }}</td>
+                    <td>₹ {{ item.item_total_price|floatformat:0|format_number }}</td>
 
                     <td class="text-success">
-                        ₹ {{ item.item_profit|floatformat:0|intcomma }}
+                        ₹ {{ item.item_profit|floatformat:0|format_number }}
                     </td>
 
                 </tr>
@@ -204,7 +205,7 @@
 
 
     <!-- RECORD INFORMATION -->
-    <div class="custom-card p-4">
+    <div class="simple-card p-4">
 
         <h5 class="mb-3">Record Information</h5>
 

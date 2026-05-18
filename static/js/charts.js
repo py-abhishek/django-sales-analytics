@@ -104,7 +104,8 @@ export class LineChart {
             
             grid: {
                 borderColor: chartUI["grid"],
-                strokeDashArray: 3
+                strokeDashArray: 3,
+                show: false
             },
 
             dataLabels: {
@@ -285,7 +286,8 @@ export class HorizontalBarchart {
             },
 
             grid: {
-                strokeDashArray: 3
+                strokeDashArray: 3,
+                show: false
             },
 
             fill: {
@@ -402,7 +404,8 @@ export class Barchart {
             },
 
             grid: {
-                strokeDashArray: 3
+                strokeDashArray: 3,
+                show: false
             },
 
             fill: {
@@ -628,7 +631,8 @@ export class AreaChart {
             
             grid: {
                 borderColor: chartUI["grid"],
-                strokeDashArray: 3
+                strokeDashArray: 3,
+                show: false
             },
 
             dataLabels: {

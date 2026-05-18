@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Dashboard{% endblock %}
 {% block css_files%}
@@ -12,7 +13,7 @@
 <div class="container-fluid dashboard-page">
 
     <!-- DASHBOARD HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-5 m-2 pt-2">
         <div>
             <h3 class="section-title mb-0">Dashboard</h3>
             <small class="text-muted">Business overview and analytics</small>
@@ -45,33 +46,33 @@
 
 
     <!-- KPI CARDS -->
-    <div class="row g-3 mb-4">
+    <div class="row g-3 gap-bottom">
 
-        <div class="col-md-3">
-            <div class="card-soft p-3 border-left">
+        <div class="col-md-3 mt-0">
+            <div class="card-soft report-card p-3 border-left">
                 <p class="card-label">Revenue</p>
-                <h4 id="cardRevenue" class="card-value">₹{{ summary.total_revenue|floatformat:0|intcomma }}</h4>
+                <h4 id="cardRevenue" class="card-value">₹{{ summary.total_revenue|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card-soft p-3 border-left">
+        <div class="col-md-3 mt-0">
+            <div class="card-soft report-card p-3 border-left">
                 <p class="card-label">Expenses</p>
-                <h4 id="cardExpenses" class="card-value text-danger">₹ {{ summary.total_exps|floatformat:0|intcomma }}</h4>
+                <h4 id="cardExpenses" class="card-value text-danger">₹ {{ summary.total_exps|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card-soft p-3 border-left">
+        <div class="col-md-3 mt-0">
+            <div class="card-soft report-card p-3 border-left">
                 <p class="card-label">Net Profit</p>
-                <h4 id="cardProfit" class="card-value text-success">₹ {{ summary.net_profit|floatformat:0|intcomma }}</h4>
+                <h4 id="cardProfit" class="card-value text-success">₹ {{ summary.net_profit|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card-soft p-3 border-left">
+        <div class="col-md-3 mt-0">
+            <div class="card-soft report-card p-3 border-left">
                 <p class="card-label">Total Sales</p>
-                <h4 id="cardTotalSales" class="card-value">{{ summary.total_sales|floatformat:0|intcomma }}</h4>
+                <h4 id="cardTotalSales" class="card-value">{{ summary.total_sales|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
@@ -79,7 +80,7 @@
 
 
     <!-- REVENUE VS EXPENSE CHART -->
-    <div class="card-soft p-4 mb-4">
+    <div class="custom-card p-4 gap-bottom">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0">Revenue vs Expense</h5>
@@ -92,11 +93,11 @@
     </div>
 
     <!-- TOP PRODUCTS + EXPENSE BREAKDOWN -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Top Selling Products</h5>
 
@@ -112,7 +113,7 @@
 
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Expense Breakdown</h5>
 
@@ -129,7 +130,7 @@
     </div>
 
         <!-- MONTHLY PROFIT -->
-    <div class="card-soft p-4 mb-4">
+    <div class="custom-card p-4 gap-bottom">
 
         <h5 class="mb-3">Monthly Profit</h5>
 
@@ -142,11 +143,11 @@
 
     
     <!-- SALES TREND + EXPENSE BREAKDOWN -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Sales Trend</h5>
 
@@ -162,7 +163,7 @@
 
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Sales by Category</h5>
 

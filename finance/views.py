@@ -34,7 +34,9 @@ class ExpenseListView(ListView):
     ordering = '-expense_date'
 
     def get_queryset(self):
-        return Expense.objects.filter(business_id=get_business_id(self.request))
+        return Expense.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related('category')
 
 # View a particuler expense in detail
 class ExpenseDetailView(DetailView):

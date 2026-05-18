@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Product Added Successfully{% endblock %}
 
@@ -10,7 +11,7 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid card-bg gap-bottom">
 
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -79,14 +80,14 @@
             <div class="col-md-3">
                 <p class="text-muted mb-1">Cost Price</p>
                 <p class="text-semibold">
-                    ₹ {{ product.current_avg_cost|floatformat:0|intcomma }}
+                    ₹ {{ product.current_avg_cost|floatformat:0|format_number }}
                 </p>
             </div>
 
             <div class="col-md-3">
                 <p class="text-muted mb-1">Selling Price</p>
                 <p class="text-semibold">
-                    ₹ {{ product.selling_price|floatformat:0|intcomma }}
+                    ₹ {{ product.selling_price|floatformat:0|format_number }}
                 </p>
             </div>
 

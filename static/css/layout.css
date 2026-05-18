@@ -4,20 +4,44 @@
 =================================*/
 .custom-navbar {
     height: var(--nav-height);
-    background: var(--clr-bg-main);
+    background: var(--clr-bg-nav);
     border-bottom: 1px solid var(--clr-border);
     padding: 0 32px;
+    margin: 15px;
+    margin-right: 23px;
+    border-radius: 999px;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    /* left: calc(230px + 2vh); */
+
+    z-index: 100;
+
+    backdrop-filter: blur(12px);
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.navbar-brand {
+
+.brand-logo {
     font-weight: 700;
+    font-size: 20px;
     color: var(--clr-primary);
     letter-spacing: 0.5px;
     transition: color 0.5s ease;
+    text-decoration: none;
 }
 
-.navbar-brand {
-    color: var(--clr-primary-hover);
+.page-title{
+    color: var(--clr-text-main);
+    font-size: 20px;
+    font-weight: 600px;
 }
 
 .search-input {
@@ -44,10 +68,10 @@
 =================================*/
 
 .admin-btn {
-    background: var(--clr-primary-soft);
+    background: var(--clr-highlight);
     border: none;
     border-radius: 30px;
-    padding: 6px 14px;
+    padding: 6px 10px 6px 7px;
     font-weight: 500;
     color: var(--clr-primary);
 }
@@ -61,7 +85,7 @@
     box-shadow: none;
 }
 
-.avatar {
+.navbar .avatar {
     width: 32px;
     height: 32px;
     background: var(--clr-primary);
@@ -97,18 +121,37 @@
 =================================*/
 .app-layout {
     display: flex;
-    height: calc(100vh - var(--nav-height));
+    height: 100vh;
 }
 
 /* ===============================
    SIDEBAR
 =================================*/
 .sidebar {
+    background-color: var(--clr-bg-sidebar);
     width: 230px;
-    height: calc(100vh - var(--nav-height));
+    /* height: calc(100vh - (95px + var(--gap))); */
+    height: calc(100vh - 110px);
+    max-height:  calc(100vh - 110px);
     overflow-x: hidden;
     overflow-y: auto;
+    border-radius: var(--radius);
+    margin: 15px;
+    margin-right: var(--gap);
+    margin-top: calc(95px);
+
+    /* Firefox */
+    scrollbar-width: none;
+
+    /* IE and Edge */
+    -ms-overflow-style: none;
 }
+
+/* Chrome, Safari */
+.sidebar::-webkit-scrollbar{
+    display: none;
+}
+
 
 .sidebar-nav{
     padding: 10px 15px;
@@ -116,8 +159,8 @@
 .sidebar-nav .nav-link {
     font-weight: 600;
     color: var(--clr-text-medium);
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: var(--radius);
+    padding: 10px 20px;
     margin: 5px 0;
 }
 
@@ -151,18 +194,16 @@
 =================================*/
 .content-area {
     flex: 1;
-    background: var(--clr-bg-content);
-    padding: 32px;
+    /* padding: 32px; */
     overflow-y: auto;
 }
 
 /* Empty placeholder block */
 .content-placeholder {
-    background: #ffffff;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
     min-height: 100%;
-    padding: 20px 40px;
+    margin-top: calc(80px + var(--gap));
+    margin-right: 15px;
 }
 
 /* Ṃanage users page */

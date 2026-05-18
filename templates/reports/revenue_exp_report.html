@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Revenue vs Expense Report{% endblock %}
 
@@ -15,7 +16,7 @@
 <div class="container-fluid">
 
     <!-- PAGE HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center gap-bottom m-2 pt-2 mb-4">
 
         <div>
             <h3 class="section-title mb-0">Revenue vs Expense</h3>
@@ -31,7 +32,7 @@
 
 
     <!-- Filters -->
-    <div class="card-soft p-3 mb-4">
+    <div class="card-soft p-3 gap-bottom">
 
         <div class="row align-items-end g-3">
 
@@ -80,38 +81,38 @@
     </div>
 
     <!-- FINANCIAL METRICS -->
-    <div class="row g-3 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Total Revenue</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Total Revenue</p>
                 <h4 id="cardTotalRevenue" class="metric-value text-success">
-                    ₹ {{ summary.total_revenue|floatformat:0|intcomma }}
+                    ₹ {{ summary.total_revenue|floatformat:0|format_number }}
                 </h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Total Expense</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Total Expense</p>
                 <h4 id="cardTotalExpense" class="metric-value text-danger">
-                    ₹ {{ summary.total_expense|floatformat:0|intcomma }}
+                    ₹ {{ summary.total_expense|floatformat:0|format_number }}
                 </h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Net Profit</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Net Profit</p>
                 <h4 id="cardNetProfit" class="metric-value">
-                    ₹ {{ summary.net_profit|floatformat:0|intcomma }}
+                    ₹ {{ summary.net_profit|floatformat:0|format_number }}
                 </h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Profit Margin</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Profit Margin</p>
                 <h4 id="cardProfitMargin" class="metric-value">
                     {{ summary.profit_margin }} %
                 </h4>
@@ -123,7 +124,7 @@
 
 
     <!-- REVENUE VS EXPENSE TREND -->
-    <div class="card-soft p-4 mb-4">
+    <div class="custom-card p-4 gap-bottom">
 
         <h5 class="mb-3">Revenue vs Expense Trend</h5>
 
@@ -138,12 +139,12 @@
 
 
     <!-- PROFIT TREND + EXPENSE BREAKDOWN -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <!-- PROFIT TREND -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Profit Trend</h5>
 
@@ -161,7 +162,7 @@
         <!-- EXPENSE BREAKDOWN -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Expense Breakdown</h5>
 
@@ -179,12 +180,12 @@
 
 {% comment %}
     <!-- FINANCIAL HIGHLIGHTS -->
-    <div class="row g-4">
+    <div class="row g-3">
 
         <!-- BEST REVENUE DAY -->
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Financial Highlights</h5>
 
@@ -192,7 +193,7 @@
                     <span class="text-muted">Highest Revenue Day</span>
                     <span class="fw-semibold">
                         {{ highlights.best_revenue_day.date }}
-                        (₹ {{ highlights.best_revenue_day.amount|intcomma }})
+                        (₹ {{ highlights.best_revenue_day.amount|format_number }})
                     </span>
                 </div>
 
@@ -200,7 +201,7 @@
                     <span class="text-muted">Highest Expense Day</span>
                     <span class="fw-semibold">
                         {{ highlights.highest_expense_day.date }}
-                        (₹ {{ highlights.highest_expense_day.amount|intcomma }})
+                        (₹ {{ highlights.highest_expense_day.amount|format_number }})
                     </span>
                 </div>
 
@@ -208,7 +209,7 @@
                     <span class="text-muted">Best Profit Day</span>
                     <span class="fw-semibold text-success">
                         {{ highlights.best_profit_day.date }}
-                        (₹ {{ highlights.best_profit_day.amount|intcomma }})
+                        (₹ {{ highlights.best_profit_day.amount|format_number }})
                     </span>
                 </div>
 
@@ -216,7 +217,7 @@
                     <span class="text-muted">Worst Profit Day</span>
                     <span class="fw-semibold text-danger">
                         {{ highlights.worst_profit_day.date }}
-                        (₹ {{ highlights.worst_profit_day.amount|intcomma }})
+                        (₹ {{ highlights.worst_profit_day.amount|format_number }})
                     </span>
                 </div>
 
@@ -228,7 +229,7 @@
         <!-- TOP EXPENSE CATEGORY -->
         <div class="col-md-6">
 
-            <div class="card-soft p-4">
+            <div class="custom-card p-4">
 
                 <h5 class="mb-3">Expense Insights</h5>
 
@@ -242,7 +243,7 @@
                 <div class="d-flex justify-content-between mb-3">
                     <span class="text-muted">Amount Spent</span>
                     <span class="fw-semibold text-danger">
-                        ₹ {{ highlights.top_expense_category.amount|intcomma }}
+                        ₹ {{ highlights.top_expense_category.amount|format_number }}
                     </span>
                 </div>
 

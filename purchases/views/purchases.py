@@ -3,11 +3,11 @@ from django.urls import reverse_lazy
 from django.views.generic import View, DetailView, ListView
 from logging import Logger
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 
 from ..forms import PurchaseForm, SupplierForm, PurchaseItemFormSet
 from .. import services
-from ..models import Purchase, Supplier
+from ..models import Purchase, Supplier, PurchaseItem
 
 import logging
 logger = logging.getLogger(__name__)
@@ -103,7 +103,7 @@ class PurchaseListView(ListView):
     context_object_name = 'purchases'
 
     def get_queryset(self):
-        return Purchase.objects.filter(business_id=get_business_id(self.request)).order_by('-purchase_date')
+        return Purchase.objects.filter(business_id=get_business_id(self.request)).select_related('supplier', 'created_by', 'business').order_by('-purchase_date')
 
 
 
@@ -114,4 +114,8 @@ class PurchaseDetailView(DetailView):
     context_object_name = 'purchase'
 
     def get_queryset(self):
-        return Purchase.objects.filter(business_id=get_business_id(self.request))
+        return Purchase.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related('supplier').prefetch_related(
+                Prefetch('items', queryset=PurchaseItem.objects.select_related('product'))
+                )

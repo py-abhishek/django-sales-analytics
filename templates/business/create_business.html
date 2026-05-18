@@ -6,10 +6,10 @@
 {% block css_files%}
 {% endblock %}
 {% block content %}
-<div class="card auth-card p-4" style="max-width: 700px">
+<div class="card auth-card">
 
     <!-- Header -->
-    <div class="text-center mb-4">
+    <div class="text-center mb-5">
         <h3 class="section-title">Create a Business</h3>
         <small class="text-muted">
             Set up your business to start managing inventory and sales
@@ -20,7 +20,7 @@
     <form method="POST" id="businessForm">
         {% csrf_token %}
 
-        <div class="row mb-3">
+        <div class="row mb-4">
             <!-- Business Name -->
             <div class="col-6">
                 <label class="form-label">Business Name</label>
@@ -37,7 +37,7 @@
 
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-4">
             <!-- Phone -->
             <div class="col-6">
                 <label class="form-label">Phone Number</label>
@@ -73,7 +73,7 @@
         {% endif %}
 
         <!-- Submit -->
-        <button type="submit" id="submitBtn" class="btn btn-primary w-100">
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100 mt-5">
             Create Business
         </button>
 

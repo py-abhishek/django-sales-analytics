@@ -22,7 +22,7 @@ class PurchasesSearchView(ListAPIView):
     def get_queryset(self):
         return Purchase.objects.filter(
             business_id=get_business_id(self.request)
-        ).order_by('-purchase_date')
+        ).select_related('supplier').order_by('-purchase_date')
     
     
     

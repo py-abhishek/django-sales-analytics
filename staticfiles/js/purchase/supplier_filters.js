@@ -5,17 +5,12 @@ search_field.addEventListener("input", function () {
     clearTimeout(timer);
 
     timer = setTimeout(() => {
+        console.log("searching");
+        
         searchQuery();
     }, 300);
 });
 
-
-search_field.addEventListener('input', function(e) {
-    const query = this.value;
-    console.log(query);
-    searchQuery(query);
-
-})
 
 // Search Sales by Customer
 function searchQuery(query){
@@ -26,12 +21,11 @@ function searchQuery(query){
 
 // Update the existing table
 function updateTable(data){
-    console.log(data);
+    
     const tbody = document.getElementById("tbody");
     tbody.innerHTML = "";
 
     if(data.length == 0) {
-        console.log('no data');
         tbody.innerHTML = `
         <tr>
         <td colspan='6' class="text-center">No record found</td>

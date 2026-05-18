@@ -9,7 +9,7 @@ class ExpenseCategoryForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-select'}),
+            'description': forms.Textarea(attrs={'class': 'form-select', 'rows': '3'}),
 
         }
 
@@ -23,7 +23,7 @@ class ExpenseForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
             'amount': forms.NumberInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control exp-dsc'}),
+            'description': forms.Textarea(attrs={'class': 'form-control exp-dsc', 'rows': '3'}),
             'amount': forms.NumberInput(attrs={'class': 'form-control'}),
             'expense_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
 

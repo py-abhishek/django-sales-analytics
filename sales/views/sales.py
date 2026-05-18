@@ -3,10 +3,10 @@ from django.views.generic import ListView, DetailView
 from django.views import View
 from django.urls import reverse_lazy
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 
 from ..forms import SaleForm, SaleItemFormSet, CustomerForm
-from sales.models import Sale, Customer
+from sales.models import Sale, SaleItem
 from inventory.models import Product
 from .. import services
 from business.models import Membership
@@ -32,7 +32,21 @@ class SalesCreateView(View):
     def get(self, request):
         sale_form = SaleForm(prefix='sale')
         customer_form = CustomerForm(prefix='customer')
-        formset = SaleItemFormSet()
+
+        products =list(
+            Product.objects.filter(
+                business_id=get_business_id(request)
+            ).only(
+                'id',
+                'name'
+            )
+        )
+        
+
+        formset = SaleItemFormSet(
+            form_kwargs={'products': products}
+        )
+
         return render(request, 'sales/create_sale.html', {
             'customer_form': customer_form,
             'sale_form': sale_form,
@@ -43,7 +57,20 @@ class SalesCreateView(View):
 
         customer_form = CustomerForm(request.POST, prefix='customer')
         sale_form = SaleForm(request.POST, prefix='sale')
-        formset = SaleItemFormSet(request.POST)
+
+        products =list(
+            Product.objects.filter(
+                business_id=get_business_id(request)
+            ).only(
+                'id',
+                'name'
+            )
+        )
+
+        formset = SaleItemFormSet(
+            request.POST,
+            form_kwargs={'products': products}
+            )
         row_customer_id = request.POST.get('customer_id')
 
         if row_customer_id.isdigit():
@@ -105,7 +132,13 @@ class SalesListView(ListView):
     context_object_name = 'sales'
     
     def get_queryset(self):
-        return Sale.objects.filter(business_id=get_business_id(self.request)).order_by('-sale_date')
+        return Sale.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related(
+                'customer',
+                'business',
+                'created_by'
+            ).order_by('-sale_date')
         
 
 # View a particuler sale detail
@@ -115,16 +148,38 @@ class SaleDetailView(DetailView):
     context_object_name = 'sale'
     
     def get_queryset(self):
-        return Sale.objects.filter(business_id=get_business_id(self.request))
+        return Sale.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related(
+                'customer',
+                'business',
+                'created_by'
+            ).prefetch_related(
+                Prefetch(
+                    'items',
+                    queryset=SaleItem.objects.select_related('product')
+                )
+            )
 
-# Render succes template on successfull sale
+# Render success template on successfull sale
 class SaleSuccessView(DetailView):
     model = Sale
     template_name = 'sales/sale_success.html'
     context_object_name = 'sale'
     
     def get_queryset(self):
-        return Sale.objects.filter(business_id=get_business_id(self.request))
+        return Sale.objects.filter(
+            business_id=get_business_id(self.request)
+            ).select_related(
+                'customer',
+                'business',
+                'created_by'
+            ).prefetch_related(
+                Prefetch(
+                    'items',
+                    queryset=SaleItem.objects.select_related('product')
+                )
+            )
 
 
 # Cancel sale

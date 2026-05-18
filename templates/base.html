@@ -18,9 +18,6 @@
 </head>
 <body>
     
-    <!-- NAVBAR -->
-    {% include "partials/navbar.html" %}
-
     <!-- ===============================
         MAIN LAYOUT
     =================================-->
@@ -31,6 +28,10 @@
 
         <!-- CONTENT AREA -->
         <div class="content-area">
+            
+        <!-- NAVBAR -->
+        {% include "partials/navbar.html" %}
+
             <div class="content-placeholder">
                 {% block content %}{% endblock %}
             </div>

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load format_number %}
 
 {% block page_title %}Inventory Report{% endblock %}
 
@@ -14,7 +15,7 @@
 <div class="container-fluid">
 
     <!-- PAGE HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center gap-bottom m-2 pt-2 mb-4">
 
         <div>
             <h3 class="section-title mb-0">Inventory Report</h3>
@@ -29,7 +30,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="card-soft p-3 mb-4">
+    <div class="card-soft p-3 gap-bottom">
 
         <div class="row align-items-end g-3">
 
@@ -65,11 +66,11 @@
     </div>
 
     <!-- INVENTORY METRICS -->
-    <div class="row g-3 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Total Products</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Total Products</p>
                 <h4 id="cardTotalProducts" class="metric-value">
                     {{ summary.total_products }}
                 </h4>
@@ -77,17 +78,17 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Inventory Value</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Inventory Value</p>
                 <h4 id="cardInventoryValue" class="metric-value">
-                    ₹ {{ summary.inventory_value|floatformat:0|intcomma }}
+                    ₹ {{ summary.inventory_value|floatformat:0|format_number }}
                 </h4>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Low Stock Products</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Low Stock Products</p>
                 <h4 id="cardLowStock" class="metric-value text-warning">
                     {{ summary.low_stock_count }}
                 </h4>
@@ -95,8 +96,8 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card-soft p-3 report-card">
-                <p class="metric-label">Out of Stock</p>
+            <div class="card-soft report-card">
+                <p class="card-label">Out of Stock</p>
                 <h4 id="cardOutofStock" class="metric-value text-danger">
                     {{ summary.out_of_stock_count }}
                 </h4>
@@ -107,7 +108,7 @@
 
 
     <!-- INVENTORY VALUE BY CATEGORY -->
-    <div class="card-soft p-4 mb-4">
+    <div class="custom-card p-4 gap-bottom">
 
         <h5 class="mb-3">Inventory Value by Category</h5>
 
@@ -120,12 +121,12 @@
 
 
     <!-- STOCK STATUS + TOP INVENTORY VALUE -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 gap-bottom">
 
         <!-- STOCK STATUS DISTRIBUTION -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Stock Status Distribution</h5>
 
@@ -142,7 +143,7 @@
         <!-- TOP INVENTORY VALUE PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft medium-height p-4">
+            <div class="custom-card medium-height p-4">
 
                 <h5 class="mb-3">Top Inventory Value Products</h5>
 
@@ -159,15 +160,15 @@
 
 
     <!-- INVENTORY ALERTS -->
-    <div class="row g-4">
+    <div class="row g-3 gap-bottom">
 
         <!-- LOW STOCK PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft">
+            <div class="custom-card">
 
                 <div class="p-3 border-bottom">
-                    <h5 class="mb-0">Low Stock Products</h5>
+                    <h5 class="mb-0 ps-2">Low Stock Products</h5>
                 </div>
 
                 <div class="table-responsive">
@@ -222,10 +223,10 @@
         <!-- OUT OF STOCK PRODUCTS -->
         <div class="col-md-6">
 
-            <div class="card-soft">
+            <div class="custom-card">
 
                 <div class="p-3 border-bottom">
-                    <h5 class="mb-0">Out of Stock Products</h5>
+                    <h5 class="mb-0 ps-2">Out of Stock Products</h5>
                 </div>
 
                 <div class="table-responsive">
