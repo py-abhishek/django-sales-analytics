@@ -82,10 +82,16 @@
 
     <!-- FINANCIAL METRICS -->
     <div class="row g-3 gap-bottom">
+        {{ summary|json_script:"summary" }}
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Total Revenue</p>
+
+                <div class="report-card-header">
+                <span class="card-label">Total Revenue</span>
+                <i class="bi bi-cash-stack metric-icon"></i>
+                </div>
+
                 <h4 id="cardTotalRevenue" class="metric-value text-success">
                     ₹ {{ summary.total_revenue|floatformat:0|format_number }}
                 </h4>
@@ -94,7 +100,12 @@
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Total Expense</p>
+                
+                <div class="report-card-header">
+                <span class="card-label">Total Expense</span>
+                <i class="bi bi-credit-card metric-icon"></i>
+                </div>
+
                 <h4 id="cardTotalExpense" class="metric-value text-danger">
                     ₹ {{ summary.total_expense|floatformat:0|format_number }}
                 </h4>
@@ -103,7 +114,12 @@
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Net Profit</p>
+                
+                <div class="report-card-header">
+                <span class="card-label">Net Profit</span>
+                <i class="bi bi-currency-rupee metric-icon"></i>
+                </div>
+
                 <h4 id="cardNetProfit" class="metric-value">
                     ₹ {{ summary.net_profit|floatformat:0|format_number }}
                 </h4>
@@ -112,7 +128,12 @@
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Profit Margin</p>
+                
+                <div class="report-card-header">
+                <span class="card-label">Profit Margin</span>
+                <i class="bi bi-percent metric-icon"></i>
+                </div>
+
                 <h4 id="cardProfitMargin" class="metric-value">
                     {{ summary.profit_margin }} %
                 </h4>

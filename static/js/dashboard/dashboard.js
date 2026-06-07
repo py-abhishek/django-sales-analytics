@@ -2,6 +2,27 @@ import * as charts from "../charts.js"
 import * as utils from "../utils.js"
 
 
+// KPI Cards
+
+const revCard = document.getElementById("cardRevenue");
+const expCard = document.getElementById("cardExpenses");
+const profitCard = document.getElementById("cardProfit");
+const salesCard = document.getElementById("cardTotalSales");
+const summary = utils.parseJson(document.querySelector("#summary"));
+
+// Animate Cards
+utils.animateNumber(revCard, summary.total_revenue, 800, "₹ ");
+utils.animateNumber(expCard, summary.total_exps, 800, "₹ ");
+utils.animateNumber(profitCard, summary.net_profit, 800, "₹ ");
+utils.animateNumber(salesCard, summary.total_sales, 800, "");
+
+// Storing value as dataset
+revCard.dataset.value = summary.total_revenue;
+expCard.dataset.value = summary.total_exps;
+profitCard.dataset.value = summary.net_profit;
+salesCard.dataset.value = summary.total_sales;
+
+
 function createRevExpTrendChart() {
     const revExpTrendChartContainer = document.querySelector("#revenueExpenseChart");
     const labels = utils.parseJson(document.querySelector("#rev_exp_trend_labels"));
@@ -151,6 +172,31 @@ const salesTrendChart = createSalesTrendChart()
 const topCategoriesChart = createTopCategoriesChart()
 
 
+const allCharts = [
+    revExpTrendChart,
+    topProductsChart,
+    expBreakdownChart,
+    profitTrendChart,
+    salesTrendChart,
+    topCategoriesChart
+];
+
+//Animate on Scroll
+document.querySelectorAll(".chart-card").forEach(card => {
+    utils.observeOnce(card, (element) => {
+        element.classList.add("show");
+    });
+});
+
+
+allCharts.forEach(chart => {
+    utils.observeOnce(chart.container, () => {
+        chart.playAnimation();
+    });
+});
+
+
+
 //**************** WORKING WITH FILTERS ****************//
 
 const yearFilter = document.getElementById("yearFilter");
@@ -195,13 +241,18 @@ function fetchData(){
 
 
 function updateData(data){
-    console.log(data);
 
     // Update cards
-    document.getElementById("cardRevenue").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_revenue)).toLocaleString('en-IN')
-    document.getElementById("cardExpenses").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_exps)).toLocaleString('en-IN')
-    document.getElementById("cardProfit").innerHTML = "₹ " + Math.trunc(Number(data.summary.net_profit)).toLocaleString('en-IN')
-    document.getElementById("cardTotalSales").innerHTML = Number(data.summary.total_sales).toLocaleString('en-IN')
+    utils.animateNumber(revCard, Math.trunc(Number(data.summary.total_revenue)), 600, "₹ ", "", 0, Number(revCard.dataset.value));
+    utils.animateNumber(expCard, Math.trunc(Number(data.summary.total_exps)), 600, "₹ ", "", 0, Number(expCard.dataset.value));
+    utils.animateNumber(profitCard, Math.trunc(Number(data.summary.net_profit)), 600, "₹ ", "", 0, Number(profitCard.dataset.value));
+    utils.animateNumber(salesCard, Number(data.summary.total_sales), 600, "", "", 0, Number(salesCard.dataset.value));
+
+    // Storing value as dataset
+    revCard.dataset.value = Math.trunc(Number(data.summary.total_revenue));
+    expCard.dataset.value =  Math.trunc(Number(data.summary.total_exps));
+    profitCard.dataset.value = Math.trunc(Number(data.summary.net_profit));
+    salesCard.dataset.value = Number(data.summary.total_sales);
 
     // Update charts
     // Revenue expense trend chart

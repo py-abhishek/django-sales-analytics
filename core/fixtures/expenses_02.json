@@ -1,0 +1,160 @@
+[
+    {
+        "name": "Shop Rent April 2025",
+        "category": "Shop Rent",
+        "amount": 8000,
+        "description": "Monthly grocery store rent payment",
+        "expense_date": "2025-04-05"
+    },
+    {
+        "name": "Electricity Bill April 2025",
+        "category": "Electricity Bills",
+        "amount": 1500,
+        "description": "Electricity charges for store operations",
+        "expense_date": "2025-04-10"
+    },
+    {
+        "name": "Internet Subscription April 2025",
+        "category": "Internet and WiFi",
+        "amount": 2500,
+        "description": "Monthly internet service charges",
+        "expense_date": "2025-04-08"
+    },
+    {
+        "name": "Staff Salaries May 2025",
+        "category": "Employee Salaries",
+        "amount": 20000,
+        "description": "Monthly salary payment for employees",
+        "expense_date": "2025-05-30"
+    },
+    {
+        "name": "Transportation April 2025",
+        "category": "Transportation",
+        "amount": 12500,
+        "description": "Transportation expenses for inventory procurement",
+        "expense_date": "2025-04-18"
+    },
+
+    {
+        "name": "Shop Rent July 2025",
+        "category": "Shop Rent",
+        "amount": 8000,
+        "description": "Monthly grocery store rent payment",
+        "expense_date": "2025-07-05"
+    },
+    {
+        "name": "Electricity Bill July 2025",
+        "category": "Electricity Bills",
+        "amount": 1200,
+        "description": "Electricity charges during summer season",
+        "expense_date": "2025-07-10"
+    },
+    {
+        "name": "Staff Salaries August 2025",
+        "category": "Employee Salaries",
+        "amount": 23000,
+        "description": "Monthly salary payment for employees",
+        "expense_date": "2025-08-31"
+    },
+    {
+        "name": "Marketing Campaign Semptemper 2025",
+        "category": "Marketing and Advertising",
+        "amount": 5000,
+        "description": "Local festival promotional campaign",
+        "expense_date": "2025-09-15"
+    },
+    {
+        "name": "Fuel Expense September 2025",
+        "category": "Fuel Expenses",
+        "amount": 4200,
+        "description": "Fuel expenses for delivery vehicle",
+        "expense_date": "2025-09-22"
+    },
+
+    {
+        "name": "Shop Rent October 2025",
+        "category": "Shop Rent",
+        "amount": 8500,
+        "description": "Monthly grocery store rent payment",
+        "expense_date": "2025-10-05"
+    },
+    {
+        "name": "Electricity Bill November 2025",
+        "category": "Electricity Bills",
+        "amount": 1500,
+        "description": "Electricity charges for store operations",
+        "expense_date": "2025-11-10"
+    },
+    {
+        "name": "Staff Salaries December 2025",
+        "category": "Employee Salaries",
+        "amount": 24000,
+        "description": "Monthly salary payment for employees",
+        "expense_date": "2025-12-31"
+    },
+    {
+        "name": "Packaging Materials October 2025",
+        "category": "Packaging Materials",
+        "amount": 3800,
+        "description": "Carry bags and packaging materials",
+        "expense_date": "2025-10-20"
+    },
+    {
+        "name": "Equipment Maintenance December 2025",
+        "category": "Equipment Maintenance",
+        "amount": 5500,
+        "description": "Maintenance of refrigeration equipment",
+        "expense_date": "2025-12-25"
+    },
+
+    {
+        "name": "Shop Rent January 2026",
+        "category": "Shop Rent",
+        "amount": 8500,
+        "description": "Monthly grocery store rent payment",
+        "expense_date": "2026-01-05"
+    },
+    {
+        "name": "Electricity Bill February 2026",
+        "category": "Electricity Bills",
+        "amount": 1300,
+        "description": "Electricity charges for store operations",
+        "expense_date": "2026-02-10"
+    },
+    {
+        "name": "Staff Salaries March 2026",
+        "category": "Employee Salaries",
+        "amount": 24000,
+        "description": "Monthly salary payment for employees",
+        "expense_date": "2026-03-31"
+    },
+    {
+        "name": "Inventory Loss March 2026",
+        "category": "Inventory Loss and Damage",
+        "amount": 1800,
+        "description": "Spoiled fruits and vegetables",
+        "expense_date": "2026-03-18"
+    },
+    {
+        "name": "Bank Charges February 2026",
+        "category": "Bank Charges",
+        "amount": 1200,
+        "description": "Monthly banking and transaction fees",
+        "expense_date": "2026-02-12"
+    },
+
+    {
+        "name": "Shop Rent May 2026",
+        "category": "Shop Rent",
+        "amount": 8500,
+        "description": "Monthly grocery store rent payment",
+        "expense_date": "2026-05-05"
+    },
+    {
+        "name": "Electricity Bill May 2026",
+        "category": "Electricity Bills",
+        "amount": 1800,
+        "description": "Electricity charges during summer season",
+        "expense_date": "2026-05-10"
+    }
+]

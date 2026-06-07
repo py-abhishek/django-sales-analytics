@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Shop Rent",
+        "description": "Monthly rent paid for the grocery store premises"
+    },
+    {
+        "name": "Electricity Bills",
+        "description": "Electricity charges for lighting, refrigeration, and daily operations"
+    },
+    {
+        "name": "Internet and WiFi",
+        "description": "Broadband and internet expenses for business operations"
+    },
+    {
+        "name": "Employee Salaries",
+        "description": "Monthly salaries and wages paid to store employees"
+    },
+    {
+        "name": "Transportation",
+        "description": "Expenses incurred for goods transportation and deliveries"
+    },
+    {
+        "name": "Fuel Expenses",
+        "description": "Fuel costs for delivery vehicles and business transportation"
+    },
+    {
+        "name": "Equipment Maintenance",
+        "description": "Repair and maintenance costs for store equipment and machinery"
+    },
+    {
+        "name": "Cleaning Supplies",
+        "description": "Expenses for cleaning products and store sanitation"
+    },
+    {
+        "name": "Packaging Materials",
+        "description": "Costs of bags, boxes, labels, and packaging materials"
+    },
+    {
+        "name": "Marketing and Advertising",
+        "description": "Promotional campaigns, banners, and advertising expenses"
+    },
+    {
+        "name": "Software Subscriptions",
+        "description": "POS systems, accounting software, and other business tools"
+    },
+    {
+        "name": "Office Supplies",
+        "description": "Stationery, printer paper, and administrative supplies"
+    },
+    {
+        "name": "Bank Charges",
+        "description": "Transaction fees, service charges, and banking expenses"
+    },
+    {
+        "name": "Licenses and Permits",
+        "description": "Business registration, permits, and compliance-related fees"
+    },
+    {
+        "name": "Insurance",
+        "description": "Business, inventory, and property insurance premiums"
+    },
+    {
+        "name": "Water Bills",
+        "description": "Water utility charges for daily store operations"
+    },
+    {
+        "name": "Security Services",
+        "description": "Expenses for security guards, CCTV monitoring, and safety measures"
+    },
+    {
+        "name": "Staff Welfare",
+        "description": "Refreshments, uniforms, and employee welfare expenses"
+    },
+    {
+        "name": "Miscellaneous Expenses",
+        "description": "Small operational expenses not covered under other categories"
+    },
+    {
+        "name": "Inventory Loss and Damage",
+        "description": "Losses due to spoilage, breakage, or damaged inventory"
+    }
+]

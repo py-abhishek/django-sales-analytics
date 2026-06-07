@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Fruits",
+        "description": "Fresh seasonal fruits sourced from local and regional farms"
+    },
+    {
+        "name": "Vegetables",
+        "description": "Fresh vegetables including leafy greens and daily essentials"
+    },
+    {
+        "name": "Dairy Products",
+        "description": "Milk, curd, butter, cheese, and other dairy items"
+    },
+    {
+        "name": "Bakery Items",
+        "description": "Fresh bread, buns, cakes, cookies, and baked products"
+    },
+    {
+        "name": "Rice & Grains",
+        "description": "Rice, wheat, flour, oats, and other staple grains"
+    },
+    {
+        "name": "Pulses & Lentils",
+        "description": "A variety of dals, beans, and lentils for daily cooking"
+    },
+    {
+        "name": "Cooking Oils",
+        "description": "Edible oils including mustard, sunflower, and olive oil"
+    },
+    {
+        "name": "Spices & Seasonings",
+        "description": "Whole and ground spices, herbs, and seasoning mixes"
+    },
+    {
+        "name": "Beverages",
+        "description": "Juices, soft drinks, tea, coffee, and health drinks"
+    },
+    {
+        "name": "Snacks",
+        "description": "Chips, namkeen, biscuits, and ready-to-eat snacks"
+    },
+    {
+        "name": "Frozen Foods",
+        "description": "Frozen vegetables, snacks, and ready-to-cook products"
+    },
+    {
+        "name": "Personal Care",
+        "description": "Soap, shampoo, toothpaste, and daily hygiene products"
+    },
+    {
+        "name": "Household Essentials",
+        "description": "Cleaning supplies, detergents, and home care products"
+    },
+    {
+        "name": "Baby Care",
+        "description": "Baby food, diapers, wipes, and infant care products"
+    },
+    {
+        "name": "Dry Fruits & Nuts",
+        "description": "Almonds, cashews, raisins, and premium dry fruits"
+    }
+]

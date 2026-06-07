@@ -97,31 +97,51 @@
 
     <!-- SUMMARY METRICS -->
     <div class="row g-3 gap-bottom">
+        
+        {{ summary|json_script:"summary" }}
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Total Products</p>
+
+                <div class="report-card-header">
+                <span class="card-label">Total Products</span>
+                <i class="bi bi-box-seam metric-icon"></i>
+                </div>
+
                 <h4 id="cardTotalProducts" class="metric-value">{{ summary.total_products }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Units Sold</p>
+
+                <div class="report-card-header">
+                <span class="card-label">Units Sold</span>
+                <i class="bi bi-cart-check metric-icon"></i>
+                </div>
+
                 <h4 id="cardUnitsSold" class="metric-value">{{ summary.units_sold|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Product Revenue</p>
+
+                <div class="report-card-header">
+                    <span class="card-label">Product Revenue</span>
+                    <i class="bi bi-cash-stack metric-icon"></i>
+                </div>
+
                 <h4 id="cardProductRevenue" class="metric-value">₹ {{ summary.product_revenue|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card-soft report-card">
-                <p class="card-label">Low Stock Products</p>
+                <div class="report-card-header">
+                <span class="card-label">Low Stock Products</span>
+                <i class="bi bi-exclamation-triangle metric-icon"></i>
+                </div>
                 <h4 id="cardLowStock" class="metric-value text-warning">{{ summary.low_stock_products }}</h4>
             </div>
         </div>

@@ -1,10 +1,10 @@
 from finance.models import ExpenseCategory
 import json
 
-def seed_expense_categories(business):
+def seed_expense_categories(data, business):
     
 
-    with open('core/fixtures/expense_categories.json', 'r') as f:
+    with open(data, 'r') as f:
         categories = json.load(f)
  
     expense_categories = []

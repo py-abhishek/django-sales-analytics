@@ -48,6 +48,17 @@ class ProductForm(forms.ModelForm):
 
         }
 
+    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['category'].empty_label = 'Select Category'
+        self.fields['unit'].choices = [
+            ('', 'Select Unit'),
+            *self.fields['unit'].choices[1:] 
+]
+
         
 
 

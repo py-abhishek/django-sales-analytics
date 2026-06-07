@@ -47,31 +47,50 @@
 
     <!-- KPI CARDS -->
     <div class="row g-3 gap-bottom">
+        
+        {{ summary|json_script:"summary" }}
 
         <div class="col-md-3 mt-0">
             <div class="card-soft report-card p-3 border-left">
-                <p class="card-label">Revenue</p>
+                <div class="report-card-header">
+                    <span class="card-label">Revenue</span>
+                    <i class="bi bi-cash-stack metric-icon"></i>
+                </div>
                 <h4 id="cardRevenue" class="card-value">₹{{ summary.total_revenue|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3 mt-0">
             <div class="card-soft report-card p-3 border-left">
-                <p class="card-label">Expenses</p>
+                
+                <div class="report-card-header">
+                <span class="card-label">Expenses</span>
+                <i class="bi bi-credit-card metric-icon"></i> 
+                </div>
+
                 <h4 id="cardExpenses" class="card-value text-danger">₹ {{ summary.total_exps|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3 mt-0">
             <div class="card-soft report-card p-3 border-left">
-                <p class="card-label">Net Profit</p>
+
+                <div class="report-card-header">
+                    <span class="card-label">Net Profit</span>
+                    <i class="bi bi-currency-rupee metric-icon"></i> 
+                </div>
+
                 <h4 id="cardProfit" class="card-value text-success">₹ {{ summary.net_profit|floatformat:0|format_number }}</h4>
             </div>
         </div>
 
         <div class="col-md-3 mt-0">
             <div class="card-soft report-card p-3 border-left">
-                <p class="card-label">Total Sales</p>
+
+                <div class="report-card-header">
+                <span class="card-label">Total Sales</span>
+                <i class="bi bi-cart-check metric-icon"></i>
+                </div>
                 <h4 id="cardTotalSales" class="card-value">{{ summary.total_sales|floatformat:0|format_number }}</h4>
             </div>
         </div>
@@ -86,7 +105,7 @@
             <h5 class="mb-0">Revenue vs Expense</h5>
         </div>
 
-        <div id="revenueExpenseChart" height="100"></div>
+        <div class="chart-card" id="revenueExpenseChart" height="100"></div>
         {{ rev_exp_trend.labels|json_script:"rev_exp_trend_labels" }}
         {{ rev_exp_trend.revenue|json_script:"rev_data" }}
         {{ rev_exp_trend.expense|json_script:"exp_data" }}
@@ -97,16 +116,16 @@
 
         <div class="col-md-6">
 
+            
             <div class="custom-card p-4">
-
                 <h5 class="mb-3">Top Selling Products</h5>
 
-                <div id="topProductsChart"></div>
+                <div class="chart-card" id="topProductsChart"></div>
+            </div>
                 
                 {{ top_selling_products.labels|json_script:"top_products_labels" }}
                 {{ top_selling_products.data|json_script:"top_products_data" }}
 
-            </div>
 
         </div>
 
@@ -134,7 +153,7 @@
 
         <h5 class="mb-3">Monthly Profit</h5>
 
-        <div id="profitTrendChart"></div>
+        <div class="chart-card" id="profitTrendChart"></div>
                 
         {{ profit_trend.labels|json_script:"profit_trend_labels" }}
         {{ profit_trend.data|json_script:"profit_trend_data" }}
@@ -151,7 +170,7 @@
 
                 <h5 class="mb-3">Sales Trend</h5>
 
-                <div id="salesTrendChart"></div>
+                <div class="chart-card" id="salesTrendChart"></div>
                         
                 {{ sales_trend.labels|json_script:"sales_trend_labels" }}
                 {{ sales_trend.data|json_script:"sales_trend_data" }}
@@ -167,7 +186,7 @@
 
                 <h5 class="mb-3">Sales by Category</h5>
 
-                <div id="categorySalesChart"></div>
+                <div class="chart-card" id="categorySalesChart"></div>
                 
                 {{ top_categories.labels|json_script:"category_labels" }}
                 {{ top_categories.data|json_script:"category_data" }}

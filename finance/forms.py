@@ -28,3 +28,11 @@ class ExpenseForm(forms.ModelForm):
             'expense_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
 
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['category'].empty_label = 'Select Category'
+
+
+        

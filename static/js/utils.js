@@ -43,11 +43,56 @@ export function formatDate(dateStr){
 }
 
 
-// convert date string to this format (April 5, 2026)
-// export function customDate(date){
-//     return new Date(date).toLocaleDateString('en-US', {
-//     year: 'numeric',
-//     month: 'long',
-//     day: 'numeric'
-//   })
-// }
+// For chart animation on scroll
+export function observeOnce(element, callback, threshold = 0.2) {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    callback(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold
+        }
+    );
+
+    observer.observe(element);
+}
+
+// Function for counter
+export function animateNumber(
+    element,
+    endValue,
+    duration = 1000,
+    prefix = "",
+    suffix = "",
+    decimals = 0,
+    startValue = 0
+) {
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const value =
+            startValue + (endValue - startValue) * progress;
+
+        element.textContent =
+            prefix +
+            Number(value).toLocaleString("en-IN", {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }) +
+            suffix;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
+}

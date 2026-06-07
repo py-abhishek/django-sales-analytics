@@ -2,7 +2,7 @@
     <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080">
 
         {% for message in messages %}
-        <div class="toast align-items-center 
+        <div class="toast toast-msg align-items-center 
 
             {% if message.tags == 'error' %}
                 text-danger
@@ -10,9 +10,9 @@
                 text-success
             {% endif %} 
             
-            border-1 mb-2"
+            border-0 mb-2"
              role="alert"
-             data-bs-delay="3000"
+             data-bs-delay="5000"
              data-bs-autohide="true">
 
             <div class="d-flex">

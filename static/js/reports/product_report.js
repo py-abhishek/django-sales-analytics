@@ -1,6 +1,25 @@
 import * as charts from "../charts.js"
 import * as utils from "../utils.js"
 
+// KPI Cards
+
+const productsCard = document.getElementById("cardTotalProducts");
+const unitsCard = document.getElementById("cardUnitsSold");
+const revenueCard = document.getElementById("cardProductRevenue");
+const lowStockCard = document.getElementById("cardLowStock");
+const summary = utils.parseJson(document.querySelector("#summary"));
+
+// Animate Cards
+utils.animateNumber(productsCard, summary.total_products, 800, "");
+utils.animateNumber(unitsCard, summary.units_sold, 800, "");
+utils.animateNumber(revenueCard, summary.product_revenue, 800, "₹ ");
+utils.animateNumber(lowStockCard, summary.low_stock_products, 800);
+
+// Storing value as dataset
+productsCard.dataset.value = summary.total_products;
+unitsCard.dataset.value = summary.units_sold;
+revenueCard.dataset.value = summary.product_revenue;
+lowStockCard.dataset.value = summary.low_stock_products;
 
 
 function createProSalesTrendChart() {
@@ -66,6 +85,26 @@ export const topProductsChart = createTopProductsChart();
 export const topCategoriesChart = createTopCategoriesChart();
 
 
+const allCharts = [
+    topProductsChart,
+    productSalesTrendChart,
+    topCategoriesChart
+];
+
+//Animate on Scroll
+document.querySelectorAll(".chart-card").forEach(card => {
+    utils.observeOnce(card, (element) => {
+        element.classList.add("show");
+    });
+});
+
+
+allCharts.forEach(chart => {
+    utils.observeOnce(chart.container, () => {
+        chart.playAnimation();
+    });
+});
+
 
 // ***************  WORKING WITH FILTERS *************** //
 
@@ -120,13 +159,19 @@ function fetchData(){
 function updateData(data){
 
     // Update cards
-    document.getElementById("cardTotalProducts").innerHTML = Math.trunc(Number(data.summary.total_products)).toLocaleString('en-IN')
-    document.getElementById("cardUnitsSold").innerHTML = Math.trunc(Number(data.summary.units_sold)).toLocaleString('en-IN')
-    document.getElementById("cardProductRevenue").innerHTML = "₹ " + Math.trunc(Number(data.summary.product_revenue)).toLocaleString('en-IN')
-    document.getElementById("cardLowStock").innerHTML = Math.trunc(Number(data.summary.low_stock_products)).toLocaleString('en-IN')
+    utils.animateNumber(productsCard, Math.trunc(Number(data.summary.total_products)), 600, "", "", 0, Number(productsCard.dataset.value));
+    utils.animateNumber(unitsCard, Math.trunc(Number(data.summary.units_sold)), 600, "", "", 0, Number(unitsCard.dataset.value));
+    utils.animateNumber(revenueCard, Math.trunc(Number(data.summary.product_revenue)), 600, "₹ ", "", 0, Number(revenueCard.dataset.value));
+    utils.animateNumber(lowStockCard, Math.trunc(Number(data.summary.low_stock_products)), 600, "", "", 0, Number(lowStockCard.dataset.value));
 
+    // Storing value as dataset
+    productsCard.dataset.value = Math.trunc(Number(data.summary.total_products));
+    unitsCard.dataset.value =  Math.trunc(Number(data.summary.units_sold));
+    revenueCard.dataset.value = Math.trunc(Number(data.summary.product_revenue));
+    lowStockCard.dataset.value = Math.trunc(Number(data.summary.low_stock_products));
+
+    
     // Update charts
-
     //Product sales chart
     productSalesTrendChart.update(
         data.product_sales_trend.labels,

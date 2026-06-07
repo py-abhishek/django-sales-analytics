@@ -1,9 +1,9 @@
 import json
 from inventory.models import ProductCategory
 
-def seed_product_categories(business):
+def seed_product_categories(data, business):
 
-    with open('core/fixtures/product_categories.json', 'r') as f:
+    with open(data, 'r') as f:
         categories = json.load(f)
 
 

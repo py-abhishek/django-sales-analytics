@@ -1,0 +1,183 @@
+[
+    {
+        "name": "Rahul Sharma",
+        "email": "rahul.sharma92@gmail.com",
+        "phone": "9876542101",
+        "address": "Lajpat Nagar, New Delhi"
+    },
+    {
+        "name": "Priya Verma",
+        "email": "priya.verma88@gmail.com",
+        "phone": "9876542102",
+        "address": "Indirapuram, Ghaziabad"
+    },
+    {
+        "name": "Amit Gupta",
+        "email": "amit.gupta85@gmail.com",
+        "phone": "9876542103",
+        "address": "Sector 62, Noida"
+    },
+    {
+        "name": "Neha Singh",
+        "email": "neha.singh90@gmail.com",
+        "phone": "9876542104",
+        "address": "Dwarka, New Delhi"
+    },
+    {
+        "name": "Vikram Malhotra",
+        "email": "vikram.malhotra87@gmail.com",
+        "phone": "9876542105",
+        "address": "Rajouri Garden, New Delhi"
+    },
+    {
+        "name": "Pooja Jain",
+        "email": "pooja.jain91@gmail.com",
+        "phone": "9876542106",
+        "address": "Vaishali, Ghaziabad"
+    },
+    {
+        "name": "Rohit Arora",
+        "email": "rohit.arora89@gmail.com",
+        "phone": "9876542107",
+        "address": "Sector 137, Noida"
+    },
+    {
+        "name": "Anjali Kapoor",
+        "email": "anjali.kapoor93@gmail.com",
+        "phone": "9876542108",
+        "address": "Pitampura, New Delhi"
+    },
+    {
+        "name": "Deepak Bansal",
+        "email": "deepak.bansal86@gmail.com",
+        "phone": "9876542109",
+        "address": "Janakpuri, New Delhi"
+    },
+    {
+        "name": "Sneha Khanna",
+        "email": "sneha.khanna95@gmail.com",
+        "phone": "9876542110",
+        "address": "Crossings Republik, Ghaziabad"
+    },
+    {
+        "name": "Karan Yadav",
+        "email": "karan.yadav88@gmail.com",
+        "phone": "9876542111",
+        "address": "Greater Noida West"
+    },
+    {
+        "name": "Ritika Saxena",
+        "email": "ritika.saxena92@gmail.com",
+        "phone": "9876542112",
+        "address": "Mayur Vihar, New Delhi"
+    },
+    {
+        "name": "Manish Tiwari",
+        "email": "manish.tiwari84@gmail.com",
+        "phone": "9876542113",
+        "address": "Sector 15, Noida"
+    },
+    {
+        "name": "Shreya Mishra",
+        "email": "shreya.mishra96@gmail.com",
+        "phone": "9876542114",
+        "address": "Model Town, New Delhi"
+    },
+    {
+        "name": "Akash Srivastava",
+        "email": "akash.srivastava89@gmail.com",
+        "phone": "9876542115",
+        "address": "Patel Nagar, New Delhi"
+    },
+
+    {
+        "name": "Nitin Chauhan",
+        "email": "nitin.chauhan90@gmail.com",
+        "phone": "9876542116",
+        "address": "Rohini, New Delhi"
+    },
+    {
+        "name": "Megha Arora",
+        "email": "megha.arora91@gmail.com",
+        "phone": "9876542117",
+        "address": "Sector 76, Noida"
+    },
+    {
+        "name": "Saurabh Kumar",
+        "email": "saurabh.kumar88@gmail.com",
+        "phone": "9876542118",
+        "address": "Kaushambi, Ghaziabad"
+    },
+    {
+        "name": "Kritika Gupta",
+        "email": "kritika.gupta93@gmail.com",
+        "phone": "9876542119",
+        "address": "Dwarka Sector 12, New Delhi"
+    },
+    {
+        "name": "Abhishek Jain",
+        "email": "abhishek.jain89@gmail.com",
+        "phone": "9876542120",
+        "address": "Indirapuram, Ghaziabad"
+    },
+    {
+        "name": "Simran Kaur",
+        "email": "simran.kaur94@gmail.com",
+        "phone": "9876542121",
+        "address": "Tilak Nagar, New Delhi"
+    },
+    {
+        "name": "Harsh Vardhan",
+        "email": "harsh.vardhan87@gmail.com",
+        "phone": "9876542122",
+        "address": "Sector 50, Noida"
+    },
+    {
+        "name": "Payal Bansal",
+        "email": "payal.bansal95@gmail.com",
+        "phone": "9876542123",
+        "address": "Raj Nagar Extension, Ghaziabad"
+    },
+    {
+        "name": "Rakesh Pandey",
+        "email": "rakesh.pandey86@gmail.com",
+        "phone": "9876542124",
+        "address": "Patparganj, New Delhi"
+    },
+    {
+        "name": "Isha Malhotra",
+        "email": "isha.malhotra92@gmail.com",
+        "phone": "9876542125",
+        "address": "Greater Noida West"
+    },
+    {
+        "name": "Vivek Agarwal",
+        "email": "vivek.agarwal90@gmail.com",
+        "phone": "9876542126",
+        "address": "Sector 18, Noida"
+    },
+    {
+        "name": "Nidhi Sharma",
+        "email": "nidhi.sharma96@gmail.com",
+        "phone": "9876542127",
+        "address": "Preet Vihar, New Delhi"
+    },
+    {
+        "name": "Gaurav Verma",
+        "email": "gaurav.verma89@gmail.com",
+        "phone": "9876542128",
+        "address": "Vasundhara, Ghaziabad"
+    },
+    {
+        "name": "Tanvi Kapoor",
+        "email": "tanvi.kapoor93@gmail.com",
+        "phone": "9876542129",
+        "address": "Janakpuri, New Delhi"
+    },
+    {
+        "name": "Aditya Saxena",
+        "email": "aditya.saxena91@gmail.com",
+        "phone": "9876542130",
+        "address": "Sector 137, Noida"
+    }
+]

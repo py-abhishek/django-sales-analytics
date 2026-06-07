@@ -2,6 +2,27 @@ import * as charts from "../charts.js"
 import * as utils from "../utils.js";
 
 
+// KPI Cards
+
+const revenueCard = document.getElementById("cardTotalRevenue");
+const expCard = document.getElementById("cardTotalExpense");
+const profitCard = document.getElementById("cardNetProfit");
+const marginCard = document.getElementById("cardProfitMargin");
+const summary = utils.parseJson(document.querySelector("#summary"));
+
+// Animate Cards
+utils.animateNumber(revenueCard, summary.total_revenue, 800, "₹ ");
+utils.animateNumber(expCard, summary.total_expense, 800, "₹ ");
+utils.animateNumber(profitCard, summary.net_profit, 800, "₹ ");
+utils.animateNumber(marginCard, summary.profit_margin, 800, "", " %", 2);
+
+// Storing value as dataset
+revenueCard.dataset.value = summary.total_revenue;
+expCard.dataset.value = summary.total_expense;
+profitCard.dataset.value = summary.net_profit;
+marginCard.dataset.value = summary.profit_margin;
+
+
 function createRevExpTrendChart() {
     const revExpTrendChartContainer = document.querySelector("#revenueExpenseChart");
     const labels = utils.parseJson(document.querySelector("#rev_exp_labels"));
@@ -93,6 +114,26 @@ function createExpByCatChart() {
 const expByCatChart = createExpByCatChart()
 
 
+const allCharts = [
+    revExpTrendChart,
+    profitTrendChart,
+    expByCatChart
+];
+
+//Animate on Scroll
+document.querySelectorAll(".chart-card").forEach(card => {
+    utils.observeOnce(card, (element) => {
+        element.classList.add("show");
+    });
+});
+
+
+allCharts.forEach(chart => {
+    utils.observeOnce(chart.container, () => {
+        chart.playAnimation();
+    });
+});
+
 
 // ***************  WORKING WITH FILTERS *************** //
 
@@ -140,12 +181,19 @@ function fetchData(){
 
 
 function updateData(data){
-    console.log(data)
+    
     // Update cards
-    document.getElementById("cardTotalRevenue").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_revenue)).toLocaleString('en-IN');
-    document.getElementById("cardTotalExpense").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_expense)).toLocaleString('en-IN');
-    document.getElementById("cardNetProfit").innerHTML = "₹ " + Math.trunc(Number(data.summary.net_profit)).toLocaleString('en-IN');
-    document.getElementById("cardProfitMargin").innerHTML = data.summary.profit_margin;
+    utils.animateNumber(revenueCard, Math.trunc(Number(data.summary.total_revenue)), 600, "₹ ", "", 0, Number(revenueCard.dataset.value));
+    utils.animateNumber(expCard, Math.trunc(Number(data.summary.total_expense)), 600, "₹ ", "", 0, Number(expCard.dataset.value));
+    utils.animateNumber(profitCard, Math.trunc(Number(data.summary.net_profit)), 600, "₹ ", "", 0, Number(profitCard.dataset.value));
+    utils.animateNumber(marginCard, Number(data.summary.profit_margin), 600, "", " %", 2, Number(marginCard.dataset.value));
+
+    // Storing value as dataset
+    revenueCard.dataset.value = Math.trunc(Number(data.summary.total_revenue));
+    expCard.dataset.value =  Math.trunc(Number(data.summary.total_expense));
+    profitCard.dataset.value = Math.trunc(Number(data.summary.net_profit));
+    marginCard.dataset.value = Number(data.summary.profit_margin);
+        
 
     // Update charts
 

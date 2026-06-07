@@ -44,6 +44,9 @@ export class LineChart {
             chart: {
                 type: 'line',
                 height: 350,
+                zoom: {
+                    enabled: false
+                },
                 toolbar: {
                     show: false
                 },
@@ -146,6 +149,22 @@ export class LineChart {
             series: this.series
         })
     }
+
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }
 
 
@@ -160,7 +179,16 @@ export class PieChart {
         this.options = {
             chart: {
                 type: 'pie',
-                height: 350
+                height: 350,
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800,
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 800
+                    }
+                },
             },
             colors: chartPalette,
             series: data,
@@ -211,6 +239,22 @@ export class PieChart {
             series: data
         })
     }
+
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }
 
 export class HorizontalBarchart {
@@ -227,7 +271,16 @@ export class HorizontalBarchart {
             chart: {
                 type: "bar",
                 height: 350,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800,
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 800
+                    }
+                },
             },
 
             series: [{
@@ -332,6 +385,22 @@ export class HorizontalBarchart {
             }]
         })
     }
+
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }
 
 
@@ -349,7 +418,16 @@ export class Barchart {
             chart: {
                 type: "bar",
                 height: 350,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800,
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 800
+                    }
+                },
             },
 
             series: series,
@@ -447,6 +525,22 @@ export class Barchart {
             series: series
         })
     }
+
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }
 
 export class DonutChart {
@@ -462,7 +556,16 @@ export class DonutChart {
         this.options = {
             chart: {
                 type: "donut",
-                height: 320
+                height: 320,
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800,
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 800
+                    }
+                },
             },
 
             series: data,
@@ -544,6 +647,21 @@ export class DonutChart {
             series: data
         })
     }
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }
 
 export class AreaChart {
@@ -561,6 +679,9 @@ export class AreaChart {
             chart: {
                 type: 'area',
                 height: 350,
+                zoom: {
+                    enabled: false
+                },
                 toolbar: {
                     show: false
                 },
@@ -673,4 +794,20 @@ export class AreaChart {
             series: series
         })
     }
+
+    playAnimation() {
+    this.chart.updateOptions(
+        {
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 800
+                }
+            }
+        },
+        true,
+        true
+    );
+}
 }

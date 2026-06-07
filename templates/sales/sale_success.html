@@ -23,17 +23,17 @@
 
         <div class="d-flex gap-2">
 
-            <a href="{% url 'create_sale' %}" class="btn btn-primary btn-sm">
+            <a href="{% url 'create_sale' %}" class="btn btn-primary ">
                 Create New Sale
             </a>
 
-            <a href="{% url 'sales_list' %}" class="btn btn-outline-secondary btn-sm">
+            <a href="{% url 'sales_list' %}" class="btn btn-secondary">
                 View All Sales
             </a>
 
-            <a href="#" class="btn btn-outline-secondary btn-sm">
+            {% comment %} <a href="#" class="btn btn-secondary btn-sm">
                 Print Invoice
-            </a>
+            </a> {% endcomment %}
 
         </div>
 
@@ -42,7 +42,7 @@
 
 
     <!-- SALE SUMMARY -->
-    <div class="custom-card border-left p-4 mb-4">
+    <div class="simple-card border-left p-4 mb-4">
 
         <h5 class="mb-3">Sale Information</h5>
 
@@ -120,7 +120,7 @@
                     </td>
 
                     <td class="text-center">
-                        {{ item.quantity }}
+                        {{ item.quantity }} {{ item.unit}}
                     </td>
 
                     <td class="text-end">
@@ -157,7 +157,7 @@
 
 
     <!-- RECORD INFORMATION -->
-    <div class="custom-card p-4">
+    <div class="simple-card p-4">
 
         <h5 class="mb-3">Record Information</h5>
 

@@ -8,17 +8,17 @@ from sales.models import Customer, Sale
 from sales import services
 
 
-def seed_sales(business, user):
+def seed_sales(business, user, total_entries):
 
     sale_form_data = {}
     customer_form_data = {}
 
-    for i in range(456):
-        customer_id = random.choice(Customer.objects.all()).id
+    for i in range(total_entries):
+        customer_id = random.choice(Customer.objects.filter(business=business)).id
         sale_form_data['payment_method'] = random.choice(Sale._meta.get_field('payment_method').choices)[0]
         sale_form_data['sale_date'] = get_random_date()
         formset_data = []
-        products = list(Product.objects.all())
+        products = list(Product.objects.filter(business=business))
 
 
         for j in range(random.randint(1, 10)):

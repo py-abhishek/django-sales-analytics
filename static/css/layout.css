@@ -28,6 +28,43 @@
 
 }
 
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+
+.current-business {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-left: 20px;
+    padding-top: 5px;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.business-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #7b8794;
+    line-height: 1;
+}
+
+.business-name {
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .brand-logo {
     font-weight: 700;
@@ -127,10 +164,18 @@
 /* ===============================
    SIDEBAR
 =================================*/
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
 .sidebar {
     background-color: var(--clr-bg-sidebar);
     width: 230px;
-    /* height: calc(100vh - (95px + var(--gap))); */
+    /* height: calc(100vh - 110px);
+    max-height:  calc(100vh - 110px); */
+    
     height: calc(100vh - 110px);
     max-height:  calc(100vh - 110px);
     overflow-x: hidden;
@@ -156,6 +201,12 @@
 .sidebar-nav{
     padding: 10px 15px;
 }
+
+.sidebar-nav li i {
+    padding-right: 16px;
+    width: 32px !important;
+}
+
 .sidebar-nav .nav-link {
     font-weight: 600;
     color: var(--clr-text-medium);
@@ -188,6 +239,62 @@
     opacity: 0.6;
 }
 
+/* Quick sale button */
+.quick-sale {
+    background: var(--clr-primary);
+    color: #fff !important;
+    border-radius: var(--radius-input) !important;
+    /* margin-top: 20px !important; */
+    margin-bottom: 20px !important;
+    /* width: 150px; */
+}
+.quick-sale i {
+    color: #fff;
+}
+
+.floating-sale-btn {
+    position: absolute;
+    left: calc(25px + var(--gap));
+    bottom: 40px;
+    /* transform: translateX(-50%); */
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+    font-size: 22px !important;
+    font-weight: bold;
+
+    background: var(--clr-primary);
+
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 24px rgba(79, 70, 229, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.2s ease;
+    opacity: .9;
+    z-index: 999;
+}
+
+.floating-sale-btn:hover {
+    transform: scale(1.06);
+    opacity: 1;
+
+    color: white;
+}
+
+
+/* .floating-sale-btn:active {
+    transform: translateX(-50%) scale(0.95);
+} */
 
 /* ===============================
    CONTENT AREA

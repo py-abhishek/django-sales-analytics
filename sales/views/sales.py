@@ -185,9 +185,10 @@ class SaleSuccessView(DetailView):
 # Cancel sale
 class CancelSaleView(RoleRequiredMixin, View):
     allowed_roles = [Membership.UserRoleChoices.ADMIN]
+    permission_denied_url = 'sale_detail'
 
-    def post(self, request, sale_id):
-        services.cancel_sale(request, sale_id, request.session.get('business_id'))
+    def post(self, request, pk):
+        services.cancel_sale(request, pk, request.session.get('business_id'))
 
-        return redirect('sale_detail', sale_id)
+        return redirect('sale_detail', pk)
 

@@ -33,7 +33,7 @@
 .suggestion-results{
     position:absolute;
     width:100%;
-    background: var(--clr-bg-main);
+    background: var(--clr-bg-sidebar);
     border:1px solid var(--clr-border);
     border-radius:var(--radius);
     max-height:200px;

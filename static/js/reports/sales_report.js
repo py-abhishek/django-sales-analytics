@@ -1,5 +1,26 @@
 import * as charts from "../charts.js"
 import { parseJson } from "../utils.js"
+import * as utils from "../utils.js"
+
+// KPI Cards
+
+const salesCard = document.getElementById("card_total_sales");
+const revCard = document.getElementById("card_total_revenue");
+const profitCard = document.getElementById("card_total_profit");
+const avgOrderCard = document.getElementById("card_avg_order");
+const summary = utils.parseJson(document.querySelector("#summary"));
+
+// Animate Cards
+utils.animateNumber(salesCard, summary.total_sales_count, 800, "");
+utils.animateNumber(revCard, summary.total_revenue, 800, "₹ ");
+utils.animateNumber(profitCard, summary.total_profit, 800, "₹ ");
+utils.animateNumber(avgOrderCard, summary.avg_order_value, 800, "₹ ");
+
+// Storing value as dataset
+salesCard.dataset.value = summary.total_sales_count;
+revCard.dataset.value = summary.total_revenue;
+profitCard.dataset.value = summary.total_profit;
+avgOrderCard.dataset.value = summary.avg_order_value;
 
 
 // Sales Report
@@ -45,6 +66,25 @@ function createPaymentChart(){
 const salesTrendChart = createSalesTrendChart();
 const paymentsChart = createPaymentChart();
 
+
+const allCharts = [
+    salesTrendChart,
+    paymentsChart
+];
+
+//Animate on Scroll
+document.querySelectorAll(".chart-card").forEach(card => {
+    utils.observeOnce(card, (element) => {
+        element.classList.add("show");
+    });
+});
+
+
+allCharts.forEach(chart => {
+    utils.observeOnce(chart.container, () => {
+        chart.playAnimation();
+    });
+});
 
 
 // ***************  WORKING WITH FILTERS *************** //
@@ -109,13 +149,19 @@ function fetchData(){
 function updateData(data){
 
     // Update cards
-    document.getElementById("card_total_sales").innerHTML = Math.trunc(Number(data.summary.total_sales_count)).toLocaleString('en-IN')
-    document.getElementById("card_total_revenue").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_revenue)).toLocaleString('en-IN')
-    document.getElementById("card_total_profit").innerHTML = "₹ " + Math.trunc(Number(data.summary.total_profit)).toLocaleString('en-IN')
-    document.getElementById("card_avg_order").innerHTML = "₹ " + Math.trunc(Number(data.summary.avg_order_value)).toLocaleString('en-IN')
+    utils.animateNumber(salesCard, Math.trunc(Number(data.summary.total_sales_count)), 600, "", "", 0, Number(salesCard.dataset.value));
+    utils.animateNumber(revCard, Math.trunc(Number(data.summary.total_revenue)), 600, "₹ ", "", 0, Number(revCard.dataset.value));
+    utils.animateNumber(profitCard, Math.trunc(Number(data.summary.total_profit)), 600, "₹ ", "", 0, Number(profitCard.dataset.value));
+    utils.animateNumber(avgOrderCard, Math.trunc(Number(data.summary.avg_order_value)), 600, "₹ ", "", 0, Number(avgOrderCard.dataset.value));
+
+    // Storing value as dataset
+    salesCard.dataset.value = Math.trunc(Number(data.summary.total_sales_count));
+    revCard.dataset.value =  Math.trunc(Number(data.summary.total_revenue));
+    profitCard.dataset.value = Math.trunc(Number(data.summary.total_profit));
+    avgOrderCard.dataset.value = Math.trunc(Number(data.summary.avg_order_value));
+            
 
     // Update charts
-
     //Sales chart
     salesTrendChart.update(
         data.sales_trend.labels,

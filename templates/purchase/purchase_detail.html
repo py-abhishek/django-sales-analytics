@@ -68,7 +68,6 @@
                         <tr>
                             <th>#</th>
                             <th>Product</th>
-                            <th>Unit</th>
                             <th>Quantity</th>
                             <th>Cost</th>
                             <th>Total</th>
@@ -83,8 +82,7 @@
 
                             <td>{{ forloop.counter }}</td>
                             <td>{{ item.product.name }}</td>
-                            <td>{{ item.unit }}</td>
-                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.quantity }} {{ item.unit }}</td>
                             <td>₹ {{ item.unit_cost|floatformat:0|format_number }}</td>
                             <td class="text-semibold">₹ {{ item.item_total_cost|floatformat:0|format_number }}</td>
 

@@ -107,32 +107,50 @@
 
         <!-- SUMMARY METRICS -->
         <div class="row g-3 gap-bottom">
+        {{ summary|json_script:"summary" }}
 
             <div class="col-md-3">
                 <div class="card-soft report-card">
-                    <p class="card-label">Total Sales</p>
+                    
+                    <div class="report-card-header">
+                        <span class="card-label">Total Sales</span>
+                        <i class="bi bi-cart-check metric-icon"></i>
+                    </div>
                     <h4 id="card_total_sales" class="metric-value">{{ summary.total_sales_count }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft report-card">
-                    <p class="card-label">Total Revenue</p>
+
+                    <div class="report-card-header">
+                    <span class="card-label">Total Revenue</span>
+                    <i class="bi bi-cash-stack metric-icon"></i>
+                    </div>
                     <h4 id="card_total_revenue" class="metric-value">₹ {{ summary.total_revenue|floatformat:0|format_number }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft report-card">
-                    <p class="card-label">Total Profit</p>
+
+                    <div class="report-card-header">
+                    <span class="card-label">Total Profit</span>
+                    <i class="bi bi-currency-rupee metric-icon"></i>
+                    </div>
+
                     <h4 id="card_total_profit" class="metric-value text-success">₹ {{ summary.total_profit|floatformat:0|format_number }}</h4>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="card-soft report-card">
-                    <p class="card-label">Avg Order Value</p>
-                    <h4 id=card_avg_order class="metric-value">₹ {{ summary.avg_order_value|floatformat:0|format_number }}</h4>
+                    
+                    <div class="report-card-header">
+                    <span class="card-label">Avg Order Value</span>
+                    <i class="bi bi-bag-check"></i>
+                    </div>
+                    <h4 id="card_avg_order" class="metric-value">₹ {{ summary.avg_order_value|floatformat:0|format_number }}</h4>
                 </div>
             </div>
 

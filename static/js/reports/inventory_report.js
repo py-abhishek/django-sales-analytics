@@ -1,6 +1,26 @@
 import * as charts from "../charts.js"
 import * as utils from "../utils.js"
 
+// KPI Cards
+
+const productsCard = document.getElementById("cardTotalProducts");
+const inventoryCard = document.getElementById("cardInventoryValue");
+const lowStockCard = document.getElementById("cardLowStock");
+const outOfStockCard = document.getElementById("cardOutofStock");
+const summary = utils.parseJson(document.querySelector("#summary"));
+
+// Animate Cards
+utils.animateNumber(productsCard, summary.total_products, 800, "");
+utils.animateNumber(inventoryCard, summary.inventory_value, 800, "₹ ");
+utils.animateNumber(lowStockCard, summary.low_stock_count, 800);
+utils.animateNumber(outOfStockCard, summary.out_of_stock_count, 800);
+
+// Storing value as dataset
+productsCard.dataset.value = summary.total_products;
+inventoryCard.dataset.value = summary.inventory_value;
+lowStockCard.dataset.value = summary.low_stock_count;
+outOfStockCard.dataset.value = summary.out_of_stock_count;
+
 
 function createInvCatChart() {
         const chartContainer = document.getElementById("inventoryCategoryChart");
@@ -63,6 +83,26 @@ function createTopInvProductsChart() {
 const topProductsChart = createTopInvProductsChart()
 
 
+const allCharts = [
+    inventoryCategoryChart,
+    stockDistributionChart,
+    topProductsChart,
+];
+
+//Animate on Scroll
+document.querySelectorAll(".chart-card").forEach(card => {
+    utils.observeOnce(card, (element) => {
+        element.classList.add("show");
+    });
+});
+
+
+allCharts.forEach(chart => {
+    utils.observeOnce(chart.container, () => {
+        chart.playAnimation();
+    });
+});
+
 
 // ***************  WORKING WITH FILTERS *************** //
 
@@ -91,15 +131,21 @@ function fetchData(){
 
 
 function updateData(data){
-
+    
     // Update cards
-    document.getElementById("cardTotalProducts").innerHTML = Number(data.summary.total_products).toLocaleString('en-IN')
-    document.getElementById("cardInventoryValue").innerHTML = "₹ " + Math.trunc(Number(data.summary.inventory_value)).toLocaleString('en-IN')
-    document.getElementById("cardLowStock").innerHTML = "₹ " + Math.trunc(Number(data.summary.low_stock_count)).toLocaleString('en-IN')
-    document.getElementById("cardOutofStock").innerHTML = "₹ " + Math.trunc(Number(data.summary.out_of_stock_count)).toLocaleString('en-IN')
+    utils.animateNumber(productsCard, Number(data.summary.total_products), 600, "", "", 0, Number(productsCard.dataset.value));
+    utils.animateNumber(inventoryCard, Math.trunc(Number(data.summary.inventory_value)), 600, "₹ ", "", 0, Number(inventoryCard.dataset.value));
+    utils.animateNumber(lowStockCard, Math.trunc(Number(data.summary.low_stock_count)), 600, "", "", 0, Number(lowStockCard.dataset.value));
+    utils.animateNumber(outOfStockCard, Math.trunc(Number(data.summary.out_of_stock_count)), 600, "", "", 0, Number(outOfStockCard.dataset.value));
 
+    // Storing value as dataset
+    productsCard.dataset.value = Number(data.summary.total_products);
+    inventoryCard.dataset.value =  Math.trunc(Number(data.summary.inventory_value));
+    lowStockCard.dataset.value = Math.trunc(Number(data.summary.low_stock_count));
+    outOfStockCard.dataset.value = Math.trunc(Number(data.summary.out_of_stock_count));
+            
+    
     // Update charts
-
     //Inventory value by cagtegory chart
     inventoryCategoryChart.update(
         data.inv_category_value.labels,

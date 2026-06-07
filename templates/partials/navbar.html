@@ -8,10 +8,19 @@
         <h3 class="page-title mb-0">{{ page_title }}Dashboard</h3>
     </div> {% endcomment %}
 
-        <div class="">
-        <a href="{% url 'dashboard' %}" class="brand-logo">
-            <span class="text-dark">Biz</span>Metric
-        </a>
+    <div class="navbar-left">
+        <div class="logo">
+            <a href="{% url 'dashboard' %}" class="brand-logo">
+                <span class="text-dark">Biz</span>Metric
+            </a>
+        </div>
+
+        {% if user.is_authenticated and current_business %}
+        <div class="current-business">
+            <span class="business-label">Current Business</span>
+                <span class="business-name">{{ current_business }}</span>
+        </div>
+        {% endif %}
     </div>
 
     <div class="d-flex align-items-center gap-4">
@@ -75,7 +84,7 @@
         {% else %}
             <div>
                 <a class="btn btn-primary me-2" href="{% url 'signin' %}">Sign In</a>
-                <a class="btn btn-outline-primary" href="{% url 'signup' %}">Sign Up</a>
+                <a class="btn btn-secondary" href="{% url 'signup' %}">Sign Up</a>
             </div>
         {% endif %}
 

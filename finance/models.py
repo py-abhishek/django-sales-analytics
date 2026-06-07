@@ -5,7 +5,16 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 
 class ExpenseCategory(models.Model):
-    name = models.CharField(db_index=True, max_length=100, unique=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'business'],
+                name='unique_expcategory_perbusiness'
+            )
+        ]
+
+    name = models.CharField(db_index=True, max_length=100)
     description = models.TextField(blank=True)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='expense_categories')
     updated_at = models.DateTimeField(auto_now=True)

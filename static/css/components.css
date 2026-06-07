@@ -177,7 +177,9 @@
 }
 
 .btn-danger {
-    border-radius: var(--radius);
+    border-radius: var(--radius) !important;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 
@@ -308,4 +310,40 @@
 .dropdown-menu li:last-child a {
     border-end-end-radius: var(--radius);
     border-end-start-radius: var(--radius);
+}
+
+.toast-msg {
+    border-radius: var(--radius) !important;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.report-card-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.report-card-header span {
+    padding-top: 5px;
+}
+
+.metric-icon {
+    color: #6b7280;
+    padding-top: 0px !important;
+    /* color: var(--clr-primary); */
+    font-size: 1.1rem;
+    /* opacity: 0.8; */
+}
+
+/* Charts */
+
+.chart-card {
+    opacity: 0;
+    /* transform: translateY(30px); */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.chart-card.show {
+    opacity: 1;
+    /* transform: translateY(0); */
 }

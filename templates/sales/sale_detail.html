@@ -85,7 +85,6 @@
                         <tr>
                             <th>#</th>
                             <th>Product</th>
-                            <th>Unit</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Total</th>
@@ -101,8 +100,7 @@
 
                             <td>{{ forloop.counter }}</td>
                             <td>{{ item.product.name }}</td>
-                            <td>{{ item.unit }}</td>
-                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.quantity }} {{ item.unit }}</td>
                             <td>₹ {{ item.price_at_sale|floatformat:0|format_number }}</td>
                             <td class="text-semibold">₹ {{ item.item_total_price|floatformat:0|format_number }}</td>
                             <td class="text-success text-semibold">
@@ -149,7 +147,7 @@
 
             <!-- HEADER -->
             <div class="modal-header">
-                <h5 class="modal-title text-danger">Confirm cancel</h5>
+                <h5 class="modal-title ">Confirm cancel</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -164,7 +162,7 @@
                     Sale ID: #{{ sale.id }} • Total Amount: ₹{{ sale.total_amount }}
                 </p>
 
-                <p class="text-danger small mb-0">
+                <p class=" small mb-0">
                     This action cannot be undone.
                 </p>
 
@@ -173,7 +171,7 @@
             <!-- FOOTER -->
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-light border" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary border" data-bs-dismiss="modal">
                     No
                 </button>
 

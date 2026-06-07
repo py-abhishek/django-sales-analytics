@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Fresh Harvest Distributors",
+        "email": "sales@freshharvest.in",
+        "phone": "9876501001",
+        "address": "Azadpur Mandi, New Delhi"
+    },
+    {
+        "name": "Green Valley Produce",
+        "email": "contact@greenvalleyproduce.in",
+        "phone": "9876501002",
+        "address": "Sector 63, Noida"
+    },
+    {
+        "name": "Amul Dairy Supply",
+        "email": "orders@amulsupply.in",
+        "phone": "9876501003",
+        "address": "Patparganj Industrial Area, New Delhi"
+    },
+    {
+        "name": "Daily Fresh Foods",
+        "email": "sales@dailyfreshfoods.in",
+        "phone": "9876501004",
+        "address": "Indirapuram, Ghaziabad"
+    },
+    {
+        "name": "Golden Grain Traders",
+        "email": "info@goldengrain.in",
+        "phone": "9876501005",
+        "address": "Narela Industrial Area, New Delhi"
+    },
+    {
+        "name": "Premium Pulses Suppliers",
+        "email": "orders@premiumpulses.in",
+        "phone": "9876501006",
+        "address": "Sahibabad Industrial Area, Ghaziabad"
+    },
+    {
+        "name": "Fortune Oil Distribution",
+        "email": "sales@fortuneoil.in",
+        "phone": "9876501007",
+        "address": "Okhla Industrial Area, New Delhi"
+    },
+    {
+        "name": "Metro Beverage Traders",
+        "email": "contact@metrobeverages.in",
+        "phone": "9876501008",
+        "address": "Sector 5, Noida"
+    },
+    {
+        "name": "Prime Bakery Supplies",
+        "email": "orders@primebakery.in",
+        "phone": "9876501009",
+        "address": "Kirti Nagar, New Delhi"
+    },
+    {
+        "name": "Nature's Basket Wholesale",
+        "email": "sales@naturesbasketwholesale.in",
+        "phone": "9876501010",
+        "address": "Greater Noida West"
+    },
+    {
+        "name": "Hygiene Essentials Distributors",
+        "email": "info@hygieneessentials.in",
+        "phone": "9876501011",
+        "address": "Mohan Nagar, Ghaziabad"
+    },
+    {
+        "name": "Baby Care Wholesale Hub",
+        "email": "orders@babycarehub.in",
+        "phone": "9876501012",
+        "address": "Laxmi Nagar, New Delhi"
+    },
+    {
+        "name": "Dry Fruit World",
+        "email": "sales@dryfruitworld.in",
+        "phone": "9876501013",
+        "address": "Khari Baoli, New Delhi"
+    },
+    {
+        "name": "Frozen Foods Depot",
+        "email": "contact@frozenfoodsdepot.in",
+        "phone": "9876501014",
+        "address": "Sector 65, Noida"
+    },
+    {
+        "name": "Capital Grocery Distributors",
+        "email": "orders@capitalgrocery.in",
+        "phone": "9876501015",
+        "address": "Rohini, New Delhi"
+    }
+]

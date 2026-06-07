@@ -8,7 +8,16 @@ class ProductCategory(models.Model):
     '''
     To Organize products into groups
     '''
-    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'business'],
+                name='unique_procategory_perbusiness'
+            )
+        ]
+
+    name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='product_categories')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,6 +32,14 @@ class Product(models.Model):
     Represents an item being sold
     '''
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['sku', 'business'],
+                name='unique_productsku_perbusiness'
+            )
+        ]
+
     class UnitChoices(models.TextChoices):
         PIECE = 'pcs', 'Piece'
         KILOGRAM = 'kg', 'KG'
@@ -35,7 +52,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    sku = models.CharField(max_length=100, unique=True)
+    sku = models.CharField(max_length=100)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.PROTECT,
         db_index=True,

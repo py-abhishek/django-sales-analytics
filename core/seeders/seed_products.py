@@ -3,8 +3,8 @@ import json
 from inventory.models import ProductCategory, Product
 from inventory.services import new_product_ledger
 
-def seed_products(business, user):
-    with open('core/fixtures/products.json', 'r') as f:
+def seed_products(data, business, user):
+    with open(data, 'r') as f:
         product_list = json.load(f)
 
     products = []
@@ -14,7 +14,7 @@ def seed_products(business, user):
             name = item['name'],
             description = item['description'],
             sku = item['sku'],
-            category = ProductCategory.objects.get(name=item['category']),
+            category = ProductCategory.objects.get(name=item['category'], business=business),
             current_avg_cost = item['cost_price'],
             selling_price = item['selling_price'],
             current_stock = item['stock_quantity'],

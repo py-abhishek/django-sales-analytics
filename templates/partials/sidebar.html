@@ -1,219 +1,252 @@
 {% load navigation_tags %}
-<div class="sidebar shadow-1">
-    
-    {% comment %} <div class="sidebar-header">
-        <a href="{% url 'dashboard' %}" class="brand-logo">
-            <span class="text-dark">Biz</span>Metric
-        </a>
-    </div> {% endcomment %}
-    <!-- SIDEBAR -->
-    <ul class="nav flex-column sidebar-nav">
 
-        <!-- Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link {% active 'dashboard' %}" href="{% url 'dashboard' %}">
-                Dashboard
-            </a>
-        </li>
+<div class="sidebar-container">
+    <div class="sidebar shadow-1">
+        <!-- SIDEBAR -->
 
-        <!-- INVENTORY -->
-        <li class="nav-item">
+        <ul class="nav flex-column sidebar-nav">
 
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#inventoryMenu">
-                Inventory
-                <span class="arrow">▾</span>
-            </a>
+             <!-- Quick Sale -->
+            {% comment %} <li class="nav-item">
+                <a class="quick-sale nav-link" href="{% url 'create_sale' %}"
+                    class="floating-sale-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="Create New Sale">
+                    <i class="bi bi-plus-lg"></i><span>Create Sale</span>
+                </a>
+            </li> {% endcomment %}
 
-            <div class="collapse {% show_menu 'add_product' 'product_list' 'product_categories' 'stock_movements' %}" id="inventoryMenu">
-                <ul class="nav flex-column sub-menu">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link {% active 'dashboard' %}" href="{% url 'dashboard' %}">
+                    <i class="bi bi-grid-1x2"></i><span>Dashboard</span>
+                </a>
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'add_product' %}" href="{% url 'add_product' %}">
-                            Add Products
-                        </a>
-                    </li>
+            <!-- INVENTORY -->
+            <li class="nav-item">
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'product_list' %}" href="{% url 'product_list' %}">
-                            Product List
-                        </a>
-                    </li>
+                <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#inventoryMenu">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-box-seam"></i><span>Inventory</span>
+                    </div>
+                    <span class="arrow">▾</span>
+                </a>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'product_categories' %}" href="{% url 'product_categories' %}">
-                            Manage Categories
-                        </a>
-                    </li>
+                <div class="collapse {% show_menu 'add_product' 'product_list' 'product_categories' 'stock_movements' %}" id="inventoryMenu">
+                    <ul class="nav flex-column sub-menu">
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'stock_movements' %}" href="{% url 'stock_movements' %}">
-                            Stock Movements
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'add_product' %}" href="{% url 'add_product' %}">
+                                Add Products
+                            </a>
+                        </li>
 
-                </ul>
-            </div>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'product_list' %}" href="{% url 'product_list' %}">
+                                Product List
+                            </a>
+                        </li>
 
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'product_categories' %}" href="{% url 'product_categories' %}">
+                                Manage Categories
+                            </a>
+                        </li>
 
-        <!-- PURCHASE -->
-        <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'stock_movements' %}" href="{% url 'stock_movements' %}">
+                                Stock Movements
+                            </a>
+                        </li>
 
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#purchaseMenu"
-            role="button">
-                Purchase
-                <span class="arrow">▾</span>
-            </a>
+                    </ul>
+                </div>
 
-            <div class="collapse {% show_menu 'add_purchase' 'purchases_list' %}" id="purchaseMenu">
-                <ul class="nav flex-column sub-menu">
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'add_purchase' %}" href="{% url 'add_purchase' %}">
-                            Add Purchase
-                        </a>
-                    </li>
+            <!-- PURCHASE -->
+            <li class="nav-item">
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'purchases_list' %}" href="{% url 'purchases_list' %}">
-                            Purchase History
-                        </a>
-                    </li>
+                <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#purchaseMenu"
+                role="button">
+                
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-cart3"></i><span>Purchase</span>
+                </div>
+                    <span class="arrow">▾</span>
+                </a>
 
-                </ul>
-            </div>
+                <div class="collapse {% show_menu 'add_purchase' 'purchases_list' %}" id="purchaseMenu">
+                    <ul class="nav flex-column sub-menu">
 
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'add_purchase' %}" href="{% url 'add_purchase' %}">
+                                Add Purchase
+                            </a>
+                        </li>
 
-        <!-- Suppliers -->
-        <li class="nav-item">
-            <a class="nav-link {% active 'suppliers_list' %}" href="{% url 'suppliers_list' %}">
-                Suppliers
-            </a>
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'purchases_list' %}" href="{% url 'purchases_list' %}">
+                                Purchase History
+                            </a>
+                        </li>
 
-        <!-- SALES -->
-        <li class="nav-item">
+                    </ul>
+                </div>
 
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#salesMenu"
-            role="button">
-                Sales
-                <span class="arrow">▾</span>
-            </a>
+            </li>
 
-            <div class="collapse {% show_menu 'create_sale' 'sales_list' %}" id="salesMenu">
-                <ul class="nav flex-column sub-menu">
+            <!-- Suppliers -->
+            <li class="nav-item">
+                <a class="nav-link {% active 'suppliers_list' %}" href="{% url 'suppliers_list' %}">
+                    <i class="bi bi-truck"></i><span>Suppliers</span>
+                </a>
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'create_sale' %}" href="{% url 'create_sale' %}">
-                            Create Sale
-                        </a>
-                    </li>
+            <!-- SALES -->
+            <li class="nav-item">
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'sales_list' %}" href="{% url 'sales_list' %}">
-                            Sales History
-                        </a>
-                    </li>
+                <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#salesMenu"
+                role="button">
+                
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-receipt"></i><span>Sales</span>
+                </div>
+                    <span class="arrow">▾</span>
+                </a>
 
-                </ul>
-            </div>
+                <div class="collapse {% show_menu 'create_sale' 'sales_list' %}" id="salesMenu">
+                    <ul class="nav flex-column sub-menu">
 
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'create_sale' %}" href="{% url 'create_sale' %}">
+                                Create Sale
+                            </a>
+                        </li>
 
-        <!-- Customers -->
-        <li class="nav-item">
-            <a class="nav-link {% active 'customers_list' %}" href="{% url 'customers_list' %}">
-                Customers
-            </a>
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'sales_list' %}" href="{% url 'sales_list' %}">
+                                Sales History
+                            </a>
+                        </li>
 
-        <!-- Expense -->
-        <li class="nav-item">
+                    </ul>
+                </div>
 
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#financeMenu">
-                Expense
-                <span class="arrow">▾</span>
-            </a>
+            </li>
 
-            <div class="collapse {% show_menu 'add_expense' 'expense_categories' 'expense_list' %}" id="financeMenu">
-                <ul class="nav flex-column sub-menu">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'add_expense' %}" href="{% url 'add_expense' %}">
-                            Add Expense
-                        </a>
-                    </li>
+            <!-- Customers -->
+            <li class="nav-item">
+                <a class="nav-link {% active 'customers_list' %}" href="{% url 'customers_list' %}">
+                    <i class="bi bi-people"></i><span>Customers</span>
+                </a>
+            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'expense_categories' %}" href="{% url 'expense_categories' %}">
-                            Manage Categories
-                        </a>
-                    </li>
+            <!-- Expense -->
+            <li class="nav-item">
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'expense_list' %}" href="{% url 'expense_list' %}">
-                            Expense History
-                        </a>
-                    </li>
+                <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#financeMenu">
+                
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-wallet2"></i><span>Expense</span>
+                </div>
+                    <span class="arrow">▾</span>
+                </a>
 
-                </ul>
-            </div>
+                <div class="collapse {% show_menu 'add_expense' 'expense_categories' 'expense_list' %}" id="financeMenu">
+                    <ul class="nav flex-column sub-menu">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'add_expense' %}" href="{% url 'add_expense' %}">
+                                Add Expense
+                            </a>
+                        </li>
 
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'expense_categories' %}" href="{% url 'expense_categories' %}">
+                                Manage Categories
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'expense_list' %}" href="{% url 'expense_list' %}">
+                                Expense History
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </li>
 
 
-        <!-- REPORTS -->
-        <li class="nav-item">
+            <!-- REPORTS -->
+            <li class="nav-item">
 
-            <a class="nav-link d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse"
-            href="#reportMenu">
+                <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#reportMenu">
+                
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-graph-up-arrow"></i><span>Reports</span>
+                </div>
+                    <span class="arrow">▾</span>
+                </a>
 
-                Reports
-                <span class="arrow">▾</span>
-            </a>
+                <div class="collapse {% show_menu 'sales_report' 'product_report' 'revenue_exp_report' 'inventory_report' %}" id="reportMenu">
+                    <ul class="nav flex-column sub-menu">
 
-            <div class="collapse {% show_menu 'sales_report' 'product_report' 'revenue_exp_report' 'inventory_report' %}" id="reportMenu">
-                <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'sales_report' %}" href="{% url 'sales_report' %}">
+                                Sales Report
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'sales_report' %}" href="{% url 'sales_report' %}">
-                            Sales Report
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'product_report' %}" href="{% url 'product_report' %}">
+                                Product Report
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'product_report' %}" href="{% url 'product_report' %}">
-                            Product Report
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'revenue_exp_report' %}" href="{% url 'revenue_exp_report' %}">
+                                Revenue vs Expense
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'revenue_exp_report' %}" href="{% url 'revenue_exp_report' %}">
-                            Revenue vs Expense
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'inventory_report' %}" href="{% url 'inventory_report' %}">
+                                Inventory Report
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {% active 'inventory_report' %}" href="{% url 'inventory_report' %}">
-                            Inventory Report
-                        </a>
-                    </li>
+                    </ul>
+                </div>
 
-                </ul>
-            </div>
+            </li>
 
-        </li>
+        </ul>
 
-    </ul>
 
-</div
+    </div>
+
+{% comment %} <a href="{% url 'create_sale' %}"
+   class="floating-sale-btn"
+   data-bs-toggle="tooltip"
+   data-bs-placement="right"
+   title="Create New Sale">
+
+    <i class="bi bi-plus-lg"></i>
+</a> {% endcomment %}
+
+</div>

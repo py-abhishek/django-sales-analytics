@@ -3,9 +3,9 @@ from sales.models import Customer
 import json
 
 
-def seed_customers(business):
+def seed_customers(data, business):
 
-    with open('core/fixtures/customers.json', 'r') as f:
+    with open(data, 'r') as f:
         customer_list = json.load(f)
 
     for c in customer_list:

@@ -8,18 +8,18 @@ from purchases.models import Supplier, Purchase
 from purchases import services
 
 
-def seed_purchases(business):
+def seed_purchases(business, total_entries):
 
     purchase_form_data = {}
     supplier_form_data = {}
 
-    for i in range(219):
-        supplier_id = random.choice(Supplier.objects.all()).id
+    for i in range(total_entries):
+        supplier_id = random.choice(Supplier.objects.filter(business=business)).id
         purchase_form_data['payment_method'] = random.choice(Purchase._meta.get_field('payment_method').choices)[0]
         purchase_form_data['purchase_date'] = get_random_date()
         formset_data = []
 
-        products = Product.objects.all()
+        products = Product.objects.filter(business=business)
 
         for j in range(random.randint(1, 10)):
 

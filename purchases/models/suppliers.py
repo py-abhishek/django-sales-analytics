@@ -5,9 +5,15 @@ class Supplier(models.Model):
 
     class Meta:
         ordering = ['name']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['phone', 'business'],
+                name='unique_supphone_perbusiness'
+            )
+        ]
 
     name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=10, unique=True)
+    phone = models.CharField(max_length=10)
     email = models.EmailField(max_length=100, blank=True)
     address = models.CharField(max_length=200, blank=True)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='suppliers')
