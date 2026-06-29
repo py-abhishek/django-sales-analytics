@@ -7,21 +7,20 @@ search_field.addEventListener("input", function () {
     timer = setTimeout(() => {
         console.log("searching");
         
-        searchQuery();
+        searchQuery(this.value);
     }, 300);
 });
 
 
 // Search Sales by Customer
 function searchQuery(query){
-    fetch(`/purchases-api/search-suppliers/?q=${query}`)
+    fetch(`/purchases-api/search-suppliers/?q=${query}&type=search`)
     .then(response => response.json())
     .then(data => updateTable(data));
 }
 
 // Update the existing table
 function updateTable(data){
-    console.log(data);
     const tbody = document.getElementById("tbody");
     tbody.innerHTML = "";
 

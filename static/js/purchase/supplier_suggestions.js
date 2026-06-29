@@ -29,7 +29,7 @@ nameField.addEventListener("input", function(e) {
 })
 
 function getSupplierData(query) {
-    fetch( `/purchases-api/search-suppliers/?q=${query}&type=suggestions`)
+    fetch(`/purchases-api/search-suppliers/?q=${query}&type=suggestions`)
     .then(response => response.json())
     .then(data => showSuggestions(data))    
 }

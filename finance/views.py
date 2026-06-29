@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Expense, ExpenseCategory
 from .forms import ExpenseForm, ExpenseCategoryForm
 
@@ -16,8 +16,9 @@ class AddExpenseView(CreateView):
     model = Expense
     form_class = ExpenseForm
     template_name = 'expense/add_expense.html'
-    success_url = reverse_lazy('expense_success')
 
+    def get_success_url(self):
+        return reverse('expense_success', args=[self.object.pk])
 
     def form_valid(self, form):
         form.instance.business_id = get_business_id(self.request)

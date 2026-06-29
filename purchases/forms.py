@@ -12,7 +12,7 @@ class SupplierForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'supplier-name', 'placeholder': 'Search or add new supplier'}),
             'phone': forms.NumberInput(attrs={'class': 'form-control', 'id': 'supplier-phone', 'placeholder': '9876543210'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'supplier-email', 'placeholder': 'name@example.com'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'supplier-address', 'placeholder': '123 Business Park, Industrial Area, City, ZIP Code'})
+            'address': forms.TextInput(attrs={'class': 'form-control', 'id': 'supplier-address', 'placeholder': 'City, State'})
         }
 
 # Add purchase

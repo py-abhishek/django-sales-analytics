@@ -1,6 +1,7 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from rest_framework.response import Response
 
 from sales.models import Customer
 from ..serializers import CustomerSerializer
@@ -25,10 +26,15 @@ class CustomerSearchView(ListAPIView):
             'email',
             'address'
         ).order_by('name')
-
-        query_type = self.request.query_params.get('type', 'search')
-
-        if query_type == 'suggestions':
-            return queryset[:10]
         
         return queryset
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        query_type = request.query_params.get('type')
+        if query_type == 'suggestions':
+            queryset = queryset[:10]
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

@@ -12,6 +12,9 @@ from . import services
 from inventory.services import new_product_ledger
 import math
 
+from core.permissions.mixins import RoleRequiredMixin
+from business.models import Membership
+
 from django.contrib import messages
 
 
@@ -25,7 +28,9 @@ class AddProductView(CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'inventory/add_product.html'
-    success_url = reverse_lazy('add_product_success')
+
+    def get_success_url(self):
+        return reverse('add_product_success', args=[self.object.pk])
 
     def form_valid(self, form):
         request = self.request
@@ -131,7 +136,10 @@ class ProductSuccessView(DetailView):
         return Product.objects.filter(business_id=get_business_id(self.request))
     
 # Edit product view
-class EditProductView(UpdateView):
+class EditProductView(RoleRequiredMixin, UpdateView):
+    allowed_roles = [Membership.UserRoleChoices.ADMIN]
+    permission_denied_url = 'product_detail'
+
     model = Product
     form_class = UpdateProductForm
     template_name = 'inventory/edit_product.html'

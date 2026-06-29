@@ -29,7 +29,7 @@ nameField.addEventListener("input", function(e) {
 })
 
 function getCustomerData(query) {
-    fetch( `/sales-api/search-customers/?q=${query}`)
+    fetch( `/sales-api/search-customers/?q=${query}&type=suggestions`)
     .then(response => response.json())
     .then(data => showSuggestions(data))    
 }
