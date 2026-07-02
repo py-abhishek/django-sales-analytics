@@ -166,6 +166,8 @@ function updateFilterSummary(dateRange){
 }
 
 function fetchData(){
+    utils.showLoader();
+
     const dateBtn = document.querySelector("#dateFilters .active-pill");
     const dateRange = dateBtn.dataset.range;
 
@@ -173,10 +175,17 @@ function fetchData(){
 
     fetch(`/reports-api/rev-exp-report/?${filter}`)
     .then(response => response.json())
-    .then(data => updateData(data))
+    .then(data => {
+        updateData(data);
+        utils.hideLoader();
+        // Update showing results for (filter summary)
+        updateFilterSummary(dateRange)
+    })
+    .catch(error => {
+        console.error(error);
+        utils.hideLoader();
+    });
 
-    // Update showing results for (filter summary)
-    updateFilterSummary(dateRange)
     }
 
 

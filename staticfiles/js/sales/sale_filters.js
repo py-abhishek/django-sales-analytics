@@ -1,4 +1,5 @@
 import { formatDate } from "../utils.js";
+import * as utils from "../utils.js";
 
 let timer;
 search_field.addEventListener("input", function () {
@@ -26,12 +27,16 @@ function resetFilters(){
 
 // Search Sales by Customer
 function fetchData(){
+    utils.showSearchLoader();
     const query = search_field.value;
     const date = date_field.value;
 
     fetch(`/sales-api/search-sales/?q=${query}&sale_date=${date}`)
     .then(response => response.json())
-    .then(data => updateTable(data));
+    .then(data => updateTable(data))
+    .finally(() => {
+        utils.hideSearchLoader();
+    })
 }
 
 // Update the existing table

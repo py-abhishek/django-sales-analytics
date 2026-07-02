@@ -1,4 +1,5 @@
-import { formatDate } from "../utils.js";   
+import { formatDate } from "../utils.js";
+import * as utils from "../utils.js";
 
 const prevPageBtn = document.getElementById("prevPageBtn");
 const nextPageBtn = document.getElementById("nextPageBtn");
@@ -10,9 +11,9 @@ nextPageBtn.addEventListener('click', function(){
     let currentPageNo = Number(activePage.textContent)
     if (currentPageNo === Number(totalPages.textContent)) return;
 
-    currentPageNo++
-    activePage.textContent = currentPageNo
-    currentPage.textContent = currentPageNo
+    currentPageNo += 1;
+    activePage.textContent = currentPageNo;
+    currentPage.textContent = currentPageNo;
     
     fetchData(currentPageNo);
 })
@@ -20,23 +21,27 @@ nextPageBtn.addEventListener('click', function(){
 prevPageBtn.addEventListener('click', function(){
     let currentPageNo = Number(activePage.textContent)
     if (currentPageNo < 2) return;
-    currentPageNo--
-    activePage.textContent = currentPageNo
-    currentPage.textContent = currentPageNo
+    currentPageNo -= 1;
+    activePage.textContent = currentPageNo;
+    currentPage.textContent = currentPageNo;
     
     fetchData(currentPageNo);
 })
 
 function fetchData(activePage){
+    utils.showLoader();
     fetch(`/inventory-api/stock-movements/?c_page=${activePage}`)
     .then(response => response.json())
-    .then(data => updateTable(data.data, data.current_page));
+    .then(data => updateTable(data.data, data.current_page))
+    .finally(() => {
+        utils.hideLoader();
+    })
 }
 
 
 // Update the existing table
 export function updateTable(data, currentPage=NaN){
-    console.log(data);
+    // console.log(data);
     
     const tbody = document.getElementById("tbody");
     tbody.innerHTML = "";

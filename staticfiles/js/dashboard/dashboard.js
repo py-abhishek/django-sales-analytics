@@ -227,6 +227,8 @@ function updateYearFilter(){
 }
 
 function fetchData(){
+    utils.showLoader();
+
     const year = yearFilter.value;
     // const month = monthFilter.value;
     
@@ -235,7 +237,14 @@ function fetchData(){
 
     fetch(`/dashboard-api/?${filter}`)
     .then(response => response.json())
-    .then(data => updateData(data))
+    .then(data => {
+        updateData(data);
+        utils.hideLoader();
+    })
+    .catch(error => {
+        console.error(error);
+        utils.hideLoader();
+    });
 
     }
 

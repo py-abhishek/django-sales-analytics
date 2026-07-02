@@ -1,4 +1,5 @@
 import { formatDate } from "../utils.js";
+import * as utils from "../utils.js";
 
 const search_field = document.getElementById("search_field");
 
@@ -15,9 +16,13 @@ search_field.addEventListener("input", function () {
 
 // Search Sales by Customer
 function searchQuery(query){
+    utils.showSearchLoader();
     fetch(`/expense-api/search-expense-categories/?q=${query}`)
     .then(response => response.json())
-    .then(data => updateTable(data));
+    .then(data => updateTable(data))
+    .finally(() => {
+        utils.hideSearchLoader();
+    })
 }
 
 // Update the existing table

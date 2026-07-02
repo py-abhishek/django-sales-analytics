@@ -1,4 +1,5 @@
 import { formatDate } from "../utils.js";
+import * as utils from "../utils.js";
 
 const search_field = document.getElementById("search_field");
 const date_field = document.getElementById("date_field");
@@ -26,12 +27,16 @@ function resetFilters(){
 
 // Search Expenses
 function fetchData(){
+    utils.showSearchLoader();
     const query = search_field.value;
     const date = date_field.value;
 
     fetch(`/expense-api/search-expenses/?q=${query}&expense_date=${date}`)
     .then(response => response.json())
-    .then(data => updateTable(data));
+    .then(data => updateTable(data))
+    .finally(() => {
+        utils.hideSearchLoader();
+    })
 }
 
 // Update the existing table

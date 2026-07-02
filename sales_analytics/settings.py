@@ -200,7 +200,7 @@ LOGGING = {
     },
 }
 
-# Add to bottom of settings.py
+# Debug logs
 # if DEBUG:
 #     LOGGING = {
 #         'version': 1,

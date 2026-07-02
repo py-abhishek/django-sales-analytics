@@ -128,6 +128,7 @@ function updateFilterSummary(dateRange, customerName, paymentMethod){
 }
 
 function fetchData(){
+    utils.showLoader();
     
     const dateBtn = document.querySelector("#dateFilters .active-pill");
     const dateRange = dateBtn.dataset.range;
@@ -139,10 +140,16 @@ function fetchData(){
 
     fetch(`/reports-api/sales-report/?${filter}`)
     .then(response => response.json())
-    .then(data => updateData(data))
-
-    // Update showing results for (filter summary)
-    updateFilterSummary(dateRange, customerName, paymentMethod)
+    .then(data => {
+        updateData(data)
+        utils.hideLoader();
+        // Update showing results for (filter summary)
+        updateFilterSummary(dateRange, customerName, paymentMethod)
+    })
+    .catch(error => {
+        console.error(error);
+        utils.hideLoader();
+    });
     }
 
 

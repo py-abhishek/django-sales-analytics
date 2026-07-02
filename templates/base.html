@@ -33,7 +33,14 @@
         {% include "partials/navbar.html" %}
 
             <div class="content-placeholder">
-                {% block content %}{% endblock %}
+                <!-- Loading Animation -->
+                <div class="dashboard-container">
+                    <div id="dashboardLoader" class="dashboard-loader">
+                        <div class="spinner"></div>
+                    </div>
+                    <!-- Dashboard content -->
+                    {% block content %}{% endblock %}
+                </div>
             </div>
         </div>
 

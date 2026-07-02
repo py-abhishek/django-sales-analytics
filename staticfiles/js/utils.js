@@ -96,3 +96,23 @@ export function animateNumber(
 
     requestAnimationFrame(update);
 }
+
+// Function for loading animation
+
+export function showLoader() {
+    const dashboardLoader = document.getElementById("dashboardLoader");
+    dashboardLoader.classList.add("active");
+}
+
+export function hideLoader() {
+    const dashboardLoader = document.getElementById("dashboardLoader");
+    dashboardLoader.classList.remove("active");
+}
+
+export function showSearchLoader() {
+    document.getElementById("searchLoader").classList.remove("d-none");
+}
+
+export function hideSearchLoader() {
+    document.getElementById("searchLoader").classList.add("d-none");
+}

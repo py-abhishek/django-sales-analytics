@@ -116,6 +116,8 @@ function updateFilterSummary(categoryName){
 }
 
 function fetchData(){
+    utils.showLoader();
+
     const categoryId = categoryFilter.value
     var categoryName = categoryFilter.selectedOptions[0]?.dataset.name || "All Categories";
 
@@ -123,10 +125,17 @@ function fetchData(){
 
     fetch(`/reports-api/inventory-report/?${filter}`)
     .then(response => response.json())
-    .then(data => updateData(data))
+    .then(data => {
+        updateData(data);
+        utils.hideLoader();
+        // Update showing results for (filter summary)
+        updateFilterSummary(categoryName);
+    })
+    .catch(error => {
+        console.error(error);
+        utils.hideLoader();
+    });
 
-    // Update showing results for (filter summary)
-    updateFilterSummary(categoryName)
     }
 
 

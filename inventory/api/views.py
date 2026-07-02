@@ -71,7 +71,7 @@ class LedgerListView(ListAPIView):
     def get_queryset(self):
         queryset = InventoryLedger.objects.filter(
             business_id=get_business_id(self.request)
-        ).order_by('-created_at')
+        ).select_related('product').order_by('-created_at')
 
         current_page = int(self.request.GET.get('c_page', 1))
 
