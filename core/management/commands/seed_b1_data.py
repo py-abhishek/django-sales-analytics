@@ -60,4 +60,4 @@ class Command(BaseCommand):
 
         print('Inserting expenses...')
         seed_expenses.seed_expenses(self.exp_data, self.business, self.user)
-        print('Expenses created added successfully')
+        print('Expenses added successfully')

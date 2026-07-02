@@ -135,9 +135,9 @@ class SalesListView(ListView):
         return Sale.objects.filter(
             business_id=get_business_id(self.request)
             ).select_related(
-                'customer',
-                'business',
-                'created_by'
+                'customer'
+            ).only(
+                'customer__name', 'sale_date', 'payment_method', 'total_amount', 'total_profit'
             ).order_by('-sale_date')
         
 
@@ -152,7 +152,6 @@ class SaleDetailView(DetailView):
             business_id=get_business_id(self.request)
             ).select_related(
                 'customer',
-                'business',
                 'created_by'
             ).prefetch_related(
                 Prefetch(

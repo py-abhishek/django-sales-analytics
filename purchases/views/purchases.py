@@ -103,11 +103,15 @@ class PurchaseListView(ListView):
     context_object_name = 'purchases'
 
     def get_queryset(self):
-        return Purchase.objects.filter(business_id=get_business_id(self.request)).select_related('supplier', 'created_by', 'business').order_by('-purchase_date')
+        return Purchase.objects.filter(business_id=get_business_id(self.request)).select_related(
+            'supplier'
+            ).only(
+                'supplier__name', 'purchase_date', 'payment_method', 'total_amount'
+            ).order_by('-purchase_date')
 
 
 
-# View a particuler product details
+# View a particuler purchase details
 class PurchaseDetailView(DetailView):
     model = Purchase
     template_name = 'purchase/purchase_detail.html'

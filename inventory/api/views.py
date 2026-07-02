@@ -62,7 +62,7 @@ class LedgerSearchView(ListAPIView):
         if not query and not date:
             return queryset[:100]
         
-        return queryset
+        return queryset[:100]
 
 
 class LedgerListView(ListAPIView):

@@ -37,7 +37,9 @@ class ExpenseListView(ListView):
     def get_queryset(self):
         return Expense.objects.filter(
             business_id=get_business_id(self.request)
-            ).select_related('category')
+            ).select_related('category').only(
+                'name', 'expense_date', 'category__name', 'amount'
+            )
 
 # View a particuler expense in detail
 class ExpenseDetailView(DetailView):
@@ -46,7 +48,7 @@ class ExpenseDetailView(DetailView):
     template_name = 'expense/expense_detail.html'
 
     def get_queryset(self):
-        return Expense.objects.filter(business_id=get_business_id(self.request))
+        return Expense.objects.filter(business_id=get_business_id(self.request)).select_related('category')
     
 class ExpenseSuccessView(DetailView):
     model = Expense
@@ -65,7 +67,11 @@ class ExpenseCategoryView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ExpenseCategory.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
+        context['categories'] = ExpenseCategory.objects.filter(
+            business_id=get_business_id(self.request)
+            ).only(
+                'name', 'description', 'created_at'
+            ).order_by('name')
         return context
 
     def form_valid(self, form):

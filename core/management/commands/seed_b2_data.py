@@ -24,30 +24,37 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
+        print('Product categories inserting..')
         seed_product_categories.seed_product_categories(self.product_categories_data, self.business)
         print('Product categories inserted successfully')
 
-
+        print('Products inserting..')
         seed_products.seed_products(self.products_data, self.business, self.user)
         print('Products inserted successfully')
 
+        print('Suppliers inserting..')
         seed_suppliers.seed_suppliers(self.suppliers_data, self.business)
         print('Suppliers inserted successfully')
 
+        print('Purchases adding..')
         seed_purchases.seed_purchases(self.business, 500)
         print('Purchases added successfully')
 
+        print('Customers inserting..')
         seed_customers.seed_customers(self.customers_data, self.business)
         print('Customers inserted successfully')
 
+        print('Sales creating..')
         seed_sales.seed_sales(self.business, self.user, 2000)
         print('Sales created successfully')
 
+        print('Expese categories creating..')
         seed_expense_categories.seed_expense_categories(self.exp_categories_data, self.business)
         print('Expese categories created successfully')
 
+        print('Expenses adding..')
         seed_expenses.seed_expenses(self.exp_data, self.business, self.user)
-        print('Expenses created added successfully')
+        print('Expenses added successfully')
 
 
 

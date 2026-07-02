@@ -66,7 +66,7 @@ class ProductCategoryView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
+        context["categories"] = ProductCategory.objects.filter(business_id=get_business_id(self.request)).only('name', 'description', 'created_at').order_by('name')
         return context
     
     def form_valid(self, form):
@@ -82,7 +82,11 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return Product.objects.filter(business_id=get_business_id(self.request)).order_by('-created_at')
+        return Product.objects.filter(
+            business_id=get_business_id(self.request)
+                                      ).only(
+                                          'name', 'sku', 'current_avg_cost', 'selling_price', 'current_stock', 'unit', 'created_at'
+                                          ).order_by('name')
 
 
 # View a particuler product in detail
@@ -90,9 +94,18 @@ class ProductDetailView(View):
     def get(self, request, pk):
         business_id = get_business_id(request)
 
-        product = get_object_or_404(Product.objects.select_related('category'), id=pk)
+        product = get_object_or_404(
+            Product.objects.select_related('category'),
+              id=pk
+              )
         current_year = now().year
-        all_sales = SaleItem.objects.filter(business_id=business_id, product=product, sale__sale_date__year__gte=current_year).select_related('product', 'sale', 'sale__customer').order_by('-sale__sale_date')
+        all_sales = SaleItem.objects.filter(
+            business_id=business_id, product=product, sale__sale_date__year__gte=current_year
+            ).select_related(
+                'product', 'sale', 'sale__customer').order_by('-sale__sale_date'
+                                                              ).only(
+                                                                  'quantity', 'item_total_price', 'item_profit', 'sale__sale_date', 'sale__customer__name', 'product__unit'
+                                                              )
         recent_sales = all_sales[:5]
 
         sales_insights = services.get_sales_insights(all_sales, business_id)
@@ -118,7 +131,10 @@ class StockMovementListView(ListView):
     def get_queryset(self):
         return InventoryLedger.objects.filter(
             business_id=get_business_id(self.request)
-            ).select_related('product').order_by('-created_at')[:100]
+            ).select_related('product'
+                             ).only(
+                                 'product__name', 'product__unit', 'created_at', 'transaction_type', 'quantity_change', 'before_quantity', 'after_quantity'
+                             ).order_by('-created_at')[:100]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
