@@ -139,7 +139,7 @@
     border-radius: 14px;
     border: 1px solid var(--clr-border);
     padding: 8px;
-    min-width: 180px;
+    min-width: 240px;
 }
 
 .custom-dropdown .dropdown-item {

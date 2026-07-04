@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 <div class="content">
-    <div class="card auth-card p-4" style="max-width: 450px; min-width: 400px">
+    <div class="card auth-card p-4" style="max-width: 500px; min-width: 500px">
 
     <!-- Header -->
     <div class="text-center mb-4">
@@ -23,7 +23,7 @@
         <!-- Email -->
         <div class="mb-3">
             <label class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+            <input id="email" type="email" name="email" class="form-control" placeholder="Enter your email" required>
         </div>
 
         <!-- Password -->
@@ -54,6 +54,19 @@
 
     </form>
 
+    <div class="demo-login-section mt-2">
+
+        <button type="button" class="btn btn-secondary w-100 mt-2" id="demoLoginBtn">
+            <i class="bi bi-lightning-charge-fill me-2"></i>
+            Continue with Demo Account
+        </button>
+
+        <div class="demo-login-text mt-1">
+            <i class="bi bi-info-circle"></i>
+            <span>Use the demo account to explore the app with existing data.</span>
+        </div>
+    </div>
+
     <!-- Footer -->
     <p class="text-center mt-3 mb-0">
         Don’t have an account?
@@ -74,5 +87,12 @@
             btn.disabled = true;
             btn.innerText = "Signing in...";
         });
+
+        document.getElementById("demoLoginBtn").addEventListener("click", function () {
+        document.getElementById("email").value = "abhishek@test.com";
+        document.getElementById("password").value = "test@1898";
+
+        document.getElementById("submitBtn").click();
+    });
     </script>
 {% endblock %}
