@@ -34,12 +34,16 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'bizmetric.co.in',
+    'www.bizmetric.co.in',
     '.onrender.com',
     config('RENDER_DOMAIN', default=''),
 ]
 
 # ─── CSRF Trusted Origins ────────────────────────────────────
 CSRF_TRUSTED_ORIGINS = [
+    'https://bizmetric.co.in',
+    'https://www.bizmetric.co.in',
     'https://*.onrender.com',
     f"https://{config('RENDER_DOMAIN', default='placeholder.onrender.com')}",
 ]
