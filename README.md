@@ -15,13 +15,6 @@ BizMetric helps small and medium-sized businesses manage daily operations from a
 
 Example:
 
-
-```text
-assets/demo.gif
-```
-
-or
-
 ```text
 https://your-demo-link.com
 ```
@@ -29,14 +22,6 @@ https://your-demo-link.com
 ---
 
 # Dashboard Preview
-
-> **Add your main dashboard screenshot here.**
-
-Suggested image:
-
-```text
-assets/screenshots/dashboard.png
-```
 
 ![dashboard](/assets/screenshots/dashboard.png)
 
@@ -69,8 +54,7 @@ Manage multiple businesses from a single account while keeping data completely i
 * Individual analytics
 
 > 📷 Screenshot:
->
-> `assets/screenshots/business-list.png`
+> [Multi Business](/assets/screenshots/multi-business.png)
 
 ---
 
@@ -89,7 +73,7 @@ Features include:
 
 > 📷 Screenshot:
 >
-> `assets/screenshots/create-sale.png`
+> [Create Sale](/assets/screenshots/create-sale.png)
 
 ---
 
@@ -106,7 +90,7 @@ Features:
 
 > 📷 Screenshot:
 >
-> `assets/screenshots/purchases.png`
+> ![Purchase History](/assets/screenshots/purchases.png)
 
 ---
 
@@ -147,14 +131,12 @@ Examples:
 
 ## Customer Management
 
-Manage customer information and purchase history.
+Manage customer information.
 
 Features:
 
 * Customer profiles
 * Contact information
-* Purchase history
-* Outstanding balances
 
 > 📷 Screenshot:
 >
@@ -164,13 +146,12 @@ Features:
 
 ## Supplier Management
 
-Maintain supplier records and purchasing history.
+Maintain supplier records.
 
 Features:
 
 * Supplier details
 * Contact information
-* Purchase records
 
 > 📷 Screenshot:
 >
