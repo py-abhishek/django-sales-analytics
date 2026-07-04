@@ -31,6 +31,7 @@ class Business(models.Model):
 class Membership(models.Model):
 
     class UserRoleChoices(models.TextChoices):
+        OWNER = 'owner', 'Owner'
         ADMIN = 'admin', 'Admin'
         STAFF = 'staff', 'Staff'
 

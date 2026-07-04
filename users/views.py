@@ -10,7 +10,7 @@ from core.permissions.mixins import RoleRequiredMixin
 
 # Manage particular business users
 class ManageUsersView(RoleRequiredMixin, View):
-    allowed_roles = [Membership.UserRoleChoices.ADMIN]
+    allowed_roles = [Membership.UserRoleChoices.OWNER, Membership.UserRoleChoices.ADMIN]
 
     def get(self, request):
         bussiness_members = Membership.objects.filter(business_id=request.session.get('business_id')).order_by('user__first_name')
@@ -36,7 +36,7 @@ class ManageUsersView(RoleRequiredMixin, View):
         bussiness_members = Membership.objects.filter(business_id=request.session.get('business_id')).order_by('user__first_name')
 
         context['business_members'] = bussiness_members
-        print(context)
+        # print(context)
 
         return render(request, 'users/manage_users.html', context)
     

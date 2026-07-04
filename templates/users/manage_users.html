@@ -58,16 +58,14 @@
 
                         <!-- Role -->
                         <td>
-                            {% if item.role == "Admin" %}
-                                <span class="badge bg-dark">Admin</span>
-                            {% else %}
-                                <span class="badge bg-secondary">{{ item.role }}</span>
-                            {% endif %}
+                            <span class="badge {% if item.role == 'owner' or item.role == 'admin' %} bg-success {% elif item.role == 'staff' %}bg-secondary {% endif %}" >
+                                {{ item.get_role_display }}
+                            </span>
                         </td>
 
                         <!-- Status -->
                         <td>
-                            <span class="badge bg-success">Active</span>
+                            <span class="badge bg-dark">Active</span>
                         </td>
 
                         <!-- Joined -->
@@ -178,6 +176,7 @@
                     <div>
                         <label class="form-label">Role</label>
                         <select name="role" class="form-select">
+                            <option value="owner" {% if user_form.data.role == 'owner' %} selected {% endif %}>owner</option>
                             <option value="admin" {% if user_form.data.role == 'admin' %} selected {% endif %}>Admin</option>
                             <option value="staff"{% if user_form.data.role == 'staff' %} selected {% endif %}>Staff</option>
                         </select>
@@ -232,6 +231,7 @@
 
                     <label class="form-label">Role</label>
                     <select name="role" id="editUserRole" class="form-select">
+                        <option value="owner">owner</option>
                         <option value="admin">Admin</option>
                         <option value="staff">Staff</option>
                     </select>

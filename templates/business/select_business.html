@@ -34,8 +34,8 @@
                     </div>
 
                     <div>
-                        {% if membership.role == 'admin' %}
-                            <span class="badge bg-success badge-role">Admin</span>
+                        {% if membership.role == 'admin' or membership.role == 'owner' %}
+                            <span class="badge bg-success badge-role">{{ membership.get_role_display }}</span>
                         {% else %}
                             <span class="badge bg-secondary badge-role">Member</span>
                         {% endif %}

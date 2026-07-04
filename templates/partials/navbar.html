@@ -58,7 +58,7 @@
                         </a>
                     </li>
 
-                    {% if user_role == 'admin' %}
+                    {% if user_role == 'admin' or user_role == 'owner' %}
                     <li>
                         <a class="dropdown-item" href="{% url 'manage_users' %}">
                             Manage Users

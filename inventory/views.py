@@ -153,7 +153,7 @@ class ProductSuccessView(DetailView):
     
 # Edit product view
 class EditProductView(RoleRequiredMixin, UpdateView):
-    allowed_roles = [Membership.UserRoleChoices.ADMIN]
+    allowed_roles = [Membership.UserRoleChoices.OWNER, Membership.UserRoleChoices.ADMIN]
     permission_denied_url = 'product_detail'
 
     model = Product

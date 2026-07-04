@@ -15,62 +15,81 @@ def add_user(request):
     password2 = request.POST.get('password2')
     role = request.POST.get('role')
 
-    if not first_name:
-        user_form['error'] = 'First name is required'
-
-    elif not email:
+    # Check if user already exits
+    if not email:
         user_form['error'] = 'Email is required'
-    
-    elif not password1:
-        user_form['error'] = 'Password is required'
 
-    elif not password1 == password2:
-        user_form['error'] = 'Passwords do not match'
-        
-    else:
-        business = Business.objects.get(id=request.session.get('business_id'))
+    user_exits = False
+    user = None
+    valid_user = True
+    try:
+        user = User.objects.get(email=email)
+        user_exits = True
+    except User.DoesNotExist:
+        user = None
         user_exits = False
-        # Check if user already exits
+
+    ##############
+
+    if not user_exits:
+        if not first_name:
+            user_form['error'] = 'New user, first name is required'
+            valid_user = False
+
+        elif not email:
+            user_form['error'] = 'Email is required'
+            valid_user = False
+        
+        elif not password1:
+            user_form['error'] = 'Password is required'
+            valid_user = False
+
+        elif not password1 == password2:
+            user_form['error'] = 'Passwords do not match'
+            valid_user = False
+            
+    # Get current business id
+    business = Business.objects.get(id=request.session.get('business_id'))
+
+    # Validate role
+    
+    if role == 'owner':
+        user_role = Membership.UserRoleChoices.OWNER
+
+    elif role == 'admin':
+        user_role = Membership.UserRoleChoices.ADMIN
+    
+    elif role == 'staff':
+        user_role = Membership.UserRoleChoices.STAFF
+    
+    else:
+        user_form['error'] = 'Undefined role'
+
+    with transaction.atomic():
+        if not user_exits and valid_user:
+            user = User(
+                first_name=first_name,
+                last_name=last_name,
+                email=email
+            )
+
+            user.set_password(password1)
+            user.save()
+
         try:
-            user = User.objects.get(email=email)
-            user_exits = True
-        except User.DoesNotExist:
-            user = None
-            user_exits = False
+            context['membership'] = Membership.objects.create(
+                user=user,
+                business=business,
+                role=user_role
+            )
+            user_form['info'] = 'User added successfully'
+            messages.success(request, user_form.get('info'))
 
-        # Validate role
-        if role == 'admin':
-            user_role = Membership.UserRoleChoices.ADMIN
-        
-        elif role == 'staff':
-            user_role = Membership.UserRoleChoices.STAFF
-        
-        else:
-            user_form['error'] = 'Undefined role'
-
-        with transaction.atomic():
-            if not user_exits:
-                user = User(
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email
-                )
-
-                user.set_password(password1)
-                user.save()
-
-            try:
-                context['membership'] = Membership.objects.create(
-                    user=user,
-                    business=business,
-                    role=user_role
-                )
-                user_form['info'] = 'User added successfully'
-                messages.success(request, user_form.get('info'))
-
-            except IntegrityError:
+        except IntegrityError:
+            if valid_user:
                 user_form['info'] = 'User already exits in this business'
                 messages.info(request, user_form.get('info'))
+
 
     # Resending fields data in case of any error
     if user_form.get('error'):
@@ -83,7 +102,7 @@ def add_user(request):
     context['user_form'] = user_form
 
     return context
-            
+
     
 # Edit existing user role
 def edit_role(request):
@@ -96,14 +115,16 @@ def edit_role(request):
     business = Business.objects.get(id=request.session.get('business_id'))
     membership = Membership.objects.get(user=user, business=business)
 
-    if role == 'admin':
+    if role == 'owner':
+        user_role = Membership.UserRoleChoices.OWNER
+    elif role == 'admin':
         user_role = Membership.UserRoleChoices.ADMIN
     elif role == 'staff':
         user_role = Membership.UserRoleChoices.STAFF
 
-    all_memberships = Membership.objects.filter(business=business, role=Membership.UserRoleChoices.ADMIN)
-    if len(all_memberships) == 1 and membership.role == Membership.UserRoleChoices.ADMIN:
-        edit_form['error'] = 'Role can not be changed. One admin is required to manage the business'
+    all_memberships = Membership.objects.filter(business=business, role=Membership.UserRoleChoices.OWNER)
+    if len(all_memberships) == 1 and membership.role == Membership.UserRoleChoices.OWNER:
+        edit_form['error'] = 'Role can not be changed. One owner is required to manage the business'
 
     else:
         membership.role = user_role
@@ -131,10 +152,10 @@ def delete_user(request):
     business = Business.objects.get(id=request.session.get('business_id'))
     membership = Membership.objects.get(user=user, business=business)
 
-    all_memberships = Membership.objects.filter(business=business, role=Membership.UserRoleChoices.ADMIN)
+    all_memberships = Membership.objects.filter(business=business, role=Membership.UserRoleChoices.OWNER)
     print(len(all_memberships))
-    if len(all_memberships) == 1 and membership.role == Membership.UserRoleChoices.ADMIN:
-        delete_form['error'] = 'User can not be deleted. One admin is required to manage the business'
+    if len(all_memberships) == 1 and membership.role == Membership.UserRoleChoices.OWNER:
+        delete_form['error'] = 'User can not be deleted. One owner is required to manage the business'
         
     else:
         membership.delete()
