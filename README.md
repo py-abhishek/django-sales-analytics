@@ -38,7 +38,7 @@ Suggested image:
 assets/screenshots/dashboard.png
 ```
 
-assets/screenshots/dashboard.png
+![dashboard](/assets/screenshots/dashboard.png)
 
 The dashboard provides an overview of:
 
