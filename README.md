@@ -1,448 +1,371 @@
 # BizMetric
 
-**A full-stack Business Management & Sales Analytics Platform built with Django, PostgreSQL, JavaScript, and Bootstrap.**
+**Business Management & Sales Analytics Platform**
 
-BizMetric helps small and medium-sized businesses manage daily operations from a single dashboard. It combines inventory management, sales, purchases, expenses, customer and supplier management, role-based access control, and business analytics to provide actionable insights for better decision-making.
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white)
+![DRF](https://img.shields.io/badge/Django_REST_Framework-ff1709?style=flat&logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=flat&logo=postgresql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap_5-7952B3?style=flat&logo=bootstrap&logoColor=white)
+![ApexCharts](https://img.shields.io/badge/ApexCharts-008FFB?style=flat&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
 
-> **Status:** Portfolio Project
-> **Purpose:** Demonstrate full-stack development, database design, business logic implementation, reporting, and data visualization.
+BizMetric is a full-stack business management platform that centralizes sales, inventory, purchases, expenses, and analytics across multiple businesses. Built with production-inspired architecture and real backend business logic behind every operation.
+
+**[Live Demo](https://bizmetric.co.in)** · **[Video Showcase](#)**
+
+> 🌐 Live at **[bizmetric.co.in](https://bizmetric.co.in)**
 
 ---
 
-## 🎥 Project Demo
+<!-- 📸 SCREENSHOT: Add a full dashboard screenshot here (1920×1080 recommended) -->
 
-> **Add a short demo video or GIF here (20–60 seconds).**
+---
 
-Example:
+## Architecture
 
-```text
-https://your-demo-link.com
+BizMetric uses a **hybrid rendering architecture**. It's not a traditional Django monolith, and not a full SPA either.
+
+- **Initial page load** → Django Views → Django Templates (fast, clean routing)
+- **Dynamic updates** → JavaScript → DRF APIs → PostgreSQL → ApexCharts (no page reload)
+
+This approach keeps the backend clean and the dashboard fully interactive without the overhead of a full SPA.
+
+```mermaid
+flowchart TD
+    U[👤 User]
+    U -->|Request| V[Django Views]
+    V --> T[Django Templates]
+    T --> B[Browser]
+    B -->|AJAX / Filter| API[Django REST Framework APIs]
+    API --> ORM[Django ORM]
+    ORM --> DB[(PostgreSQL · Supabase)]
+    DB --> ORM
+    ORM --> API
+    API -->|JSON Response| JS[JavaScript]
+    JS --> C[ApexCharts & KPI Cards]
+    style U fill:#2563eb,color:#fff
+    style V fill:#16a34a,color:#fff
+    style API fill:#f59e0b,color:#fff
+    style ORM fill:#7c3aed,color:#fff
+    style DB fill:#334155,color:#fff
+    style JS fill:#dc2626,color:#fff
+    style C fill:#0891b2,color:#fff
 ```
 
 ---
 
-# Dashboard Preview
-
-![dashboard](/assets/screenshots/dashboard.png)
-
-The dashboard provides an overview of:
-
-* Revenue
-* Profit
-* Sales
-* Purchases
-* Expenses
-* Inventory
-* Monthly trends
-* Top-selling products
-* Business performance
-
----
-
-# Features
-
-## Multi-Business Management
-
-Manage multiple businesses from a single account while keeping data completely isolated.
-
-**Features**
-
-* Create and manage multiple businesses
-* Independent inventory
-* Separate reports
-* Separate customers and suppliers
-* Individual analytics
-
-> 📷 Screenshot:
-> [Multi Business](/assets/screenshots/multi-business.png)
-
----
-
-## Sales Management
-
-Create and manage customer sales efficiently.
-
-Features include:
-
-* Customer search
-* Product search
-* Quantity management
-* Automatic stock updates
-* Invoice generation
-* Profit calculation
-
-> 📷 Screenshot:
->
-> [Create Sale](/assets/screenshots/create-sale.png)
-
----
-
-## Purchase Management
-
-Track inventory purchases from suppliers.
-
-Features:
-
-* Supplier management
-* Purchase history
-* Cost tracking
-* Inventory updates
-
-> 📷 Screenshot:
->
-> ![Purchase History](/assets/screenshots/purchases.png)
-
----
-
-## Inventory Management
-
-Keep inventory synchronized with every purchase and sale.
-
-Includes:
-
-* Current stock
-* Stock valuation
-* Product categories
-* Low-stock monitoring
-
-> 📷 Screenshot:
->
-> `assets/screenshots/inventory.png`
-
----
-
-## Expense Tracking
-
-Monitor business expenses to understand profitability.
-
-Examples:
-
-* Rent
-* Salary
-* Utilities
-* Marketing
-* Miscellaneous expenses
-
-> 📷 Screenshot:
->
-> `assets/screenshots/expenses.png`
-
----
-
-## Customer Management
-
-Manage customer information.
-
-Features:
-
-* Customer profiles
-* Contact information
-
-> 📷 Screenshot:
->
-> `assets/screenshots/customers.png`
-
----
-
-## Supplier Management
-
-Maintain supplier records.
-
-Features:
-
-* Supplier details
-* Contact information
-
-> 📷 Screenshot:
->
-> `assets/screenshots/suppliers.png`
-
----
-
-## Reports & Analytics
-
-Generate business insights using interactive dashboards.
-
-Reports include:
-
-* Revenue trends
-* Profit analysis
-* Monthly sales
-* Expense reports
-* Product performance
-* Customer analytics
-
-> 📷 Screenshot:
->
-> `assets/screenshots/reports.png`
-
----
-
-## Role-Based Access Control
-
-Secure access using custom roles and permissions.
-
-Examples:
-
-* Owner
-* Manager
-* Employee
-
-Features:
-
-* Authentication
-* Authorization
-* Protected views
-* Permission-based navigation
-
-> 📷 Screenshot:
->
-> `assets/screenshots/users-permissions.png`
-
----
-
-# Technology Stack
-
-### Backend
-
-* Django
-* Django ORM
-* PostgreSQL
-
-### Frontend
-
-* HTML
-* CSS
-* Bootstrap
-* JavaScript
-
-### Database
-
-* PostgreSQL (Supabase)
-
-### Deployment
-
-* Render
-* Supabase
-
-### Tools
-
-* Git
-* GitHub
-* VS Code
-
----
-
-# Project Architecture
-
-```text
-Browser
-      │
-      ▼
-Bootstrap + JavaScript
-      │
-      ▼
-Django Views
-      │
-      ▼
-Business Logic
-      │
-      ▼
-Django ORM
-      │
-      ▼
-PostgreSQL (Supabase)
+## Multi-Business Architecture
+
+One account manages multiple businesses. Every business has completely isolated data. Products, sales, purchases, and expenses never cross between them.
+
+```mermaid
+flowchart TD
+    U[👤 User - Owner]
+    U --> M[👥 Membership]
+    M --> B1[🏢 Business 1]
+    M --> B2[🏢 Business 2]
+    B1 --> TM1[Team Members]
+    B2 --> TM2[Team Members]
+    TM1 --> R1[Owner / Admin / Staff]
+    TM2 --> R2[Owner / Admin / Staff]
+    style U fill:#2563eb,color:#fff
+    style M fill:#7c3aed,color:#fff
+    style B1 fill:#1e3a5f,color:#fff
+    style B2 fill:#1e3a5f,color:#fff
+    style TM1 fill:#1e293b,color:#fff
+    style TM2 fill:#1e293b,color:#fff
+    style R1 fill:#1e293b,color:#fff
+    style R2 fill:#1e293b,color:#fff
+```
+
+> **Three roles:** Owner has full access. Admin manages operations. Staff has restricted access.
+
+Every database query carries `business_id` context. Isolation is structural, not a conditional check.
+
+```python
+# Every query scoped to the active business
+Sale.objects.filter(business_id=request.session.get("business_id"))
+Product.objects.filter(business_id=request.session.get("business_id"))
 ```
 
 ---
 
-# Key Backend Highlights
+## Features
 
-This project focuses heavily on backend development and business logic.
+### 📊 Dashboard
+- Real-time KPIs: Revenue, Expenses, Net Profit, Total Sales
+- Monthly revenue and expense trends via ApexCharts
+- Low stock alerts and top product performance
+- Fully dynamic, updates via DRF APIs without page reload
 
-Highlights include:
+### 📦 Inventory
+- Product catalog with SKU management and categories
+- Stock level tracking with reorder alerts
+- Weighted average cost recalculated automatically on every purchase
 
-* Django ORM optimization
-* Model relationships
-* Foreign keys
-* Transactions
-* Aggregations
-* Permission decorators
-* Class-based views
-* Authentication
-* Custom management commands
-* Data seeding
-* Dynamic dashboard APIs
+### 🧾 Sales
+- Multi-item sale creation with inline customer search
+- Automatic stock deduction and item-level profit tracking
+- Full audit ledger on every transaction
 
----
+### 🛒 Purchases
+- Supplier-linked purchase entries
+- Automatic inventory replenishment on purchase save
 
-# Business Modules
+### 💸 Expenses & Customers
+- Categorized expense logging
+- Customer profiles with purchase history
 
-* Dashboard
-* Sales
-* Purchases
-* Inventory
-* Customers
-* Suppliers
-* Expenses
-* Reports
-* User Management
-* Authentication
+### 📈 Reports
+- Sales · Product Performance · Revenue vs Expenses · Inventory Health
+- Interactive date filters with summary cards and ApexCharts visualizations
 
----
-
-# Database Design
-
-The application uses a relational database with interconnected models including:
-
-* Business
-* User
-* Customer
-* Supplier
-* Product
-* Category
-* Sale
-* Sale Item
-* Purchase
-* Purchase Item
-* Expense
-
-> 📷 Optional:
->
-> Add an ER Diagram here.
->
-> `assets/screenshots/database-diagram.png`
+<!-- 📸 SCREENSHOT: Add reports page with filters applied here -->
 
 ---
 
-# Performance Considerations
+## Backend Engineering
 
-Implemented optimizations include:
+This section covers the decisions that go beyond standard CRUD.
 
-* Database aggregations
-* Efficient ORM queries
-* Filtered reports
-* Dynamic dashboard loading
-* Optimized static assets
-* WhiteNoise static file serving
+### Sale Transaction Workflow
+
+Every sale triggers multiple coordinated operations inside a single atomic transaction. Validation runs before anything touches the database.
+
+```mermaid
+flowchart TD
+    A[Sale Request] --> B[Validate Stock & Duplicates]
+    B --> C{Valid?}
+    C -->|No| D[Raise ValidationError\nNothing written to DB]
+    C -->|Yes| E[Begin transaction.atomic]
+    E --> F[Create Customer\nif new, rolls back on failure]
+    F --> G[Create Sale Record\ntotal_amount · total_profit]
+    G --> H[Create SaleItems\ncost_at_sale snapshot]
+    H --> I[Deduct Stock]
+    I --> J[Write Ledger Entry]
+    J --> K[Commit Transaction]
+    K --> L[Dashboard Updated]
+    style A fill:#2563eb,color:#fff
+    style B fill:#f59e0b,color:#fff
+    style D fill:#dc2626,color:#fff
+    style E fill:#7c3aed,color:#fff
+    style H fill:#0891b2,color:#fff
+    style K fill:#16a34a,color:#fff
+```
+
+**Key decisions:**
+
+| Decision | Why It Matters |
+|---|---|
+| `transaction.atomic()` | Customer, sale, line items, ledger, and stock deduction all commit together, or nothing does |
+| `cost_at_sale` snapshot | Profit reports stay accurate even when product prices change later |
+| Stock Ledger | Every movement, whether a sale or cancellation, writes a ledger entry in both directions |
+
+<!-- 📸 SCREENSHOT (optional): Sale creation form showing multi-item workflow -->
+
+### Sale Cancellation Workflow
+
+Sale cancellation reverses the original transaction by restoring inventory, preserving historical costs, updating the inventory ledger, and marking the sale as cancelled.
+
+```python
+def cancel_sale(request, sale_id, business_id):
+    sale = Sale.objects.get(business_id=business_id, id=sale_id)
+
+    if sale.is_cancelled():            # Guard — prevents double cancellation
+        messages.info(request, "This sale is already cancelled")
+        return
+
+    for item in sale.items.all():
+        product = item.product
+
+        product.current_stock += item.quantity
+        product.save()
+
+        create_cancel_sale_ledger(
+            business_id, sale, product,
+            item.quantity, item.cost_at_sale       # Original cost preserved
+      )
+
+    sale.status = Sale.StatusChoices.CANCELLED
+    sale.save()
+```
+
+### Role-Based Permissions
+
+Permissions are enforced at the view layer via a reusable `RoleRequiredMixin`, not hidden in templates. Critical operations like cancelling a sale are restricted to Owner and Admin roles. Even direct backend requests are rejected.
+
+```python
+class CancelSaleView(RoleRequiredMixin, View):
+    allowed_roles = [Membership.UserRoleChoices.OWNER,
+                     Membership.UserRoleChoices.ADMIN]
+    # Staff users → blocked server-side
+    # UI bypass → still rejected
+
+    permission_denied_url = "sale_detail"
+
+    def post(self, request, pk):
+        services.cancel_sale(request, pk, request.session.get("business_id"))
+
+        return redirect("sale_detail", pk)
+```
+
+### Analytics Queries
+
+Dashboard and report analytics are generated using Django ORM aggregations, allowing complex business metrics to be calculated directly by PostgreSQL without writing raw SQL.
+
+```python
+def get_summary(sales):
+    return sales.aggregate(
+        total_revenue=Sum("total_amount"),
+        total_sales_count=Count("id"),
+        total_profit=Sum("total_profit"),
+        avg_order_value=Avg("total_amount")
+    )
+
+
+def get_sales_trend(sales):
+    monthly_sales = (
+        sales.annotate(month=TruncMonth("sale_date"))
+             .values("month")
+             .annotate(total_amount=Sum("total_amount"))
+             .order_by("month")
+    )
+```
 
 ---
 
-# Security
+## Database Design
 
-* CSRF Protection
-* Authentication
-* Authorization
-* Role-based permissions
-* Server-side validation
-* Protected business data
+```mermaid
+erDiagram
+    User ||--o{ Business : creates
+    User ||--o{ Membership : has
+    Membership }o--|| Business : belongs_to
+
+    Business ||--o{ ProductCategory : owns
+    Business ||--o{ Product : owns
+    Business ||--o{ Customer : owns
+    Business ||--o{ Supplier : owns
+    Business ||--o{ Sale : owns
+    Business ||--o{ Purchase : owns
+    Business ||--o{ ExpenseCategory : owns
+    Business ||--o{ Expense : owns
+
+    ProductCategory ||--o{ Product : categorizes
+    ExpenseCategory ||--o{ Expense : categorizes
+
+    Customer ||--o{ Sale : makes
+    Sale ||--|{ SaleItem : contains
+    SaleItem }o--|| Product : references
+
+    Supplier ||--o{ Purchase : supplies
+    Purchase ||--|{ PurchaseItem : contains
+    PurchaseItem }o--|| Product : references
+
+    Product ||--o{ InventoryLedger : tracked_by
+    Sale ||--o{ InventoryLedger : triggers
+    Purchase ||--o{ InventoryLedger : triggers
+```
 
 ---
 
-# Installation
+## Getting Started
 
-Clone the repository:
+### Prerequisites
+
+- Python 3.10+
+- PostgreSQL
+- pip
+
+### Installation
 
 ```bash
-git clone https://github.com/your-username/django-sales-analytics.git
-```
+# Clone the repository
+git clone https://github.com/yourusername/bizmetric.git
+cd bizmetric
 
-Navigate to the project:
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate       # Windows: venv\Scripts\activate
 
-```bash
-cd django-sales-analytics
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-```bash
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-Run migrations:
+# Configure environment
+cp .env.example .env
+# Set DATABASE_URL and SECRET_KEY in .env
 
-```bash
+# Run migrations
 python manage.py migrate
-```
 
-Create a superuser:
+# Seed demo data
+python manage.py seed_data
 
-```bash
-python manage.py createsuperuser
-```
-
-Start the server:
-
-```bash
+# Start server
 python manage.py runserver
 ```
 
----
+### Demo Data
 
-# Screenshots
+The project includes a custom management commands that seeds realistic businesses with interconnected sales, purchases, inventory, and expenses. The dashboard and reports are immediately usable after running it.
 
-Create this folder structure:
+```bash
 
-```text
-assets/
-└── screenshots/
-    ├── dashboard.png
-    ├── create-sale.png
-    ├── inventory.png
-    ├── purchases.png
-    ├── expenses.png
-    ├── reports.png
-    ├── customers.png
-    ├── suppliers.png
-    ├── users-permissions.png
-    ├── business-list.png
-    └── database-diagram.png
+python manage.py seed_b1_data   # TechZone Electronics
+python manage.py seed_b2_data   # FreshMart Grocery
 ```
 
 ---
 
-# Future Improvements
+## Project Structure
 
-* Barcode scanning
-* Invoice PDF generation
-* Email notifications
-* GST reports
-* Advanced forecasting
-* Export to Excel/PDF
-* Mobile-responsive enhancements
-* REST API expansion
+```
+sales_analytics/
+├── accounts/            # Authentication, custom User model
+├── assets/              # Raw static source files
+├── business/            # Business management, switching
+├── core/                # Shared utilities, base mixins
+├── dashboard/           # KPIs, DRF APIs, ApexCharts data
+├── finance/             # Expenses, expense categories
+├── inventory/           # Products, categories, stock ledger
+├── purchases/           # Purchase workflow, suppliers
+├── reports/             # Report generation, filters, analytics
+├── sales/               # Sale workflow, customers, SaleItems
+├── sales_analytics/     # Django project config (settings, urls)
+├── static/              # Static source files
+├── staticfiles/         # Collected static files
+├── templates/           # HTML templates
+├── users/               # User profile management
+├── .env                 # Environment variables
+├── build.sh             # Render build script
+├── manage.py
+├── render.yaml          # Render deployment config
+└── requirements.txt
+```
 
 ---
 
-# What This Project Demonstrates
+## Deployment
 
-* Full-stack web development
-* Django architecture
-* PostgreSQL database design
-* Business workflow implementation
-* Dashboard development
-* Data visualization
-* Authentication & authorization
-* CRUD operations
-* Reporting & analytics
-* Production deployment
+| Service | Purpose |
+|---|---|
+| Render | Application hosting |
+| Supabase | PostgreSQL database |
 
 ---
 
-# Author
+## Author
 
 **Abhishek Chaudhary**
+Backend Developer · Python · Django · PostgreSQL
 
-If you found this project interesting, feel free to explore the codebase or connect with me.
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](#)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](#)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=flat&logo=vercel&logoColor=white)](#)
+
+---
+
+*Built as a portfolio project demonstrating production-inspired Django development.*
