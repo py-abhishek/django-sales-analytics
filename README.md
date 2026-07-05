@@ -14,13 +14,14 @@
 
 BizMetric is a full-stack business management platform that centralizes sales, inventory, purchases, expenses, and analytics across multiple businesses. Built with production-inspired architecture and real backend business logic behind every operation.
 
-**[Live Demo](https://bizmetric.co.in)** · **[Video Showcase](#)**
+**[Video Showcase](#)**
 
 > 🌐 Live at **[bizmetric.co.in](https://bizmetric.co.in)**
 
 ---
 
 <!-- 📸 SCREENSHOT: Add a full dashboard screenshot here (1920×1080 recommended) -->
+![Dashboard](/assets/screenshots/dashboard.png)
 
 ---
 
@@ -81,7 +82,16 @@ flowchart TD
     style R2 fill:#1e293b,color:#fff
 ```
 
+### Team Management
+
+Each business can have multiple team members with role-based permissions. This enables owners to collaborate securely while controlling access to different modules based on responsibilities.
+
+<!-- ss -->
+![Dashboard](/assets/screenshots/multi-user.png)
+
 > **Three roles:** Owner has full access. Admin manages operations. Staff has restricted access.
+
+### Business Data Isolation
 
 Every database query carries `business_id` context. Isolation is structural, not a conditional check.
 
@@ -124,6 +134,7 @@ Product.objects.filter(business_id=request.session.get("business_id"))
 - Interactive date filters with summary cards and ApexCharts visualizations
 
 <!-- 📸 SCREENSHOT: Add reports page with filters applied here -->
+![Dashboard](/assets/screenshots/report.png)
 
 ---
 
@@ -164,7 +175,7 @@ flowchart TD
 | `cost_at_sale` snapshot | Profit reports stay accurate even when product prices change later |
 | Stock Ledger | Every movement, whether a sale or cancellation, writes a ledger entry in both directions |
 
-<!-- 📸 SCREENSHOT (optional): Sale creation form showing multi-item workflow -->
+![Dashboard](/assets/screenshots/create-sale.png)
 
 ### Sale Cancellation Workflow
 
@@ -362,9 +373,8 @@ sales_analytics/
 **Abhishek Chaudhary**
 Backend Developer · Python · Django · PostgreSQL
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](#)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](#)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=flat&logo=vercel&logoColor=white)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/py-abhishek/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abhishekchaudhary091/)
 
 ---
 
