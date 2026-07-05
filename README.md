@@ -87,7 +87,7 @@ flowchart TD
 Each business can have multiple team members with role-based permissions. This enables owners to collaborate securely while controlling access to different modules based on responsibilities.
 
 <!-- ss -->
-![Dashboard](/assets/screenshots/multi-user.png)
+![Team](/assets/screenshots/multi-user.png)
 
 > **Three roles:** Owner has full access. Admin manages operations. Staff has restricted access.
 
@@ -134,7 +134,7 @@ Product.objects.filter(business_id=request.session.get("business_id"))
 - Interactive date filters with summary cards and ApexCharts visualizations
 
 <!-- 📸 SCREENSHOT: Add reports page with filters applied here -->
-![Dashboard](/assets/screenshots/report.png)
+![Report](/assets/screenshots/reports.png)
 
 ---
 
@@ -175,7 +175,7 @@ flowchart TD
 | `cost_at_sale` snapshot | Profit reports stay accurate even when product prices change later |
 | Stock Ledger | Every movement, whether a sale or cancellation, writes a ledger entry in both directions |
 
-![Dashboard](/assets/screenshots/create-sale.png)
+![Create Sale](/assets/screenshots/create-sale.png)
 
 ### Sale Cancellation Workflow
 
