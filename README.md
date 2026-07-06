@@ -14,9 +14,11 @@
 
 BizMetric is a full-stack business management platform that centralizes sales, inventory, purchases, expenses, and analytics across multiple businesses. Built with production-inspired architecture and real backend business logic behind every operation.
 
-**[Video Showcase](#)**
+🌐 **Live at:** https://bizmetric.co.in
 
-> 🌐 Live at **[bizmetric.co.in](https://bizmetric.co.in)**
+🎬 **Watch Project Walkthrough:** https://youtu.be/9mnm_tPGl6M
+
+<!-- [![BizMetric Demo](https://img.youtube.com/vi/9mnm_tPGl6M/maxresdefault.jpg)](https://youtu.be/9mnm_tPGl6M) -->
 
 ---
 
