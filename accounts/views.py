@@ -13,7 +13,7 @@ class SignUpView(View):
         form = SignUpForm()
 
         context = {
-            'form': form
+            'form': form,
         }
         return render(request, 'accounts/sign_up.html', context)
     
@@ -22,10 +22,18 @@ class SignUpView(View):
         password1 = request.POST.get('password1').strip()
         password2 = request.POST.get('password2').strip()
 
-        if password1 != password2:
-            form.add_error(None, "Password do not match")
+        valid_pass = True
+        error = ''
 
-        if form.is_valid():
+        if  not services.check_password(password1):
+            valid_pass = False
+            error = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'
+
+        elif password1 != password2:
+            valid_pass = False
+            error = 'Confirm password do not match'
+
+        if valid_pass and form.is_valid():
             user = form.save(commit=False)
             user.set_password(password1)
             user.save()
@@ -35,7 +43,7 @@ class SignUpView(View):
             return redirect('create_business')
         
         else:
-            return render(request, 'accounts/sign_up.html', {'form': form})
+            return render(request, 'accounts/sign_up.html', {'form': form, 'error': error})
         
         
 

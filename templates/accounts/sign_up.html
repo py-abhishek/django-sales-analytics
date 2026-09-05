@@ -68,6 +68,12 @@
             </div>
         {% endif %}
 
+        {% if error %}
+            <div class="alert alert-danger py-2">
+                {{ error }}
+            </div>
+        {% endif %}
+
         <!-- Submit Button -->
         <button type="submit" id="submitBtn" class="btn btn-primary w-100">
             Sign Up

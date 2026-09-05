@@ -2,7 +2,19 @@
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
+# check if password is strong enough
+def check_password(password:str):
+    if len(password) < 8:
+        return False
+    
+    has_letter = any(char.isalpha() for char in password)
+    has_number = any(char.isdigit() for char in password)
+    has_special = any(char.isalnum() for char in password)
+    has_upper = any(char.isupper() for char in password)
 
+    return has_letter and has_number and has_special and has_upper
+
+# update user profile
 def update_profile(request):
     context = {}
     first_name = request.POST.get('first_name')
@@ -18,7 +30,7 @@ def update_profile(request):
     
     return context
 
-
+# update user password
 def update_password(request):
     context = {}
     c_pass = request.POST.get('current_password')
@@ -33,7 +45,10 @@ def update_password(request):
     
     elif not new_pass:
         context['form2_error'] = 'Please enter a new password'
-    
+
+    if not check_password():
+        context['form2_error'] = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'
+        
     elif not new_pass == confirm_pass:
         context['form2_error'] = 'Passwords do not match'
     

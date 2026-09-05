@@ -2,6 +2,7 @@ from accounts.models import User
 from business.models import Membership, Business
 from django.db import transaction, IntegrityError
 from django.contrib import messages
+from accounts.services import check_password
 
 # Validate and add new user
 def add_user(request):
@@ -42,6 +43,10 @@ def add_user(request):
         
         elif not password1:
             user_form['error'] = 'Password is required'
+            valid_user = False
+
+        elif not check_password(password1):
+            user_form['error'] = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'
             valid_user = False
 
         elif not password1 == password2:

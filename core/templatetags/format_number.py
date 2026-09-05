@@ -5,7 +5,12 @@ register = template.Library()
 
 @register.filter
 def format_number(value):
-    value = str(int(value))
+    try:
+        value = str(int(value))
+    except (ValueError, TypeError):
+        return 0
+
+    return str(value)
 
     last_three = value[-3:]
     remaining = value[:-3]
